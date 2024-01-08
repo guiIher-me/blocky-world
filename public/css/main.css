@@ -1,0 +1,527 @@
+@import url('https://fonts.cdnfonts.com/css/minecraftia');
+
+:root {
+    --axis-x-color: red;
+    --axis-y-color: blue;
+    --axis-z-color: #31ee31;
+    --block-px-size: 16px;
+    --half-block-px-size: calc(var(--block-px-size) / 2);
+    --half-half-block-px-size: calc(var(--block-px-size) / 4);
+    --hotbar-slot-size: 45px;
+}
+
+@keyframes horizontal-rotate-camera {
+    from {
+        transform: rotateX(335deg) rotateY(0deg);
+    }
+
+    to {
+        transform: rotateX(335deg) rotateY(360deg);
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/*************************************/
+/* World */
+
+#axis-container {
+    position: absolute;
+    display: block;
+    left: 30px;
+    bottom: 50px;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    /* transform: rotateX(360deg) rotateY(0deg); */
+    transform: rotateX(335deg) rotateY(220deg);
+    transform-origin: center center;
+    z-index: 1000;
+        
+    animation-duration: 45s;
+    /* animation-name: horizontal-rotate-camera; */
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    will-change: transform;
+}
+
+#axis-container .axis-coord {
+    display: block;
+    width: 40px;
+    height: 2px;
+    transform-origin: right bottom;
+}
+
+#axis-container .axis-coord.axis-x {
+    background-color: var(--axis-x-color);
+    transform: rotateX(0deg);
+    margin-bottom: -5px;
+}
+
+#axis-container .axis-coord.axis-y {
+    background-color: var(--axis-y-color);
+    transform: rotateZ(90deg);
+}
+
+#axis-container .axis-coord.axis-z {
+    background-color: var(--axis-z-color);
+    transform: rotateY(-90deg);
+}
+
+#axis-container .axis-coord:after{
+    position: absolute;
+    color: #000;
+    font-size: 15px;
+}
+
+#axis-container .axis-x:after {
+    content: 'x';
+    color: var(--axis-x-color)
+}
+
+#axis-container .axis-y:after {
+    content: 'y';
+    transform: rotateZ(-90deg) rotateY(180deg);
+    color: var(--axis-y-color)
+}
+
+#axis-container .axis-z:after {
+    content: 'z';
+    transform: rotateY(180deg);
+    color: var(--axis-z-color)
+}
+
+
+/*************************************/
+/* World */
+
+#world-container {
+    position: fixed;
+    background: linear-gradient(180deg, rgba(212,245,255,1) 0%, rgba(8,166,255,1) 50%, rgba(0,83,143,1) 100%);
+}
+
+.world-wrapper {
+    position: relative;
+}
+
+#world {
+    position: relative;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    top: 245px;
+    left: 70px;
+    transform-style: preserve-3d;
+    /* transform: rotateX(338deg) rotateY(220deg); */
+    transform-origin: 500px 400px;
+    perspective: 100000px;
+}
+
+.infinite-rotating--animation {
+    animation-name: horizontal-rotate-camera;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    will-change: transform;
+    animation-duration: 45s;
+}
+
+.removed {
+    display: none !important;
+}
+
+.hidden {
+    visibility: hidden !important;
+}
+
+/*************************************/
+/* Navigation */
+
+nav.navigation {
+    position: absolute;
+    display: inline-flex;
+    top: 0;
+    padding: 20px;
+    font-family: 'Minecraftia', sans-serif;
+    font-weight: bold;
+    z-index: 10;
+}
+
+.world-name {
+    padding: 0 20px;
+    display: flex;
+    align-self: center;
+}
+
+
+/*************************************/
+/* Button */
+
+.mc-button {
+    display: flex;
+    height: fit-content;
+    font-family: 'Minecraftia', sans-serif;
+    cursor: pointer;
+	overflow: hidden;
+    outline: none;
+	white-space: nowrap;
+	user-select: none;
+    background: #999 url('../src/textures/icons/button.png') center / cover;
+    image-rendering: pixelated;
+	border: 2px solid #000;
+    padding: 0;
+    margin: 0 3px;
+}
+
+.mc-button .title {
+    color: #DDD;
+    text-shadow: 2px 2px #000A;
+    box-shadow: inset -2px -4px #0006, inset 2px 2px #FFF7;
+    padding: 10px 20px;
+}
+
+.mc-button .title.title-img {
+    padding: 0;
+}
+
+.mc-button .title.title-img img {
+    padding: 0;
+}
+
+#btn-inventory img {
+    padding: 2px 10px;
+    height: 38px;
+}
+
+
+.mc-button .title:hover {
+    background-color: rgba(100, 100, 255, .45);
+    text-shadow: 2px 2px #202013CC;
+    color: #FFFFA0;
+}
+
+
+/*************************************/
+/* Input */
+
+.mc-input {
+    background-color: #000;
+    color: #DDD;
+    font-family: 'Minecraftia', sans-serif;
+    border: 2px solid #a5a5a5;
+    padding: 10px 20px;
+    outline: none;
+    outline-width: 0;
+}
+
+.mc-input::placeholder,
+.mc-input::-ms-input-placeholder {
+    color: #575757;
+}
+
+/*************************************/
+/* Block */
+
+.block {
+    width: var(--block-px-size);
+    height: var(--block-px-size);
+    position: absolute;
+    transform-style: preserve-3d;
+    left: 200px;
+    top: 100px;
+}
+
+.block .faces {
+    transform-style: preserve-3d;
+}
+
+
+/* Normal Faces */
+
+.block .face {
+    position: absolute;
+    width: var(--block-px-size);
+    height: var(--block-px-size);
+    box-sizing: border-box;
+    background-color: rgb(0, 0, 0, 0.35);
+    background-image: url('../src/textures/blocks/missing/missing.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.block .faces:hover > .face {
+    outline: 1.5px solid rgba(0, 0, 0, 0.5);
+    outline-offset: -1.5px;
+    cursor: pointer;
+}
+
+.block .face:hover {
+    filter: brightness(1.3) !important;
+}
+
+.block .face-up {
+    transform: rotateX(90deg) translateZ(var(--half-block-px-size));
+}
+
+.block .face-down {
+    transform: rotateX(-90deg) translateZ(var(--half-block-px-size));
+    background-color: rgba(0, 0, 0, 0.60);
+}
+
+.block .face-north {
+    transform: rotateY(180deg) translateZ(var(--half-block-px-size));
+    background-blend-mode: hard-light;
+    background-color: rgba(255, 255, 255, 0.45);
+}
+
+.block .face-south {
+    transform: rotateY(0deg) translateZ(var(--half-block-px-size));
+    background-blend-mode: darken;
+}
+
+.block .face-east {
+    transform: rotateY(90deg) translateZ(var(--half-block-px-size));
+    background-blend-mode: darken;
+}
+
+.block .face-west {
+    transform: rotateY(-90deg) translateZ(var(--half-block-px-size));
+}
+
+
+/* Slab Faces */
+
+.block .faces-slab .face-up {
+    transform: rotateX(90deg) translateZ(0);
+}
+
+.block .faces-slab .face-north {
+    transform: rotateY(180deg) translateZ(var(--half-block-px-size)) translateY(var(--half-block-px-size));
+    height: var(--half-block-px-size);
+}
+
+.block .faces-slab .face-south {
+    transform: rotateY(0deg) translateZ(var(--half-block-px-size)) translateY(var(--half-block-px-size));
+    height: var(--half-block-px-size);
+}
+
+.block .faces-slab .face-east {
+    transform: rotateY(90deg) translateZ(var(--half-block-px-size)) translateY(var(--half-block-px-size));
+    height: var(--half-block-px-size);
+}
+
+.block .faces-slab .face-west {
+    transform: rotateY(-90deg) translateZ(var(--half-block-px-size)) translateY(var(--half-block-px-size));
+    height: var(--half-block-px-size);
+}
+
+
+/* X Faces */
+
+.block .faces-x .face {
+    background-color: initial;
+}
+
+.block .faces-x .face-part1 {
+    transform: rotateY(0);
+}
+
+.block .faces-x .face-part2 {
+    transform: rotateY(90deg);
+}
+
+
+/* Bars Faces */
+
+.block .faces-bars .face {
+    background-color: initial;
+}
+
+
+/* Wall Faces */
+.block .faces-wall .face {
+    transform-origin: 100%;
+}
+
+.block .faces-wall .face-up,
+.block .faces-wall .face-down {
+    width: var(--half-block-px-size);
+    height: var(--half-block-px-size);
+}
+
+.block .faces-wall .face-up {
+    transform: rotateX(90deg) translateX(var(--half-half-block-px-size)) translateZ(var(--half-half-block-px-size));
+}
+
+.block .faces-wall .face-down {
+    transform: rotateX(-90deg) translateX(var(--half-half-block-px-size)) translateZ(var(--block-px-size));
+}
+
+.block .faces-wall .face-north {
+    transform: rotateY(180deg) translateX(var(--half-half-block-px-size)) translateZ(var(--half-half-block-px-size));
+    width: var(--half-block-px-size);
+}
+
+.block .faces-wall .face-south {
+    transform: rotateY(0deg) translateX(var(--half-half-block-px-size)) translateZ(var(--half-half-block-px-size));
+    width: var(--half-block-px-size);
+}
+
+.block .faces-wall .face-east {
+    transform: rotateY(90deg) translateX(var(--half-half-block-px-size)) translateZ(var(--half-half-block-px-size));
+    width: var(--half-block-px-size);
+}
+
+.block .faces-wall .face-west {
+    transform: rotateY(-90deg) translateX(var(--half-half-block-px-size)) translateZ(var(--half-half-block-px-size));
+    width: var(--half-block-px-size);
+}
+
+
+/*************************************/
+/* Footbar */
+
+#footerbar-container {
+    position: absolute;
+    width: 100%;
+    height: 80px;
+    display: inline-flex;
+    justify-content: center;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    transform-style: flat;
+    z-index: 10;
+}
+
+
+/*************************************/
+/* Hotbar */
+
+#hotbar {
+    display: inline-flex;
+    margin: 0 10px;
+    border: 2px solid #000;
+    height: fit-content;
+}
+
+.hotbar-slot {
+    position: relative;
+    width: var(--hotbar-slot-size);
+    height: var(--hotbar-slot-size);
+
+    background-image: url('../src/textures/guis/slot/hotbar-slot.png');    
+}
+
+.hotbar-slot .slot-item {
+    width: 33px;
+    height: 33px;
+}
+
+.hotbar-slot--active {
+    background-image: url('../src/textures/guis/slot/hotbar-slot--active.png');
+}
+
+
+
+/*************************************/
+/* Inventory */
+
+#inventory-container {
+    position: absolute;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+
+#inventory {
+    position: relative;
+    align-self: center;
+    justify-self: center;
+    width: 520px;
+    height: 437px;
+    background-color: #c6c6c6;
+    background-image: url('../src/textures/guis/inventory-gui.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    user-select: none;
+}
+
+.inventory-slot-grid {
+    margin-top: 58px;
+    margin-left: 20px;
+}
+
+.inventory-selected-slot-line {
+    margin-top: 12px;
+    margin-left: 21px;
+}
+
+.inventory-slot-line {
+    display: flex;
+    flex-direction: row;
+    width: 435px;
+}
+
+.inventory-slot {
+    background-color: #8b8b8b;
+    box-sizing: border-box;
+
+    background-image: url('../src/textures/guis/slot/inventory-slot.png');
+}
+
+.inventory-slot .slot-item {
+    width: 48px;
+    height: 48px;
+}
+
+/* Inventory Category */
+
+#inventory-categories {
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: 14px;
+}
+
+.inventory-category {
+    margin-left: 10px;
+    width: 60px;
+    height: 60px;
+    background-color: #8b8b8b;
+    background-image: url('../src/textures/guis/slot/inventory-slot-category.png');
+}
+
+
+/*************************************/
+/* Slot */
+
+.slot {
+    position: relative;
+    display: grid;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    align-items: center;
+    image-rendering: pixelated;
+}
+
+.slot .slot-item,
+.inventory-category {
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    cursor: pointer;
+}

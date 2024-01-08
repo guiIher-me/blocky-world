@@ -1,0 +1,22 @@
+{
+  "name": "react-testes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "esbuild --bundle src/main.jsx --minify --outfile=./public/js/main.js --servedir=./public/ --watch",
+    "build": "esbuild --bundle src/main.jsx --minify --outfile=./public/js/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@emotion/styled": "^11.11.0",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "esbuild": "^0.19.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "uuid": "^9.0.1"
+  }
+}
