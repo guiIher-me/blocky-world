@@ -474,13 +474,19 @@ nav.navigation {
 .inventory-slot {
     background-color: #8b8b8b;
     box-sizing: border-box;
-
-    background-image: url('../src/textures/guis/slot/inventory-slot.png');
+    /* background-image: url('../src/textures/guis/slot/inventory-slot.png'); */
+    border: 3px solid;
+    border-color: #373737 #fff #fff #373737;
 }
 
 .inventory-slot .slot-item {
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
+}
+
+/* Hover */
+.inventory-slot > .slot-item:hover {
+    background-color: #b2b2b2;
 }
 
 /* Inventory Category */
@@ -502,6 +508,14 @@ nav.navigation {
 
 .inventory-category img {
     padding: 12px;
+}
+
+.inventory-category > img:hover {
+    background-size: cover;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    user-select: none;
+    background-image: url('../src/textures/guis/slot/inventory-slot-category--hover.png');
 }
 
 
