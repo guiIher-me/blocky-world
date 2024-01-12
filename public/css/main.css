@@ -500,6 +500,10 @@ nav.navigation {
     background-image: url('../src/textures/guis/slot/inventory-slot-category.png');
 }
 
+.inventory-category img {
+    padding: 12px;
+}
+
 
 /*************************************/
 /* Slot */

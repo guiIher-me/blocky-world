@@ -19,7 +19,7 @@ export default class Footer extends Component {
         return (
             <div id="footerbar-container" className={ actions.view360.value == true ? 'hidden' : '' }>
                 <Hotbar changeActiveBlock={actions.changeActiveBlock}></Hotbar>
-                <MCButtonImg btnid="btn-inventory" title="go to inventory" src="./src/textures/icons/chest--icon.png" onClick={actions.openInventory}></MCButtonImg>
+                <MCButtonImg btnid="btn-inventory" title="open inventory" src="./src/textures/icons/chest--icon.png" onClick={actions.openInventory}></MCButtonImg>
             </div>
         );
     }

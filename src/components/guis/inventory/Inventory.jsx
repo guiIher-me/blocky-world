@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import listeners from "../../../listeners";
+import ItemCategories from "../../../ItemCategories";
 
 export default class Inventory extends Component {
 
@@ -28,13 +29,13 @@ export default class Inventory extends Component {
                     <div id="inventory">
 
                         <div id="inventory-categories">
-                            <div className="inventory-category">
-                                
-                            </div>
-
-                            <div className="inventory-category">
-                                
-                            </div>
+                            {Object.values(ItemCategories).map((ItemCategory) => {
+                                return (
+                                    <div className="inventory-category">
+                                        <img src={ItemCategory.getIllustration()} title={ItemCategory.getTitle()}></img>
+                                    </div>
+                                )
+                            })}
                         </div>
 
                         <div className="inventory-slot-grid">
