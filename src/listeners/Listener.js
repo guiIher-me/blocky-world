@@ -16,7 +16,7 @@ export default class Listener {
     }
 
     notify(event) {
-        throw new Error(`[Listener] Not implemented method notify !`);
+        throw new Error(`[Listener] Not implemented 'notify' method!`);
     }
 
 }

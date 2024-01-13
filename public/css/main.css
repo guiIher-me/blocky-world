@@ -465,7 +465,7 @@ nav.navigation {
     margin-left: 20px;
 }
 
-.inventory-selected-slot-line {
+.inventory-selected-container {
     margin-left: 21px;
     bottom: 20px;
     position: absolute;

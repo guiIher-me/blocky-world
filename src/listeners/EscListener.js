@@ -10,7 +10,6 @@ export default class EscListener extends Listener {
     notify(event) {
         if (event.key === 'Escape')
             Object.entries(this.subs).forEach(([key, fnCallback]) => {
-                console.log(`notifying ${key}...`);
                 fnCallback(event);
             });
     }

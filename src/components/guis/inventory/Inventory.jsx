@@ -15,6 +15,7 @@ export default class Inventory extends Component {
 
         this.changeDragItem = this.changeDragItem.bind(this);
         this.changeDroppedSlot = this.changeDroppedSlot.bind(this);
+        // this.closeInventoryByClick = this.closeInventoryByClick.bind(this);
     }
 
     changeDragItem(block) {
@@ -29,6 +30,12 @@ export default class Inventory extends Component {
         if (activeCategoryKey !== this.state.activeCategoryKey) {
             this.setState({ activeCategoryKey });
             event.preventDefault();
+        }
+    }
+
+    closeInventoryByClick(event, containerId) {
+        if (event.target.id === containerId) {
+            this.props.actions.close(event);
         }
     }
 
@@ -52,7 +59,7 @@ export default class Inventory extends Component {
 
         const { actions } = this.props;
         { return (
-                <div id="inventory-container" className={actions.opened ? '' : 'removed'}>
+                <div id="inventory-container" className={actions.opened ? '' : 'removed'} onClick={(event) => this.closeInventoryByClick(event, "inventory-container")}>
                     <div id="inventory">
 
                         <div id="inventory-categories">
@@ -77,7 +84,7 @@ export default class Inventory extends Component {
 
 
 
-                        <div className="inventory-selected-slot-line">
+                        <div className="inventory-selected-container">
 
                             <div className="inventory-slot-grid">
 
@@ -91,14 +98,6 @@ export default class Inventory extends Component {
                                     }}></InventorySelectSlot>
                                 )}
 
-                                {/*
-                                <InventorySelectSlot id="2" drag={{
-                                        slotid: this.state.draggedSelectSlot,
-                                        item: this.state.draggItem,
-                                        droppedSelectSlot: this.state.droppedSelectSlot,
-                                        changeItem: this.changeDragItem,
-                                        changeDroppedSlot: this.changeDroppedSlot
-                                }}></InventorySelectSlot> */}
                             </div>
 
                         </div>
