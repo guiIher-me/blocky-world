@@ -89,7 +89,6 @@ export default class WorldComponent extends Component {
         return (
             <div id={`${WORLD_ID}`} style={world_style} className={classes}>{
 
-                /*
                 Object.values(this.state).map(({randomkey, position, block, states}) => {
                     const {x, y, z} = BlockUtil.getCoord(position);
                     const key = `${x},${y},${z}`;
@@ -106,7 +105,7 @@ export default class WorldComponent extends Component {
                             deleteBlock: this.deleteBlock
                         }}>
                     </BlockComponent>
-                }) */
+                })
 
             }</div>
         )

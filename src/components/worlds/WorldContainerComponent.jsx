@@ -113,13 +113,13 @@ export default class WorldContainerComponent extends Component {
         const mouseDown = (event) => { this.setState({clicking: true}); }
 
         const mouseMove = (event) => {
-            if (!this.state.clicking) return;
-        
-            const { movementX } = event;
-            if (movementX == 0) return;
+            if (!this.state.clicking || 
+                (!["world", "world-container", "footerbar-container"].includes(event.target.id)) ||
+                event.movementX == 0)
+                    return;
         
             this.setState((prevState) => ({
-                worldRotateY: prevState.worldRotateY + movementX,
+                worldRotateY: prevState.worldRotateY + event.movementX,
             }));
         }
 

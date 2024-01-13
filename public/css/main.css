@@ -12,11 +12,11 @@
 
 @keyframes horizontal-rotate-camera {
     from {
-        transform: rotateX(335deg) rotateY(0deg);
+        transform: rotateX(335deg) rotateY(360deg);
     }
 
     to {
-        transform: rotateX(335deg) rotateY(360deg);
+        transform: rotateX(335deg) rotateY(0deg);
     }
 }
 
