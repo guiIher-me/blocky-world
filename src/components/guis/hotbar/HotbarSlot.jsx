@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import Block from '../../../blocks/Block';
 import SlotItem from './SlotItem';
-import BlockUtil from '../../blocks/util/BlockUtil';
 
 export default class HotbarSlot extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            block: BlockUtil.getRandomBlock()
+            block: null
         }
 
         this.selectSlot = this.selectSlot.bind(this);

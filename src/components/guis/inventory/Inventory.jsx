@@ -80,20 +80,25 @@ export default class Inventory extends Component {
                         <div className="inventory-selected-slot-line">
 
                             <div className="inventory-slot-grid">
-                                <InventorySelectSlot id="1" drag={{
-                                        slotid: this.state.draggedSelectSlot,
-                                        item: this.state.draggItem,
-                                        droppedSelectSlot: this.state.droppedSelectSlot,
-                                        changeItem: this.changeDragItem,
-                                        changeDroppedSlot: this.changeDroppedSlot
-                                }}></InventorySelectSlot>
+
+                                {[...Array(9)].map((x, i) =>
+                                    <InventorySelectSlot id={i+1} drag={{
+                                            slotid: this.state.draggedSelectSlot,
+                                            item: this.state.draggItem,
+                                            droppedSelectSlot: this.state.droppedSelectSlot,
+                                            changeItem: this.changeDragItem,
+                                            changeDroppedSlot: this.changeDroppedSlot
+                                    }}></InventorySelectSlot>
+                                )}
+
+                                {/*
                                 <InventorySelectSlot id="2" drag={{
                                         slotid: this.state.draggedSelectSlot,
                                         item: this.state.draggItem,
                                         droppedSelectSlot: this.state.droppedSelectSlot,
                                         changeItem: this.changeDragItem,
                                         changeDroppedSlot: this.changeDroppedSlot
-                                }}></InventorySelectSlot>
+                                }}></InventorySelectSlot> */}
                             </div>
 
                         </div>
