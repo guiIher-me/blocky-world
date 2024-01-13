@@ -218,6 +218,7 @@ nav.navigation {
     padding: 10px 20px;
     outline: none;
     outline-width: 0;
+    margin: 0 3px;
 }
 
 .mc-input::placeholder,
@@ -532,7 +533,7 @@ nav.navigation {
     background-image: url('../src/textures/guis/slot/inventory-slot-category--hover.png');
 }
 
-.inventory-category .inventory-category--active {
+.inventory-category.inventory-category--active {
     background-image: url('../src/textures/guis/slot/inventory-slot-category--active.png') !important;
 }
 

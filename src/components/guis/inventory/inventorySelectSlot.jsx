@@ -16,6 +16,11 @@ export default class InventorySelectSlot extends Component {
             dragClone: null,
         }
     }
+
+    changeBlock(block) {
+        this.setState({block});
+        this.props.changeItem(this.props.id, block);
+    }
     
     createDragClone(event) {
         const original = event.target;
@@ -45,7 +50,7 @@ export default class InventorySelectSlot extends Component {
 
     // start dragging me
     onDragStart(event) {
-        this.props.drag.changeItem(this.state.block, this.props.id);
+        this.props.drag.changeDragItem(this.state.block, this.props.id);
         this.createDragClone(event);
     }
 
@@ -61,7 +66,7 @@ export default class InventorySelectSlot extends Component {
         this.props.drag.changeDroppedSlot(this.props.id);
 
         if (this.state.block == null)
-            this.setState({block});
+            this.changeBlock(block)
     }
 
     // end dragging me
@@ -69,9 +74,9 @@ export default class InventorySelectSlot extends Component {
         this.deleteDragClone(event);
 
         if (this.props.drag.droppedSelectSlot !== this.props.id)
-            this.setState({block: null});
+            this.changeBlock(null);
 
-        this.props.drag.changeItem(null);
+        this.props.drag.changeDragItem(null);
         this.props.drag.changeDroppedSlot(null);
     }
 

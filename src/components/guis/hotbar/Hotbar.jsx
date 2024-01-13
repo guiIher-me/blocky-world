@@ -41,7 +41,8 @@ export default class Hotbar extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return this.state.activeSlot !== nextState.activeSlot;
+        return this.state.activeSlot !== nextState.activeSlot ||
+               this.state.slots !== nextProps.slots;
     }
 
     render() {
@@ -50,11 +51,12 @@ export default class Hotbar extends Component {
 
                 {[...Array(config.HOTBAR_SLOTS)].map((x, i) =>
                     <HotbarSlot number={i+1}
+                                item={this.props.slots[`slot-${i+1}`]}
                                 active={this.state.activeSlot}
                                 changeActiveSlot={this.changeActiveSlot}>            
                     </HotbarSlot>
                 )}
-
+                
             </div>
         )
     }

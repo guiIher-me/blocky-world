@@ -10,15 +10,16 @@ export default class Footer extends Component {
     
     shouldComponentUpdate(nextProps, nextState) {
         const {actions} = this.props;
-        return actions.view360.value !== nextProps.actions.view360.value;
+        return actions.view360.value !== nextProps.actions.view360.value ||
+               this.props.slots !== nextProps.slots;
     }
 
     render() {
-        const { actions } = this.props;
+        const { slots, actions } = this.props;
 
         return (
             <div id="footerbar-container" className={ actions.view360.value == true ? 'hidden' : '' }>
-                <Hotbar changeActiveBlock={actions.changeActiveBlock}></Hotbar>
+                <Hotbar slots={slots} changeActiveBlock={actions.changeActiveBlock}></Hotbar>
                 <MCButtonImg btnid="btn-inventory" title="open inventory" src="./src/textures/icons/chest--icon.png" onClick={actions.openInventory}></MCButtonImg>
             </div>
         );

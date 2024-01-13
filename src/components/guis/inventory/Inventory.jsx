@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import listeners from "../../../listeners";
 import ItemCategories from "../../../ItemCategories";
 import InventorySelectSlot from "./inventorySelectSlot";
+import InventorySlot from "./InventorySlot";
 
 export default class Inventory extends Component {
 
@@ -15,7 +16,6 @@ export default class Inventory extends Component {
 
         this.changeDragItem = this.changeDragItem.bind(this);
         this.changeDroppedSlot = this.changeDroppedSlot.bind(this);
-        // this.closeInventoryByClick = this.closeInventoryByClick.bind(this);
     }
 
     changeDragItem(block) {
@@ -55,7 +55,6 @@ export default class Inventory extends Component {
     }
 
     render() {
-        console.log('rendering inventory');
 
         const { actions } = this.props;
         { return (
@@ -76,7 +75,7 @@ export default class Inventory extends Component {
 
                             <div className="inventory-slot-grid">
                                 {ItemCategories[this.state.activeCategoryKey].getItems().map((block) => {
-                                    return <div className="slot inventory-slot"><div className="slot-item" draggable="true" onDragStart={(event) => this.changeDragItem(block)} style={{backgroundImage: `url('${block.getItem().getTexture()}')`}}></div></div>
+                                    return <InventorySlot block={block} changeDragItem={this.changeDragItem}></InventorySlot>
                                 })}
                             </div>
 
@@ -89,15 +88,21 @@ export default class Inventory extends Component {
                             <div className="inventory-slot-grid">
 
                                 {[...Array(9)].map((x, i) =>
-                                    <InventorySelectSlot id={i+1} drag={{
+                                    <InventorySelectSlot
+                                        id={i+1}
+
+                                        drag={{
                                             slotid: this.state.draggedSelectSlot,
                                             item: this.state.draggItem,
                                             droppedSelectSlot: this.state.droppedSelectSlot,
-                                            changeItem: this.changeDragItem,
+                                            changeDragItem: this.changeDragItem,
                                             changeDroppedSlot: this.changeDroppedSlot
-                                    }}></InventorySelectSlot>
+                                        }}
+                                        
+                                        changeItem={this.props.actions.changeSlot}
+                                    >
+                                    </InventorySelectSlot>
                                 )}
-
                             </div>
 
                         </div>

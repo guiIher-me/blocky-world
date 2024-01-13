@@ -18,10 +18,22 @@ export default class WorldContainerComponent extends Component {
             activeSlotBlock: null,
             worldName: "Ancient Castle",
             viewmode: false,
-            inventoryOpened: false
+            inventoryOpened: false,
+            selectSlotsBlock: {
+                "slot-1": null,
+                "slot-2": null,
+                "slot-3": null,
+                "slot-4": null,
+                "slot-5": null,
+                "slot-6": null,
+                "slot-7": null,
+                "slot-8": null,
+                "slot-9": null
+            }
         }
         
         this.changeActiveBlock = this.changeActiveBlock.bind(this);
+        this.changeSelectSlotsBlock = this.changeSelectSlotsBlock.bind(this);
         this.updateWorldName = this.updateWorldName.bind(this);
         this.view360On = this.view360On.bind(this);
         this.view360Off = this.view360Off.bind(this);
@@ -31,6 +43,13 @@ export default class WorldContainerComponent extends Component {
 
     changeActiveBlock(block) {
         this.setState({activeSlotBlock: block});
+    }
+
+    changeSelectSlotsBlock(slotid, block) {
+        this.setState({selectSlotsBlock: {
+            ...this.state.selectSlotsBlock,
+            [`slot-${slotid}`]: block
+        }});
     }
 
     save(event) {
@@ -45,7 +64,6 @@ export default class WorldContainerComponent extends Component {
 
     openInventory(event) {
         if (this.state.inventoryOpened == false) {
-            console.log("opening inventory...");
             this.setState({ inventoryOpened: true });
             event.preventDefault();
         }
@@ -53,7 +71,6 @@ export default class WorldContainerComponent extends Component {
 
     closeInventory(event) {
         if (this.state.inventoryOpened == true) {
-            console.log("close inventory...");
             this.setState({ inventoryOpened: false });
             event.preventDefault();
         }
@@ -126,12 +143,13 @@ export default class WorldContainerComponent extends Component {
                     >
                 </WorldComponent>
 
-                <Footer actions={{changeActiveBlock: this.changeActiveBlock,
+                <Footer slots={this.state.selectSlotsBlock}
+                        actions={{changeActiveBlock: this.changeActiveBlock,
                                   openInventory: this.openInventory,
                                   view360: {value: this.state.viewmode}}}>
                 </Footer>
 
-                <Inventory actions={{open: this.openInventory, close: this.closeInventory, opened: this.state.inventoryOpened}}></Inventory>
+                <Inventory actions={{changeSlot: this.changeSelectSlotsBlock, open: this.openInventory, close: this.closeInventory, opened: this.state.inventoryOpened}}></Inventory>
             </div>
         )
 
