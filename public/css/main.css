@@ -135,6 +135,11 @@ body {
     visibility: hidden !important;
 }
 
+.transparent {
+    opacity: 0;
+}
+
+
 /*************************************/
 /* Navigation */
 
@@ -455,18 +460,20 @@ nav.navigation {
     user-select: none;
 }
 
-.inventory-slot-grid {
+.inventory-slot-container {
     margin-top: 58px;
     margin-left: 20px;
 }
 
 .inventory-selected-slot-line {
-    margin-top: 12px;
     margin-left: 21px;
+    bottom: 20px;
+    position: absolute;
 }
 
-.inventory-slot-line {
+.inventory-slot-grid {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     width: 435px;
 }
@@ -474,7 +481,6 @@ nav.navigation {
 .inventory-slot {
     background-color: #8b8b8b;
     box-sizing: border-box;
-    /* background-image: url('../src/textures/guis/slot/inventory-slot.png'); */
     border: 3px solid;
     border-color: #373737 #fff #fff #373737;
 }
@@ -484,9 +490,17 @@ nav.navigation {
     height: 42px;
 }
 
+.inventory-slot .slot-item--dragged {
+    opacity: 1;
+    position: absolute;
+    pointer-events: none;
+    z-index: 1000;
+}
+
 /* Hover */
-.inventory-slot > .slot-item:hover {
-    background-color: #b2b2b2;
+.inventory-slot > .slot-item:hover,
+.inventory-slot > .slot-item--hover {
+    background-color: #b1b1b1;
 }
 
 /* Inventory Category */
@@ -516,6 +530,10 @@ nav.navigation {
     image-rendering: pixelated;
     user-select: none;
     background-image: url('../src/textures/guis/slot/inventory-slot-category--hover.png');
+}
+
+.inventory-category .inventory-category--active {
+    background-image: url('../src/textures/guis/slot/inventory-slot-category--active.png') !important;
 }
 
 
