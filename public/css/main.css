@@ -452,7 +452,6 @@ nav.navigation {
     justify-self: center;
     width: 520px;
     height: 437px;
-    background-color: #c6c6c6;
     background-image: url('../src/textures/guis/inventory-gui.png');
     background-position: center;
     background-size: cover;
