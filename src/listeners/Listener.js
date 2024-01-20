@@ -19,6 +19,7 @@ export default class Listener {
         return this.subs;
     }
 
+    // eslint-disable-next-line no-unused-vars
     notify(event) {
         throw new Error(`[Listener] Not implemented 'notify' method!`);
     }

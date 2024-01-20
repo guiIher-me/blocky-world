@@ -116,9 +116,9 @@ export default class WorldContainerComponent extends Component {
     }
 
     render() {
-        const mouseUp = (event) => { this.setState({clicking: false}); }
+        const mouseUp = () => { this.setState({clicking: false}); }
 
-        const mouseDown = (event) => { this.setState({clicking: true}); }
+        const mouseDown = () => { this.setState({clicking: true}); }
 
         const mouseMove = (event) => {
             if (!this.state.clicking ||

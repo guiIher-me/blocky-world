@@ -8,7 +8,7 @@ export default class EscListener extends KeyUpListener {
 
     notify(event) {
         if (event.key === 'Escape')
-            Object.entries(this.subs).forEach(([key, fnCallback]) => {
+            Object.entries(this.subs).forEach(([ , fnCallback]) => {
                 fnCallback(event);
             });
     }

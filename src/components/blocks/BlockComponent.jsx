@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
 import BlockFaces from './faces/BlockFaces';
 import BlockUtil from './util/BlockUtil';
+import PropTypes from 'prop-types';
 
 export default class BlockComponent extends Component {
+
+    static propTypes = {
+        position: PropTypes.string.isRequired,
+        block: PropTypes.string.isRequired,
+        blockstates: PropTypes.object,
+        actions: PropTypes.object.isRequired,
+        active: PropTypes.bool.isRequired
+    }
 
     constructor(props) {
         super(props);
     }
 
+    // eslint-disable-next-line no-unused-vars
     shouldComponentUpdate(nextProps, nextState) {
         return (this.props.active == true && nextProps.active == false)
     }
@@ -21,10 +31,7 @@ export default class BlockComponent extends Component {
         const styles_blockstates = BlockUtil.getStylesFromStates(block, blockstates);
         const style = BlockUtil.prepareStyle([style_coord, ...styles_blockstates]);
         
-        const infoBlock = (event) => {
-            console.log(`${name}: {${x}, ${y}, ${z}}`);
-        }
-        
+       
         const deleteBlock = async (event) => {
             actions.deleteBlock({x, y, z});
             event.preventDefault();

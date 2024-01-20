@@ -1,8 +1,17 @@
 import React, { PureComponent } from 'react';
 import styled from '@emotion/styled';
 import WorldUtil from '../../worlds/WorldUtil';
+import PropTypes from 'prop-types';
 
 export default class BlockFace extends PureComponent {
+
+    static propTypes = {
+        face: PropTypes.string,
+        coord: PropTypes.object,
+        actions: PropTypes.object.isRequired,
+        blockname: PropTypes.string,
+        texture: PropTypes.string
+    }
 
     constructor(props) {
         super(props);

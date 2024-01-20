@@ -2,8 +2,15 @@ import React, { Component } from "react";
 import MCButton from "../action/MCButton";
 import MCInput from "../action/MCInput";
 import listeners from "../../listeners/";
+import PropTypes from 'prop-types';
+
 
 export default class Navigation extends Component {
+
+    static propTypes = {
+        worldName: PropTypes.string.isRequired,
+        actions: PropTypes.object.isRequired,
+    }
 
     constructor(props) {
         super(props);
@@ -17,6 +24,7 @@ export default class Navigation extends Component {
         listeners.SaveListener.unsubscribe("navigation");
     }
 
+    // eslint-disable-next-line no-unused-vars
     shouldComponentUpdate(nextProps, nextState) {
         const {actions} = this.props;
         return actions.view360.value !== nextProps.actions.view360.value;

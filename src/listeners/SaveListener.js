@@ -9,7 +9,7 @@ export default class SaveListener extends KeyDownListener {
 
     notify(event) {
         if (event.ctrlKey && event.key === 's') {
-            Object.entries(this.subs).forEach(([key, fnCallback]) => {
+            Object.entries(this.subs).forEach(([ , fnCallback]) => {
                 fnCallback(event);
             });
             

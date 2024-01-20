@@ -5,8 +5,15 @@ import BlockComponent from '../blocks/BlockComponent';
 import BlockUtil from '../blocks/util/BlockUtil';
 import WorldUtil from './WorldUtil';
 import { v4 as uuidv4 } from 'uuid';
+import PropTypes from 'prop-types';
 
 export default class WorldComponent extends Component {
+
+    static propTypes = {
+        activeSlotBlock: PropTypes.object.isRequired,
+        rotateY: PropTypes.number.isRequired,
+        classes: PropTypes.string
+    }
 
     constructor(props) {
         super(props);

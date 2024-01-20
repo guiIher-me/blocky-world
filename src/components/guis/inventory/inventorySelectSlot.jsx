@@ -1,6 +1,14 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 
 export default class InventorySelectSlot extends Component {
+
+    static propTypes = {
+        id: PropTypes.string.isRequired,
+        block: PropTypes.object.isRequired,
+        changeItem: PropTypes.func.isRequired,
+        drag: PropTypes.object.isRequired,
+    }
 
     constructor(props) {
         super(props);

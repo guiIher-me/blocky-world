@@ -1,6 +1,15 @@
-import React, { Component, PureComponent } from "react";
+import React, { PureComponent } from "react";
+import PropTypes from 'prop-types';
 
 export default class MCInput extends PureComponent {
+
+    static propTypes = {
+        name: PropTypes.string,
+        value: PropTypes.string,
+        classes: PropTypes.string,
+        placeholder: PropTypes.string,
+        onFocusOut: PropTypes.func
+    }
 
     constructor(props) {
         super(props);
@@ -21,14 +30,13 @@ export default class MCInput extends PureComponent {
 
     notifyChanges(event) {
         const { onFocusOut } = this.props;
-
         onFocusOut(event, this.state.text);
     }
 
     render() {
-        const { name="", value="", classes="", placeholder="" } = this.props;
+        const { name = "", value = "", classes = "", placeholder = "" } = this.props;
         return <input type="text" name={name} className={`mc-input ${classes}`}
-                      autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                      autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"
                       onBlur={this.notifyChanges}
                       defaultValue={value}
                       placeholder={placeholder}

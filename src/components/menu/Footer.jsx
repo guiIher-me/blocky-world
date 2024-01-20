@@ -1,15 +1,22 @@
 import React, { Component } from "react";
 import Hotbar from "../guis/hotbar/Hotbar";
 import MCButtonImg from "../action/MCButtonImg";
+import PropTypes from 'prop-types';
 
 export default class Footer extends Component {
+
+    static propTypes = {
+        actions: PropTypes.object.isRequired,
+        slots: PropTypes.array.isRequired
+    }
 
     constructor(props) {
         super(props);
     }
     
+    // eslint-disable-next-line no-unused-vars
     shouldComponentUpdate(nextProps, nextState) {
-        const {actions} = this.props;
+        const { actions } = this.props;
         return actions.view360.value !== nextProps.actions.view360.value ||
                this.props.slots !== nextProps.slots;
     }

@@ -8,7 +8,7 @@ export default class BlockStateFacing extends BlockState {
         super(STATE_NAME, [true, false], false);
     }
 
-    getStyle(state = defaultValue) {
+    getStyle(state = this.defaultValue) {
         this.assert(state);
 
         const styles = {

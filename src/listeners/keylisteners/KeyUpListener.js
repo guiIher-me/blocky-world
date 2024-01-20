@@ -8,7 +8,7 @@ export default class KeyUpListener extends Listener {
     }
 
     notify(event) {
-        Object.entries(this.subs).forEach(([key, fnCallback]) => {
+        Object.entries(this.subs).forEach(([ , fnCallback]) => {
             fnCallback(event);
         });
     }

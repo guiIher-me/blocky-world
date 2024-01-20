@@ -1,7 +1,5 @@
 import B from "./Blocks";
-import ItemCategories from "./ItemCategories";
 import App from "./components/worlds/App";
-import D from "./direction/directionEnum";
 
 const blockpositions = [
     

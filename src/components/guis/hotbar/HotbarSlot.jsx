@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
 import Block from '../../../blocks/Block';
 import SlotItem from './SlotItem';
+import PropTypes from 'prop-types';
 
 export default class HotbarSlot extends Component {
+
+    static propTypes = {
+        item: PropTypes.object.isRequired,
+        number: PropTypes.number.isRequired,
+        active: PropTypes.string.isRequired,
+        changeActiveSlot: PropTypes.func.isRequired,
+    }
 
     constructor(props) {
         super(props);
         this.state = {
             block: props.item
-        }
+        };
 
         this.selectSlot = this.selectSlot.bind(this);
     }
@@ -28,6 +36,7 @@ export default class HotbarSlot extends Component {
             changeActiveSlot({ activeBlock: this.props.item });
     }
 
+    // eslint-disable-next-line no-unused-vars
     shouldComponentUpdate(nextProps, nextState) {
         const { number } = this.props;
         const newActive = nextProps.active;
@@ -42,8 +51,8 @@ export default class HotbarSlot extends Component {
         this.updateActiveSlotBlock();
 
         return (
-            <div id={`hotbar-slot-${number}`} onClick={this.selectSlot} className={`slot hotbar-slot ${active == number ? 'hotbar-slot--active' : ''}`}>
-                {this.hasBlock() && <SlotItem item={this.props.item.getItem()}></SlotItem>}
+            <div id={`hotbar-slot-${ number }`} onClick={this.selectSlot} className={ `slot hotbar-slot ${ active == number ? 'hotbar-slot--active' : '' }`}>
+                { this.hasBlock() && <SlotItem item={ item.getItem() }></SlotItem> }
             </div>
         )
     }

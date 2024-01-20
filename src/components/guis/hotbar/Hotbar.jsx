@@ -1,22 +1,29 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import HotbarSlot from "./HotbarSlot";
 import config from '../../../config';
 import listeners from '../../../listeners';
+import { v4 as uuidv4 } from 'uuid';
+import PropTypes from 'prop-types';
 
 export default class Hotbar extends Component {
 
+    static propTypes = {
+        position: PropTypes.string.isRequired,
+        changeActiveBlock: PropTypes.func.isRequired,
+        slots: PropTypes.array.isRequired
+    }
+
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             activeSlot: 1
-        }
-
+        };
         this.changeActiveSlot = this.changeActiveSlot.bind(this);
         this.onNumberKeyPress = this.onNumberKeyPress.bind(this);
     }
 
     isValidSlot(number) {
-        return number >= 1 && number <= config.HOTBAR_SLOTS
+        return number >= 1 && number <= config.HOTBAR_SLOTS;
     }
 
     changeActiveSlot({ activeNumber = null, activeBlock = null }) {
@@ -50,7 +57,8 @@ export default class Hotbar extends Component {
             <div id="hotbar">
 
                 {[...Array(config.HOTBAR_SLOTS)].map((x, i) =>
-                    <HotbarSlot number={i+1}
+                    <HotbarSlot key={uuidv4()}
+                                number={i+1}
                                 item={this.props.slots[`slot-${i+1}`]}
                                 active={this.state.activeSlot}
                                 changeActiveSlot={this.changeActiveSlot}>            
@@ -58,7 +66,7 @@ export default class Hotbar extends Component {
                 )}
                 
             </div>
-        )
+        );
     }
 
 }

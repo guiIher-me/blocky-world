@@ -18,10 +18,12 @@ export default class KeyPressingListener {
         this.upListener.unsubscribe(id);
     }
 
+    // eslint-disable-next-line no-unused-vars
     notifyDown(event) {
         throw new Error(`[Listener] Not implemented 'notifyDown' method!`);
     }
 
+    // eslint-disable-next-line no-unused-vars
     notifyUp(event) {
         throw new Error(`[Listener] Not implemented 'notifyUp' method!`);
     }

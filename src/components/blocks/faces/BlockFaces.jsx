@@ -1,26 +1,40 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import blockModelFactory from '../../../blocks/models/blockModelFactory';
 import BlockFace from './BlockFace';
 import blockTemplateEnum from '../../../blocks/models/blockTemplateEnum';
-
 import { v4 as uuidv4 } from 'uuid';
+import PropTypes from 'prop-types';
 
-export default ({block, coord, actions}) => {
-    const blockname = block.getName();
-    const {template, faces} = blockModelFactory(block);
+export default class BlockFaces extends PureComponent {
 
-    const neighbors = actions.getNeighbors(coord);
+    static propTypes = {
+        block: PropTypes.object.isRequired,
+        coord: PropTypes.object.isRequired,
+        actions: PropTypes.object.isRequired,
+    }
+    
+    constructor() {
+        super();
+    }
 
-    if (template == blockTemplateEnum.normal)
-        var blockfaces = Object.entries(faces).map(([face, texture]) => {
-            return neighbors[face].isTransparent() &&
-                   <BlockFace key={uuidv4()} face={face} coord={coord} blockname={blockname} actions={actions} texture={`${texture}`} />
-        });
+    render() {
+        const { block, coord, actions } = this.props;
+        const blockname = block.getName();
+        const {template, faces} = blockModelFactory(block);
 
-    else
-        var blockfaces = Object.entries(faces).map(([face, texture]) => {
-            return <BlockFace key={uuidv4()} face={face} coord={coord} blockname={blockname} actions={actions} texture={`${texture}`} />
-        });
-        
-    return <div className={`faces faces-${template}`}>{ blockfaces }</div>;
+        const neighbors = actions.getNeighbors(coord);
+
+        var blockfaces;
+        if (template == blockTemplateEnum.normal)
+            blockfaces = Object.entries(faces).map(([face, texture]) => {
+                return neighbors[face].isTransparent() &&
+                    <BlockFace key={ uuidv4()} face={face} coord={coord} blockname={blockname} actions={actions} texture={`${texture}` } />
+            });
+        else
+            blockfaces = Object.entries(faces).map(([face, texture]) => {
+                return <BlockFace key={ uuidv4()} face={face} coord={coord} blockname={blockname} actions={actions} texture={`${texture}` } />
+            });
+            
+        return <div className={ `faces faces-${template}` }>{ blockfaces }</div>;
+    }    
 }

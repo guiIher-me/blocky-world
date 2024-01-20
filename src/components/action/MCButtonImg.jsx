@@ -1,12 +1,21 @@
-import React, { Component, PureComponent } from "react";
+import React, { PureComponent } from "react";
 import Button from "./Button";
+import PropTypes from 'prop-types';
 
 export default class MCButtonImg extends PureComponent {
+
+    static propTypes = {
+        btnid: PropTypes.string,
+        src: PropTypes.string,
+        title: PropTypes.string,
+        onClick: PropTypes.func.isRequired
+    }
 
     constructor(props) {
         super(props);
     }
 
+    // eslint-disable-next-line no-unused-vars
     shouldComponentUpdate(nextProps, nextState) {
         return false;
     }
@@ -14,7 +23,7 @@ export default class MCButtonImg extends PureComponent {
     render() {
         const { btnid, src, title, onClick } = this.props;
         const content = (
-            <div class="title title-img">
+            <div className="title title-img">
                 <img src={src} title={title} />
             </div>
         );
