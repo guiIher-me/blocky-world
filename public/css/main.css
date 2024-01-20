@@ -505,7 +505,7 @@ nav.navigation {
 
 /* Inventory Category */
 
-#inventory-categories {
+#inventory-categories-container {
     display: flex;
     align-items: center;
     position: relative;

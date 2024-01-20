@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import listeners from "../../../listeners";
 import ItemCategories from "../../../ItemCategories";
-import InventorySelectSlot from "./inventorySelectSlot";
-import InventorySlot from "./InventorySlot";
-import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
+import InventorySelectedContainer from "./InventorySelectedContainer";
+import InventorySlotContainer from "./InventorySlotContainer";
+import InventoryCategoriesContainer from "./InventoryCategoriesContainer";
 
 export default class Inventory extends Component {
 
@@ -21,11 +21,14 @@ export default class Inventory extends Component {
         }
 
         this.changeDragItem = this.changeDragItem.bind(this);
+        this.changeActiveCategory = this.changeActiveCategory.bind(this);
         this.changeDroppedSlot = this.changeDroppedSlot.bind(this);
     }
 
     changeDragItem(block) {
-        this.setState({ draggItem: block });
+        console.log("changing item to:");
+        console.log(block);
+        this.setState({ draggedItem: block });
     }
 
     changeDroppedSlot(droppedSelectSlot) {
@@ -56,62 +59,38 @@ export default class Inventory extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         return this.props.actions.opened !== nextProps.actions.opened ||
                this.state.activeCategoryKey !== nextState.activeCategoryKey ||
-               this.state.draggItem !== nextState.draggItem ||
+               this.state.draggedItem !== nextState.draggedItem ||
                this.state.droppedSelectSlot !== nextState.droppedSelectSlot
     }
 
     render() {
+        console.log("rerender inventory");
+
         const { actions } = this.props;
         return (
                 <div id="inventory-container" className={actions.opened ? '' : 'removed'} onClick={(event) => this.closeInventoryByClick(event, "inventory-container")}>
                     <div id="inventory">
 
-                        <div id="inventory-categories">
-                            {Object.entries(ItemCategories).map(([categoryKey, categoryValue]) => {
-                                return (
-                                    <div key={ uuidv4() } className={`inventory-category ${categoryKey == this.state.activeCategoryKey ? 'inventory-category--active' : ''}`}>
-                                        <img src={categoryValue.getIllustration()} title={categoryValue.getTitle()} onClick={(event) => this.changeActiveCategory(categoryKey, event)}></img>
-                                    </div>
-                                )
-                            })}
-                        </div>
+                        <InventoryCategoriesContainer
+                            activeCategoryKey={this.state.activeCategoryKey}
+                            changeActiveCategory={this.changeActiveCategory}
+                        />
+                        
+                        <InventorySlotContainer
+                            activeCategoryKey={this.state.activeCategoryKey}
+                            changeDragItem={this.changeDragItem}
+                        />
 
-
-                        <div className="inventory-slot-container">
-
-                            <div className="inventory-slot-grid">
-                                {ItemCategories[this.state.activeCategoryKey].getItems().map((block) => {
-                                    return <InventorySlot key={ uuidv4() } block={block} changeDragItem={this.changeDragItem}></InventorySlot>
-                                })}
-                            </div>
-
-                        </div>
-
-
-                        <div className="inventory-selected-container">
-
-                            <div className="inventory-slot-grid">
-
-                                {[...Array(9)].map((x, i) =>
-                                    <InventorySelectSlot
-                                        key={ uuidv4() }
-                                        id={ i+1 }
-
-                                        drag={{
-                                            slotid: this.state.draggedSelectSlot,
-                                            item: this.state.draggItem,
-                                            droppedSelectSlot: this.state.droppedSelectSlot,
-                                            changeDragItem: this.changeDragItem,
-                                            changeDroppedSlot: this.changeDroppedSlot
-                                        }}
-                                        
-                                        changeItem={ this.props.actions.changeSlot }
-                                    >
-                                    </InventorySelectSlot>
-                                )}
-                            </div>
-
-                        </div>
+                        <InventorySelectedContainer
+                            draggedSelectSlot={this.state.draggedSelectSlot}
+                            draggedItem={this.state.draggedItem}
+                            droppedSelectSlot={this.state.droppedSelectSlot}
+                            actions={{
+                                changeDragItem: this.changeDragItem,
+                                changeDroppedSlot: this.changeDroppedSlot,
+                                changeSlot: this.props.actions.changeSlot
+                            }}
+                        />
 
                     </div>
                 </div>
