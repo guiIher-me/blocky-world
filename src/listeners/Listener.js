@@ -15,6 +15,10 @@ export default class Listener {
             delete this.subs[id];
     }
 
+    getSubs() {
+        return this.subs;
+    }
+
     notify(event) {
         throw new Error(`[Listener] Not implemented 'notify' method!`);
     }

@@ -1,11 +1,10 @@
 
-import Listener from "./Listener";
+import KeyDownListener from "./keylisteners/KeyDownListener";
 
-export default class SaveListener extends Listener {
+export default class SaveListener extends KeyDownListener {
 
     constructor() {
         super();
-        window.addEventListener("keydown", this.notify.bind(this));
     }
 
     notify(event) {

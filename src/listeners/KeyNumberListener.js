@@ -1,6 +1,6 @@
-import KeyListener from "./KeyListener";
+import KeyPressListener from "./keylisteners/KeyPressListener";
 
-export default class KeyNumberListener extends KeyListener {
+export default class KeyNumberListener extends KeyPressListener {
 
     constructor() {
         super();

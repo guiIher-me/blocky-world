@@ -509,14 +509,13 @@ nav.navigation {
     display: flex;
     align-items: center;
     position: relative;
-    top: 14px;
+    top: 17px;
 }
 
 .inventory-category {
     margin-left: 10px;
     width: 60px;
     height: 60px;
-    background-color: #8b8b8b;
     background-image: url('../src/textures/guis/slot/inventory-slot-category.png');
 }
 

@@ -14,7 +14,10 @@ export default class WorldContainerComponent extends Component {
         super(props); 
         this.state = {
             clicking: false,
+            pressingSpace: false,
             worldRotateY: WORLD_INITIAL_ROTATION_Y,
+            worldPositionTop: 245,
+            worldPositionLeft: 70,
             activeSlotBlock: null,
             worldName: "Ancient Castle",
             viewmode: false,
@@ -84,7 +87,7 @@ export default class WorldContainerComponent extends Component {
     }
 
     view360Off(event) {
-        if(this.state.viewmode == true) {
+        if (this.state.viewmode == true) {
             this.setState({ viewmode: false });
             event.preventDefault();
         }
@@ -97,14 +100,19 @@ export default class WorldContainerComponent extends Component {
 
     componentDidMount() {
         listeners.SaveListener.subscribe("worldcontainer", this.save);
+        listeners.SpacePressingListener.subscribe("worldcontainer", {
+            fnKeyDown: () => this.setState({pressingSpace: true}),
+            fnKeyUp: () => this.setState({pressingSpace: false})
+        });
     }
 
     componentWillUnmount() {
         listeners.SaveListener.unsubscribe("worldcontainer");
+        listeners.SpacePressingListener.unsubscribe("worldcontainer");
     }
 
     componentDidUpdate() {
-        document.title = `${this.state.worldName} | Block World`
+        document.title = `${this.state.worldName} | Blocky World`
     }
 
     render() {
@@ -113,7 +121,8 @@ export default class WorldContainerComponent extends Component {
         const mouseDown = (event) => { this.setState({clicking: true}); }
 
         const mouseMove = (event) => {
-            if (!this.state.clicking || 
+            if (!this.state.clicking ||
+                this.state.pressingSpace || 
                 (!["world", "world-container", "footerbar-container"].includes(event.target.id)) ||
                 event.movementX == 0)
                     return;

@@ -1,10 +1,9 @@
-import Listener from "./Listener";
+import KeyUpListener from "./keylisteners/KeyUpListener";
 
-export default class EscListener extends Listener {
+export default class EscListener extends KeyUpListener {
 
     constructor() {
         super();
-        window.addEventListener("keyup", this.notify.bind(this));
     }
 
     notify(event) {
