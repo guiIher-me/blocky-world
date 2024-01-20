@@ -19,7 +19,6 @@ export default class InventoryCategoriesContainer extends Component {
     }
 
     render() {
-        console.log("rerender categories slots");
         const { activeCategoryKey, changeActiveCategory } = this.props;
 
         return (

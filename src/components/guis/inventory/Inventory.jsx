@@ -26,7 +26,6 @@ export default class Inventory extends Component {
     }
 
     changeDragItem(block) {
-        console.log("changing item to:");
         console.log(block);
         this.setState({ draggedItem: block });
     }
@@ -64,8 +63,6 @@ export default class Inventory extends Component {
     }
 
     render() {
-        console.log("rerender inventory");
-
         const { actions } = this.props;
         return (
                 <div id="inventory-container" className={actions.opened ? '' : 'removed'} onClick={(event) => this.closeInventoryByClick(event, "inventory-container")}>

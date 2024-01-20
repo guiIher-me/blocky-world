@@ -22,8 +22,6 @@ export default class InventorySlotContainer extends Component {
     }
 
     render() {
-        console.log("rerender inventory slots");
-
         const { activeCategoryKey, changeDragItem } = this.props;
 
         return (

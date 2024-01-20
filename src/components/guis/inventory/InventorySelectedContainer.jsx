@@ -22,8 +22,6 @@ export default class InventorySelectedContainer extends Component {
     }
 
     render() {
-        console.log("rerender selected slots");
-
         const { draggedSelectSlot, draggedItem, droppedSelectSlot, actions } = this.props;
 
         return (
