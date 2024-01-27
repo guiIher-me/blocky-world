@@ -178,9 +178,7 @@ export default class WorldContainerComponent extends Component {
         }));
     }
 
-    setRotation(event) {
-        this.setActionAxisByEvent(event);
-            
+    setRotation(event) {            
         if (this.state.world.actionAxis == 'X')
             return this.setRotationX(event.movementX);
         
@@ -188,9 +186,36 @@ export default class WorldContainerComponent extends Component {
             return this.setRotationY((event.movementY * -1.25));
     }
 
-    // eslint-disable-next-line no-unused-vars
+    setMovingX(offset) {
+        this.setState((prevState) => ({
+            world: {
+                ...prevState.world,
+                position: {
+                    ...prevState.world.position,
+                    left: prevState.world.position.left + offset,
+                }
+            }
+        }));
+    }
+
+    setMovingY(offset) {
+        this.setState((prevState) => ({
+            world: {
+                ...prevState.world,
+                position: {
+                    ...prevState.world.position,
+                    top: prevState.world.position.top + offset,
+                }
+            }
+        }));
+    }
+
     setMoving(event) {
-        console.log("setting moving...");
+        if (this.state.world.actionAxis == 'X')
+            return this.setMovingX(event.movementX);
+        
+        if (this.state.world.actionAxis == 'Y')
+            return this.setMovingY((event.movementY));
     }
 
     updateWorldName(event, newWorldName) {
@@ -230,8 +255,14 @@ export default class WorldContainerComponent extends Component {
 
         const mouseMove = (event) => {
             if (!this.isActive(event)) return;
-            if (this.isRotationAction(event)) return this.setRotation(event);
-            if (this.isMovingAction(event)) return this.setMoving(event);
+
+            this.setActionAxisByEvent(event);
+
+            if (this.isRotationAction(event))
+                return this.setRotation(event);
+
+            if (this.isMovingAction(event))
+                return this.setMoving(event);
         }
 
         return (
