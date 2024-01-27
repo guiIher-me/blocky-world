@@ -17,6 +17,7 @@ export default class WorldContainerComponent extends Component {
             pressingSpace: false,
             world: {
                 rotation: {
+                    axis: null,
                     x: WORLD_INITIAL_ROTATION_X,
                     y: WORLD_INITIAL_ROTATION_Y
                 }
@@ -121,7 +122,16 @@ export default class WorldContainerComponent extends Component {
     }
 
     render() {
-        const mouseUp = () => { this.setState({clicking: false}); }
+        const mouseUp = () => {this.setState((prevState) => ({
+                clicking: false,
+                world: {
+                    ...prevState.world,
+                    rotation: {
+                        ...prevState.world.rotation,
+                        axis: null
+                    }
+                }
+        })); }
 
         const mouseDown = () => { this.setState({clicking: true}); }
 
@@ -129,18 +139,43 @@ export default class WorldContainerComponent extends Component {
             if (!this.state.clicking ||
                 this.state.pressingSpace || 
                 (!["world", "world-container", "footerbar-container"].includes(event.target.id)) ||
-                event.movementX == 0)
+                (event.movementX == 0 && event.movementY == 0))
                     return;
-        
-            this.setState((prevState) => ({
-                world: {
-                    ...prevState.world,
-                    rotation: {
-                        ...prevState.world.rotation,
-                        y: prevState.world.rotation.y + event.movementX
+
+            // define rotation axis
+            if (this.state.rotationAxis == null) {
+                const rotationAxis = Math.abs(event.movementY) >= Math.abs(event.movementX) ? 'Y' : 'X';
+                this.setState((prevState) => ({
+                    world: {
+                        ...prevState.world,
+                        rotation: {
+                            ...prevState.world.rotation,
+                            axis: rotationAxis
+                        }
+                }}));
+            }
+            
+            // change world rotation
+            if(this.state.world.rotation.axis == 'X')
+                this.setState((prevState) => ({
+                    world: {
+                        ...prevState.world,
+                        rotation: {
+                            ...prevState.world.rotation,
+                            y: prevState.world.rotation.y + event.movementX
+                        }
                     }
-                },
-            }));
+                }));
+            else if(this.state.world.rotation.axis == 'Y')
+                this.setState((prevState) => ({
+                    world: {
+                        ...prevState.world,
+                        rotation: {
+                            ...prevState.world.rotation,
+                            x: prevState.world.rotation.x + (event.movementY * -1.25),
+                        }
+                    }
+                }));
         }
 
         return (

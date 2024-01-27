@@ -91,7 +91,7 @@ export default class WorldComponent extends Component {
     render() {
         const { rotation, classes } = this.props;
         const { WORLD_ID } = config;
-        const world_style = {transform: `rotateX(338deg) rotateY(${rotation.y}deg)`};
+        const world_style = {transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`};
 
         return (
             <div id={`${WORLD_ID}`} style={world_style} className={classes}>{
