@@ -111,8 +111,8 @@ body {
     display: block;
     width: 100vw;
     height: 100vh;
-    top: 245px;
-    left: 70px;
+    /* top: 245px;
+    left: 70px; */
     transform-style: preserve-3d;
     /* transform: rotateX(338deg) rotateY(220deg); */
     transform-origin: 500px 400px;
@@ -139,6 +139,17 @@ body {
     opacity: 0;
 }
 
+.cursor-pointer {
+    cursor: pointer !important;
+}
+
+.cursor-grab {
+    cursor: grab !important;
+}
+
+.cursor-grabbing {
+    cursor: grabbing !important;
+}
 
 /*************************************/
 /* Navigation */
