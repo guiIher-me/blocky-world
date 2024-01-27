@@ -6,7 +6,7 @@ import Navigation from '../menu/Navigation';
 import Footer from '../menu/Footer';
 import Inventory from '../guis/inventory/Inventory';
 
-const { WORLD_CONTAINER_ID, WORLD_INITIAL_ROTATION_Y } = config;
+const { WORLD_CONTAINER_ID, WORLD_INITIAL_ROTATION_X, WORLD_INITIAL_ROTATION_Y } = config;
 
 export default class WorldContainerComponent extends Component {
 
@@ -15,7 +15,12 @@ export default class WorldContainerComponent extends Component {
         this.state = {
             clicking: false,
             pressingSpace: false,
-            worldRotateY: WORLD_INITIAL_ROTATION_Y,
+            world: {
+                rotation: {
+                    x: WORLD_INITIAL_ROTATION_X,
+                    y: WORLD_INITIAL_ROTATION_Y
+                }
+            },
             worldPositionTop: 245,
             worldPositionLeft: 70,
             activeSlotBlock: null,
@@ -128,7 +133,13 @@ export default class WorldContainerComponent extends Component {
                     return;
         
             this.setState((prevState) => ({
-                worldRotateY: prevState.worldRotateY + event.movementX,
+                world: {
+                    ...prevState.world,
+                    rotation: {
+                        ...prevState.world.rotation,
+                        y: prevState.world.rotation.y + event.movementX
+                    }
+                },
             }));
         }
 
@@ -147,7 +158,7 @@ export default class WorldContainerComponent extends Component {
 
                 <WorldComponent
                     classes={`${ this.state.viewmode ? 'infinite-rotating--animation' : ''}`}
-                    rotateY={this.state.worldRotateY}
+                    rotation={this.state.world.rotation}
                     activeSlotBlock={this.state.activeSlotBlock}
                     >
                 </WorldComponent>
