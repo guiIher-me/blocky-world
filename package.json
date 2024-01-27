@@ -1,27 +1,25 @@
 {
-  "name": "react-testes",
+  "name": "blocky-world",
   "version": "1.0.0",
-  "description": "",
+  "description": "An interactive three-dimensional blocky world inspired by Minecraft",
   "main": "index.js",
   "scripts": {
-    "start": "esbuild --bundle src/main.jsx --minify --outfile=./public/js/main.js --servedir=./public/ --watch",
-    "build": "esbuild --bundle src/main.jsx --minify --outfile=./public/js/main.js"
+    "start": "npm run start-backend & npm run start-frontend",
+    "start-backend": "cd backend && npm start",
+    "start-frontend": "cd frontend && npm start",
+    "build": "npm run build-backend && npm run build-frontend",
+    "build-backend": "cd backend && npm run build",
+    "build-frontend": "cd frontend && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guiIher-me/blocky-world.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@emotion/styled": "^11.11.0",
-    "@types/react": "^18.2.45",
-    "@types/react-dom": "^18.2.18",
-    "esbuild": "^0.19.10",
-    "prop-types": "^15.8.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "uuid": "^9.0.1"
+  "author": "Guilherme Cardoso",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/guiIher-me/blocky-world/issues"
   },
-  "devDependencies": {
-    "eslint": "^8.56.0",
-    "eslint-plugin-react": "^7.33.2"
-  }
+  "homepage": "https://github.com/guiIher-me/blocky-world#readme"
 }
