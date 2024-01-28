@@ -10,11 +10,21 @@ import ItemCat from './ItemCategories';
 
 export default {
     Air: ( new Block('air').setTransparency(true) ),
-    Dirt: ( new BlockNatural('dirt') ),
+
     GrassBlock: ( new BlockNatural('grass-block').setModel(blockModelsEnum.Side)),
+    Dirt: ( new BlockNatural('dirt') ),
     Grass: ( new BlockX('grass') ),
+    Stone: ( new BlockNatural('stone') ),
+    CoalOre: ( new BlockNatural('coal-ore')),
+    IronOre: ( new BlockNatural('iron-ore')),
+    CopperOre: ( new BlockNatural('copper-ore') ),
+    GoldOre: ( new BlockNatural('gold-ore') ),
+    RedstoneOre: ( new BlockNatural('redstone-ore') ),
+    EmeraldOre: ( new BlockNatural('emerald-ore') ),
+    LapisLazuliOre: ( new BlockNatural('lapis-lazuli-ore') ),
+    DiamondOre: ( new Block('diamond-ore', ItemCat.NaturalBlocks) ),
+
     OakPlanks: ( new BlockBuilding('oak-planks') ),
-    Stone: ( new Block('stone', ItemCat.NaturalBlocks) ),
     Cobblestone: ( new BlockBuilding('cobblestone') ),
     Bricks: ( new BlockBuilding('bricks') ),
     StoneBricks: ( new BlockBuilding('stone-bricks') ),
