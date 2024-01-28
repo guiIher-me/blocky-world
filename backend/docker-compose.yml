@@ -1,0 +1,16 @@
+version: '3'
+services:
+  blockyworld-backend-mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    container_name: blockyworld-backend-mongodb
+
+  blockyworld-backend-server:
+    build:
+      context: .
+    ports:
+      - "3001:3001"
+    depends_on:
+      - blockyworld-backend-mongodb
+    container_name: blockyworld-backend-server
