@@ -1,14 +1,9 @@
 const mongoose = require("mongoose");
 
 const worldSchema = new mongoose.Schema({
-  name: String,
-  created_at: {
-    type: Date,
-    default: Date.now,
-  },
-  updated_at: {
-    type: Date,
-    default: Date.now,
+  name: {
+    type: String,
+    trim: true
   },
   rotation: {
     x: {
@@ -74,13 +69,22 @@ const worldSchema = new mongoose.Schema({
       },
     },
   },
-  blockmap: [
-    {
-      position: String,
-      block: String,
-    },
-  ],
-});
+  blockmap: {
+    type: [
+      {
+        position: String,
+        block: String,
+      },
+    ],
+    default: [
+      {
+        position: "0 0 0",
+        block: "grass-block"
+      }
+    ],
+  },
+
+}, { timestamps: true });
 
 const World = mongoose.model("World", worldSchema);
 
