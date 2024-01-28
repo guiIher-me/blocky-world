@@ -2,14 +2,6 @@ const mongoose = require("mongoose");
 
 const worldSchema = new mongoose.Schema({
   name: String,
-  created_at: {
-    type: Date,
-    default: Date.now,
-  },
-  updated_at: {
-    type: Date,
-    default: Date.now,
-  },
   rotation: {
     x: {
       type: Number,
@@ -80,7 +72,7 @@ const worldSchema = new mongoose.Schema({
       block: String,
     },
   ],
-});
+}, { timestamps: true });
 
 const World = mongoose.model("World", worldSchema);
 
