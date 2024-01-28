@@ -1,13 +1,13 @@
 {
   "name": "blocky-world-frontend",
   "version": "1.0.0",
-  "description": "",
+  "description": "An interactive three-dimensional blocky world inspired by Minecraft",
   "main": "index.js",
   "scripts": {
     "start": "esbuild --bundle src/main.jsx --minify --outfile=./public/js/main.js --servedir=./public/ --watch",
     "build": "esbuild --bundle src/main.jsx --minify --outfile=./public/js/main.js"
   },
-  "keywords": [],
+  "keywords": ["minecraft", "blocky-world", "game", "world", "node", "react", "mongo"],
   "author": "",
   "license": "ISC",
   "dependencies": {

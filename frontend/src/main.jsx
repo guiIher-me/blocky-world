@@ -14,8 +14,6 @@ const blockpositions = [
     { position: '19 00 20', block: B.GrassBlock },
 
     // Line 2
-    // { position: '10 02 19', block: B.IronBars, states: { facing: D.south } },
-    // { position: '10 01 19', block: B.IronBars, states: { facing: D.south } },
     { position: '10 00 19', block: B.GrassBlock },
     { position: '11 00 19', block: B.GrassBlock },
     { position: '12 00 19', block: B.GrassBlock },
@@ -784,13 +782,6 @@ const blockpositions = [
     { position: '10 03 00', block: B.Cobblestone },
     { position: '10 04 00', block: B.MossyStoneBricks },
     { position: '10 05 00', block: B.Cobblestone },
-
-
-
-    // Torre Esquerda  
-
-
-    
 ];
 
 App.render(blockpositions);
