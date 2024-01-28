@@ -1,15 +1,15 @@
+require('dotenv').config();
+require('./src/db');
+
 const express = require('express');
+const bodyParser = require('body-parser');
+const router = require('./src/routes/api');
 const app = express();
-const routes = require('./routes');
 
-app.use(express.json());
-app.use('/api', routes);
+app.use(bodyParser.json());
+app.use(router);
 
-app.get('/', (req, res) => {
-  res.send('Servidor Express está rodando!');
-});
-
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.SERVER_PORT;
 app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+  console.log(`Servidor rodando na porta ${PORT} !`);
 });
