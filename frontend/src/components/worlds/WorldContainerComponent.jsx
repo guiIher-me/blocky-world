@@ -229,6 +229,8 @@ export default class WorldContainerComponent extends Component {
     }
 
     componentDidMount() {
+        listeners.EKeyListener.subscribe("worldcontainer-open-inventory", this.openInventory);
+        listeners.EKeyListener.subscribe("worldcontainer-close-inventory", this.closeInventory);
         listeners.SaveListener.subscribe("worldcontainer", this.save);
         listeners.SpacePressingListener.subscribe("worldcontainer", {
             fnKeyDown: () => this.setState({pressingSpace: true}),
@@ -237,6 +239,8 @@ export default class WorldContainerComponent extends Component {
     }
 
     componentWillUnmount() {
+        listeners.EKeyListener.unsubscribe("worldcontainer-open-inventory");
+        listeners.EKeyListener.unsubscribe("worldcontainer-close-inventory");
         listeners.SaveListener.unsubscribe("worldcontainer");
         listeners.SpacePressingListener.unsubscribe("worldcontainer");
     }
