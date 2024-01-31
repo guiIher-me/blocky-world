@@ -88,4 +88,4 @@ const worldSchema = new mongoose.Schema({
 
 const World = mongoose.model("World", worldSchema);
 
-module.exports = World;
+module.exports = { World };
