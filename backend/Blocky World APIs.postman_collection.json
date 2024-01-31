@@ -1,0 +1,1525 @@
+{
+	"info": {
+		"_postman_id": "d9c8f03a-4b93-4288-981b-a258faccaac0",
+		"name": "Blocky World APIs",
+		"description": "**An interactive three-dimensional blocky world inspired by Minecraft**",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28225040"
+	},
+	"item": [
+		{
+			"name": "world",
+			"item": [
+				{
+					"name": "test",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[200] Ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "27"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b-JDvppX+jXY812ZC5ulEqpJ6q+ro\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 30 Jan 2024 00:25:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"It's Working!\"\n}"
+						},
+						{
+							"name": "[401] Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "24"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"18-XPDV80vbMk4yY1/PADG4jYM4rSI\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 30 Jan 2024 00:22:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Unauthorized\"\n}"
+						}
+					]
+				},
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"A\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/worlds/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"worlds",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[200] Ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"New World\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3001/worlds/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"worlds",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "439"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b7-nw+oECHPuSBypl1ZWA/576l3GKU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 28 Jan 2024 22:24:38 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"New World\",\n    \"rotation\": {\n        \"x\": 345,\n        \"y\": 40\n    },\n    \"position\": {\n        \"top\": 400,\n        \"left\": 250\n    },\n    \"hotbar\": {\n        \"slots\": {\n            \"slot1\": null,\n            \"slot2\": null,\n            \"slot3\": null,\n            \"slot4\": null,\n            \"slot5\": null,\n            \"slot6\": null,\n            \"slot7\": null,\n            \"slot8\": null,\n            \"slot9\": null\n        },\n        \"active\": 1\n    },\n    \"_id\": \"65b6d4265f23d1fc279dd081\",\n    \"blockmap\": [\n        {\n            \"_id\": \"65b6d4265f23d1fc279dd082\",\n            \"position\": \"0 0 0\",\n            \"block\": \"grass-block\"\n        }\n    ],\n    \"createdAt\": \"2024-01-28T22:24:38.704Z\",\n    \"updatedAt\": \"2024-01-28T22:24:38.704Z\",\n    \"__v\": 0\n}"
+						},
+						{
+							"name": "[401] Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"New World\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3001/worlds/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"worlds",
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "24"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"18-XPDV80vbMk4yY1/PADG4jYM4rSI\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 30 Jan 2024 02:54:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Unauthorized\"\n}"
+						},
+						{
+							"name": "[422] Invalid Params",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"A\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3001/worlds/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"worlds",
+										""
+									]
+								}
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "62"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3e-/SUm3fN3KNOCMg2II9TNh8k/20w\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 30 Jan 2024 03:02:38 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"\\\"name\\\" length must be at least 3 characters long\"\n}"
+						}
+					]
+				},
+				{
+					"name": "get all",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/worlds/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"worlds",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[200] Ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/worlds/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"worlds",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "263"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"107-Bjqswgh0FMiM4w4lexmvzo+KZiY\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 28 Jan 2024 22:41:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"_id\": \"65b6d4265f23d1fc279dd081\",\n        \"name\": \"New World\",\n        \"createdAt\": \"2024-01-28T22:24:38.704Z\",\n        \"updatedAt\": \"2024-01-28T22:24:38.704Z\"\n    },\n    {\n        \"_id\": \"65b6d817aecc21e608205bf9\",\n        \"name\": \"World 2\",\n        \"createdAt\": \"2024-01-28T22:41:27.843Z\",\n        \"updatedAt\": \"2024-01-28T22:41:27.843Z\"\n    }\n]"
+						},
+						{
+							"name": "[401] Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/worlds/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"worlds",
+										""
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "24"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"18-XPDV80vbMk4yY1/PADG4jYM4rSI\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 30 Jan 2024 01:16:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Unauthorized\"\n}"
+						}
+					]
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/worlds/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"worlds",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "65b866ad5d4d8a400ee1bcc9"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[200] Ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/worlds/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"worlds",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "65b6d4265f23d1fc279dd081"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "437"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b5-xp9z66UTcLyeosoayayQad6/hwY\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 30 Jan 2024 01:17:24 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"rotation\": {\n        \"x\": 345,\n        \"y\": 40\n    },\n    \"position\": {\n        \"top\": 400,\n        \"left\": 250\n    },\n    \"hotbar\": {\n        \"slots\": {\n            \"slot1\": null,\n            \"slot2\": null,\n            \"slot3\": null,\n            \"slot4\": null,\n            \"slot5\": null,\n            \"slot6\": null,\n            \"slot7\": null,\n            \"slot8\": null,\n            \"slot9\": null\n        },\n        \"active\": 2\n    },\n    \"_id\": \"65b6d4265f23d1fc279dd081\",\n    \"name\": \"World 1\",\n    \"blockmap\": [\n        {\n            \"position\": \"0 0 1\",\n            \"block\": \"grass-block\",\n            \"_id\": \"65b6dceec34ff3809282fb28\"\n        }\n    ],\n    \"createdAt\": \"2024-01-28T22:24:38.704Z\",\n    \"updatedAt\": \"2024-01-30T00:28:52.591Z\",\n    \"__v\": 0\n}"
+						},
+						{
+							"name": "[401] Unauthorized",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/worlds/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"worlds",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "65b6d4265f23d1fc279dd081"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "24"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"18-XPDV80vbMk4yY1/PADG4jYM4rSI\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 30 Jan 2024 01:17:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Unauthorized\"\n}"
+						},
+						{
+							"name": "[404] Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/worlds/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"worlds",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "65b86500d1217c502a96013a"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "28"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c-SHCzx833rcxIuG2CZaRbNECTTsU\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 31 Jan 2024 00:10:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"World not found!\"\n}"
+						},
+						{
+							"name": "[422] Invalid Params",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/worlds/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"worlds",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3b-oZ2vlKcLzfd0S2m8NCM08t6ZUkk\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 30 Jan 2024 02:10:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"\\\"id\\\" must only contain hexadecimal characters\"\n}"
+						}
+					]
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/worlds/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"worlds",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "65b865730e6f9093af315212"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[204] No Content",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/worlds/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"worlds",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "65b6d817aecc21e608205bf9"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 28 Jan 2024 23:03:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "[401] Unauthorized",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/worlds/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"worlds",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "65b6d817aecc21e608205bf9"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "24"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"18-XPDV80vbMk4yY1/PADG4jYM4rSI\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 30 Jan 2024 00:39:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Unauthorized\"\n}"
+						},
+						{
+							"name": "[404] Not Found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/worlds/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"worlds",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "65b865730e6f9093af315212"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "28"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c-SHCzx833rcxIuG2CZaRbNECTTsU\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 31 Jan 2024 00:20:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"World not found!\"\n}"
+						},
+						{
+							"name": "[422] Invalid Params",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3001/worlds/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"worlds",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3b-oZ2vlKcLzfd0S2m8NCM08t6ZUkk\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 30 Jan 2024 02:13:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"\\\"id\\\" must only contain hexadecimal characters\"\n}"
+						}
+					]
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rotation\": {\r\n        \"x\": 345,\r\n        \"y\": 40\r\n    },\r\n    \"position\": {\r\n        \"top\": 400,\r\n        \"left\": 250\r\n    },\r\n    \"hotbar\": {\r\n        \"slots\": {\r\n            \"slot1\": null,\r\n            \"slot2\": null,\r\n            \"slot3\": null,\r\n            \"slot4\": null,\r\n            \"slot5\": null,\r\n            \"slot6\": null,\r\n            \"slot7\": null,\r\n            \"slot8\": null,\r\n            \"slot9\": null\r\n        },\r\n        \"active\": 2\r\n    },\r\n    \"name\": \"Updated World\",\r\n    \"blockmap\": [\r\n        {\r\n            \"position\": \"0 0 1\",\r\n            \"block\": \"grass-block\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/worlds/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"worlds",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "65b6d4265f23d1fc279dd08a"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "[200] Ok",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"rotation\": {\r\n        \"x\": 345,\r\n        \"y\": 40\r\n    },\r\n    \"position\": {\r\n        \"top\": 400,\r\n        \"left\": 250\r\n    },\r\n    \"hotbar\": {\r\n        \"slots\": {\r\n            \"slot1\": null,\r\n            \"slot2\": null,\r\n            \"slot3\": null,\r\n            \"slot4\": null,\r\n            \"slot5\": null,\r\n            \"slot6\": null,\r\n            \"slot7\": null,\r\n            \"slot8\": null,\r\n            \"slot9\": null\r\n        },\r\n        \"active\": 2\r\n    },\r\n    \"name\": \"Updated World\",\r\n    \"blockmap\": [\r\n        {\r\n            \"position\": \"0 0 1\",\r\n            \"block\": \"grass-block\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3001/worlds/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"worlds",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "65b6d4265f23d1fc279dd081"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "443"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1bb-T+w0Kzwm4wgL+RPnSGCceybtmY8\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 28 Jan 2024 23:02:06 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"rotation\": {\n        \"x\": 345,\n        \"y\": 40\n    },\n    \"position\": {\n        \"top\": 400,\n        \"left\": 250\n    },\n    \"hotbar\": {\n        \"slots\": {\n            \"slot1\": null,\n            \"slot2\": null,\n            \"slot3\": null,\n            \"slot4\": null,\n            \"slot5\": null,\n            \"slot6\": null,\n            \"slot7\": null,\n            \"slot8\": null,\n            \"slot9\": null\n        },\n        \"active\": 2\n    },\n    \"_id\": \"65b6d4265f23d1fc279dd081\",\n    \"name\": \"Updated World\",\n    \"blockmap\": [\n        {\n            \"position\": \"0 0 1\",\n            \"block\": \"grass-block\",\n            \"_id\": \"65b6dceec34ff3809282fb28\"\n        }\n    ],\n    \"createdAt\": \"2024-01-28T22:24:38.704Z\",\n    \"updatedAt\": \"2024-01-28T23:02:06.542Z\",\n    \"__v\": 0\n}"
+						},
+						{
+							"name": "[401] Unauthorized",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"rotation\": {\r\n        \"x\": 345,\r\n        \"y\": 40\r\n    },\r\n    \"position\": {\r\n        \"top\": 400,\r\n        \"left\": 250\r\n    },\r\n    \"hotbar\": {\r\n        \"slots\": {\r\n            \"slot1\": null,\r\n            \"slot2\": null,\r\n            \"slot3\": null,\r\n            \"slot4\": null,\r\n            \"slot5\": null,\r\n            \"slot6\": null,\r\n            \"slot7\": null,\r\n            \"slot8\": null,\r\n            \"slot9\": null\r\n        },\r\n        \"active\": 2\r\n    },\r\n    \"name\": \"Updated World\",\r\n    \"blockmap\": [\r\n        {\r\n            \"position\": \"0 0 1\",\r\n            \"block\": \"grass-block\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3001/worlds/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"worlds",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "65b6d4265f23d1fc279dd081"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "24"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"18-XPDV80vbMk4yY1/PADG4jYM4rSI\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 30 Jan 2024 00:37:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Unauthorized\"\n}"
+						},
+						{
+							"name": "[404] Not Found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"rotation\": {\r\n        \"x\": 345,\r\n        \"y\": 40\r\n    },\r\n    \"position\": {\r\n        \"top\": 400,\r\n        \"left\": 250\r\n    },\r\n    \"hotbar\": {\r\n        \"slots\": {\r\n            \"slot1\": null,\r\n            \"slot2\": null,\r\n            \"slot3\": null,\r\n            \"slot4\": null,\r\n            \"slot5\": null,\r\n            \"slot6\": null,\r\n            \"slot7\": null,\r\n            \"slot8\": null,\r\n            \"slot9\": null\r\n        },\r\n        \"active\": 2\r\n    },\r\n    \"name\": \"Updated World\",\r\n    \"blockmap\": [\r\n        {\r\n            \"position\": \"0 0 1\",\r\n            \"block\": \"grass-block\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3001/worlds/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"worlds",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "65b6d4265f23d1fc279dd08a"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "28"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1c-SHCzx833rcxIuG2CZaRbNECTTsU\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 31 Jan 2024 00:21:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"World not found!\"\n}"
+						},
+						{
+							"name": "[422] Invalid Params",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"rotation\": {\r\n        \"x\": 345,\r\n        \"y\": 40\r\n    },\r\n    \"position\": {\r\n        \"top\": 400,\r\n        \"left\": 250\r\n    },\r\n    \"hotbar\": {\r\n        \"slots\": {\r\n            \"slot1\": null,\r\n            \"slot2\": null,\r\n            \"slot3\": null,\r\n            \"slot4\": null,\r\n            \"slot5\": null,\r\n            \"slot6\": null,\r\n            \"slot7\": null,\r\n            \"slot8\": null,\r\n            \"slot9\": null\r\n        },\r\n        \"active\": 2\r\n    },\r\n    \"name\": \"Updated World\",\r\n    \"blockmap\": [\r\n        {\r\n            \"position\": \"0 0 1\",\r\n            \"block\": \"grass-block\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3001/worlds/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3001",
+									"path": [
+										"worlds",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "65b86500d1217c502a96013"
+										}
+									]
+								}
+							},
+							"status": "Unprocessable Entity",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "61"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3d-yT+9+kjZESM1flsPF81XqrBvgsI\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 31 Jan 2024 00:12:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"\\\"id\\\" length must be at least 24 characters long\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "94XKjLPSKkekf/ojyGL8w62PG8FrmILlXX9HZGLYGN8=",
+			"type": "string"
+		}
+	]
+}
