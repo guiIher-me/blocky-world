@@ -1,10 +1,10 @@
 import Listener from "./Listener";
 
-export default class ScrollListener extends Listener {
+export default class WheelListener extends Listener {
 
     constructor() {
         super();
-        window.addEventListener("scroll", this.notify.bind(this));
+        window.addEventListener("wheel", this.notify.bind(this));
     }
 
     condition() {
