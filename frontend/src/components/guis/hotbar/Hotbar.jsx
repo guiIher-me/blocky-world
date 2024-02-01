@@ -19,11 +19,12 @@ export default class Hotbar extends Component {
             activeSlot: 1
         };
         this.changeActiveSlot = this.changeActiveSlot.bind(this);
+        this.changeActiveSlotByWheel = this.changeActiveSlotByWheel.bind(this);
         this.onNumberKeyPress = this.onNumberKeyPress.bind(this);
     }
 
     isValidSlot(number) {
-        return number >= 1 && number <= config.HOTBAR_SLOTS;
+        return number >= 1 && number <= 9;
     }
 
     changeActiveSlot({ activeNumber = null, activeBlock = null }) {
@@ -34,17 +35,30 @@ export default class Hotbar extends Component {
             this.props.changeActiveBlock(activeBlock);
     }
 
+    changeActiveSlotByWheel(event) {
+        event.preventDefault();
+        const delta = event.deltaY > 0 ? 1 : -1;
+        const number = this.state.activeSlot + delta;
+
+        const min = 1;
+        const max = 9;
+        const activeNumber = (number > max) ? min : ((number < min) ? max : number);
+        return this.changeActiveSlot({activeNumber});
+    }
+
     onNumberKeyPress(event) {
-        const activeNumber = event.key;
+        const activeNumber = parseInt(event.key);
         this.changeActiveSlot({ activeNumber });
     }
 
     componentDidMount() {
-        listeners.KeyNumberListener.subscribe("hotbar", this.onNumberKeyPress);
+        listeners.WheelListener.subscribe("hotbar-wheel", this.changeActiveSlotByWheel);
+        listeners.KeyNumberListener.subscribe("hotbar-numbers", this.onNumberKeyPress);
     }
 
     componentWillUnmount() {
-        listeners.KeyNumberListener.unsubscribe("hotbar");
+        listeners.WheelListener.unsubscribe("hotbar-wheel");
+        listeners.KeyNumberListener.unsubscribe("hotbar-numbers");
     }
 
     shouldComponentUpdate(nextProps, nextState) {

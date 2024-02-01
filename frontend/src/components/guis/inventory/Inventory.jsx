@@ -48,11 +48,11 @@ export default class Inventory extends Component {
     }
 
     componentDidMount() {
-        listeners.EscListener.subscribe("inventory", this.props.actions.close);
+        listeners.EscListener.subscribe("inventory-esc-close", this.props.actions.close);
     }
 
     componentWillUnmount() {
-        listeners.EscListener.unsubscribe("inventory");
+        listeners.EscListener.unsubscribe("inventory-esc-close");
     }
 
     shouldComponentUpdate(nextProps, nextState) {

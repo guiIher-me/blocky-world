@@ -20,8 +20,16 @@ export default class Listener {
     }
 
     // eslint-disable-next-line no-unused-vars
+    condition(event) {
+        throw new Error(`[Listener] Not implemented 'condition' method!`);
+    }
+
     notify(event) {
-        throw new Error(`[Listener] Not implemented 'notify' method!`);
+        if (this.condition(event)) {
+            Object.entries(this.subs).forEach(([ , fnCallback]) => {
+                fnCallback(event);
+            });
+        }
     }
 
 }

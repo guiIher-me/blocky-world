@@ -6,11 +6,8 @@ export default class EKeyListener extends KeyUpListener {
         super();
     }
 
-    notify(event) {
-        if (event.key === 'e')
-            Object.entries(this.subs).forEach(([ , fnCallback]) => {
-                fnCallback(event);
-            });
+    condition(event) {
+        return event.key === 'e';
     }
 
 }

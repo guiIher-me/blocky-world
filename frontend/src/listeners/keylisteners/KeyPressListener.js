@@ -7,11 +7,8 @@ export default class KeyPressListener extends Listener {
         window.addEventListener("keypress", this.notify.bind(this));
     }
 
-    notify(event) {
-        Object.entries(this.subs).forEach(([key, fnCallback]) => {
-            console.log(`notifying ${key}...`);
-            fnCallback(event);
-        });
+    condition() {
+        return true;
     }
 
 }

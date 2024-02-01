@@ -231,8 +231,8 @@ export default class WorldContainerComponent extends Component {
     componentDidMount() {
         listeners.EKeyListener.subscribe("worldcontainer-open-inventory", this.openInventory);
         listeners.EKeyListener.subscribe("worldcontainer-close-inventory", this.closeInventory);
-        listeners.SaveListener.subscribe("worldcontainer", this.save);
-        listeners.SpacePressingListener.subscribe("worldcontainer", {
+        listeners.SaveListener.subscribe("worldcontainer-save", this.save);
+        listeners.SpacePressingListener.subscribe("worldcontainer-space", {
             fnKeyDown: () => this.setState({pressingSpace: true}),
             fnKeyUp: () => this.setState({pressingSpace: false})
         });
@@ -241,8 +241,8 @@ export default class WorldContainerComponent extends Component {
     componentWillUnmount() {
         listeners.EKeyListener.unsubscribe("worldcontainer-open-inventory");
         listeners.EKeyListener.unsubscribe("worldcontainer-close-inventory");
-        listeners.SaveListener.unsubscribe("worldcontainer");
-        listeners.SpacePressingListener.unsubscribe("worldcontainer");
+        listeners.SaveListener.unsubscribe("worldcontainer-save");
+        listeners.SpacePressingListener.unsubscribe("worldcontainer-space");
     }
 
     componentDidUpdate() {

@@ -1,4 +1,3 @@
-
 import KeyDownListener from "./keylisteners/KeyDownListener";
 
 export default class SaveListener extends KeyDownListener {
@@ -7,15 +6,8 @@ export default class SaveListener extends KeyDownListener {
         super();
     }
 
-    notify(event) {
-        if (event.ctrlKey && event.key === 's') {
-            Object.entries(this.subs).forEach(([ , fnCallback]) => {
-                fnCallback(event);
-            });
-            
-            event.preventDefault();
-        }
-        
+    condition(event) {
+        return event.ctrlKey && event.key === 's';
     }
 
 }
