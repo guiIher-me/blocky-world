@@ -1,8 +1,9 @@
 
 export default class Listener {
 
-    constructor() {
+    constructor(allowListenFieldTags = false) {
         this.subs = {};
+        this.allowListenFieldTags = allowListenFieldTags;
     }
 
     subscribe(id, fnCallback) {
@@ -19,13 +20,24 @@ export default class Listener {
         return this.subs;
     }
 
+    isFieldTarget(event) {
+        const { target } = event;
+        return target?.tagName === 'INPUT' || target?.tagName === 'TEXTAREA';
+    }
+
+    mustListenTarget(event) {
+        const isFieldTarget = this.isFieldTarget(event);
+        return !this.allowListenFieldTags && !isFieldTarget ||
+                this.allowListenFieldTags &&  isFieldTarget;
+    }
+
     // eslint-disable-next-line no-unused-vars
     condition(event) {
         throw new Error(`[Listener] Not implemented 'condition' method!`);
     }
 
     notify(event) {
-        if (this.condition(event)) {
+        if (this.condition(event) && this.mustListenTarget(event)) {
             Object.entries(this.subs).forEach(([ , fnCallback]) => {
                 fnCallback(event);
             });
