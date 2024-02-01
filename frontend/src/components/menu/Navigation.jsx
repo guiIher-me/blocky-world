@@ -17,11 +17,11 @@ export default class Navigation extends Component {
     }
 
     componentDidMount() {
-        listeners.EscListener.subscribe("navigation", this.props.actions.view360.off);
+        listeners.EscListener.subscribe("navigation-view360", this.props.actions.view360.off);
     }
 
     componentWillUnmount() {
-        listeners.SaveListener.unsubscribe("navigation");
+        listeners.SaveListener.unsubscribe("navigation-view360");
     }
 
     // eslint-disable-next-line no-unused-vars

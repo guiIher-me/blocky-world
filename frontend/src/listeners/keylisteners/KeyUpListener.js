@@ -7,10 +7,8 @@ export default class KeyUpListener extends Listener {
         window.addEventListener("keyup", this.notify.bind(this));
     }
 
-    notify(event) {
-        Object.entries(this.subs).forEach(([ , fnCallback]) => {
-            fnCallback(event);
-        });
+    condition() {
+        return true;
     }
 
 }

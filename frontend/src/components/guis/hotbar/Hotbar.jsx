@@ -40,11 +40,11 @@ export default class Hotbar extends Component {
     }
 
     componentDidMount() {
-        listeners.KeyNumberListener.subscribe("hotbar", this.onNumberKeyPress);
+        listeners.KeyNumberListener.subscribe("hotbar-numbers", this.onNumberKeyPress);
     }
 
     componentWillUnmount() {
-        listeners.KeyNumberListener.unsubscribe("hotbar");
+        listeners.KeyNumberListener.unsubscribe("hotbar-numbers");
     }
 
     shouldComponentUpdate(nextProps, nextState) {

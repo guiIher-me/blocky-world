@@ -2,35 +2,20 @@ import KeyPressingListener from "./keylisteners/KeyPressingListener";
 
 export default class SpacePressingListener extends KeyPressingListener {
 
-    constructor() {
+    constructor() { 
         super();
-        this.down = false;
     }
 
     isSpace(event) {
         return (event.keyCode === 32);
     }
 
-    notifyDown(event) {
-        if (this.isSpace(event) && this.down == false) {
-            this.down = true;
-            const subs = this.downListener.getSubs();
-            Object.entries(subs).forEach(([key, fnCallback]) => {
-                console.log(`notifying down ${key}...`);
-                fnCallback(event);
-            });
-        }
+    conditionDown(event) {
+       return this.isSpace(event);
     }
 
-    notifyUp(event) {
-        if (this.isSpace(event)) {
-            this.down = false;
-            const subs = this.downListener.getSubs();
-            Object.entries(subs).forEach(([key, fnCallback]) => {
-                console.log(`notifying up ${key}...`);
-                fnCallback(event);
-            });
-        }
+    conditionUp(event) {
+        return this.isSpace(event);
     }
 
 }
