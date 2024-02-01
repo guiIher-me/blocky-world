@@ -1,5 +1,6 @@
 import B from "./Blocks";
 import App from "./components/worlds/App";
+import HttpHandler from "./services/HttpHandler";
 
 const blockpositions = [
     
@@ -785,3 +786,10 @@ const blockpositions = [
 ];
 
 App.render(blockpositions);
+
+
+(async () => {
+    const http = new HttpHandler();
+    const response = await http.get("");
+    console.log(response);
+})();

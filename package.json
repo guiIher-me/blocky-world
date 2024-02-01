@@ -15,7 +15,15 @@
     "type": "git",
     "url": "git+https://github.com/guiIher-me/blocky-world.git"
   },
-  "keywords": ["minecraft", "blocky-world", "game", "world", "node", "react", "mongo"],
+  "keywords": [
+    "minecraft",
+    "blocky-world",
+    "game",
+    "world",
+    "node",
+    "react",
+    "mongo"
+  ],
   "author": "Guilherme Cardoso",
   "license": "MIT",
   "bugs": {
