@@ -39,4 +39,8 @@ export default class HttpHandler {
     async patch(endpoint, data, options = {}) {
         return this.request('PATCH', endpoint, data, options);
     }
+
+    async put(endpoint, data, options = {}) {
+        return this.request('PUT', endpoint, data, options);
+    }
 }
