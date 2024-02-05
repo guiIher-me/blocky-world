@@ -5,7 +5,7 @@ export default class Button extends PureComponent {
 
     static propTypes = {
         btnid: PropTypes.string,
-        content: PropTypes.string.isRequired,
+        content: PropTypes.object.isRequired,
         classes: PropTypes.string,
         onClick: PropTypes.func.isRequired
     }
