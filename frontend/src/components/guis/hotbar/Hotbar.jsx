@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import HotbarSlot from "./HotbarSlot";
-import config from '../../../config';
 import listeners from '../../../listeners';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
+
+const HOTBAR_SLOTS = 9;
 
 export default class Hotbar extends Component {
 
@@ -70,7 +71,7 @@ export default class Hotbar extends Component {
         return (
             <div id="hotbar">
 
-                {[...Array(config.HOTBAR_SLOTS)].map((x, i) =>
+                {[...Array(HOTBAR_SLOTS)].map((x, i) =>
                     <HotbarSlot key={uuidv4()}
                                 number={i+1}
                                 item={this.props.slots[`slot-${i+1}`]}
