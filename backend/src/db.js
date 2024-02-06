@@ -1,9 +1,14 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+/**
+ * The MongoDB connection URL based on environment variables.
+ * @type {string}
+ */
 const dbUrl = `mongodb://blockyworld-backend-mongodb:${process.env.DATABASE_PORT}`;
 
 mongoose.connect(dbUrl, {});
+
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'Erro na conexão com o MongoDB:'));
