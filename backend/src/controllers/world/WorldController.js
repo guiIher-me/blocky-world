@@ -1,9 +1,17 @@
+import '../../utils/typedef';
+
 const { HttpResponse } = require("../../http/HttpResponse");
 const { World } = require("../../models/world");
 const { Validator } = require("../../Validator");
 const { idSchema, createSchema, updateSchema } = require("./schemas");
 
 class WorldController {
+    /**
+     * Create a new World
+     * @param {Object} params 
+     * @param {Object} body 
+     * @returns {HttpResponseData}
+     */
     async create(params, body) {
         const validator = new Validator();
         if (!validator.validate(createSchema, body)) return validator.error();
@@ -12,11 +20,23 @@ class WorldController {
         return HttpResponse.created(newWorld);
     }
 
+    /**
+     * Get all Worlds
+     * @param {Object} params 
+     * @param {Object} body 
+     * @returns {HttpResponseData}
+     */
     async getAll(params, body) {
         const worlds = await World.find({}, "_id name createdAt updatedAt");
         return HttpResponse.ok(worlds);
     }
 
+    /**
+     * Get world by id
+     * @param {Object} params 
+     * @param {Object} body 
+     * @returns {HttpResponseData}
+     */
     async getById(params, body) {
         const validator = new Validator();
         if (!validator.validate(idSchema, params)) return validator.error();
@@ -27,6 +47,12 @@ class WorldController {
         return HttpResponse.notFound("World not found!");
     }
 
+    /**
+     * Update world by id
+     * @param {Object} params 
+     * @param {Object} body 
+     * @returns {HttpResponseData}
+     */
     async update(params, body) {
         const validator = new Validator();
         if (!validator.validate(idSchema, params)) return validator.error();
@@ -42,6 +68,12 @@ class WorldController {
         return HttpResponse.notFound("World not found!");
     }
 
+    /**
+     * Delete world by id
+     * @param {Object} params 
+     * @param {Object} body 
+     * @returns {HttpResponseData}
+     */
     async delete(params, body) {
         const validator = new Validator();
         if (!validator.validate(idSchema, params)) return validator.error();
