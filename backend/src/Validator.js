@@ -1,5 +1,4 @@
-/* eslint-disable import/no-import-module-exports */
-import './utils/typedef';
+require('./utils/typedef');
 
 const { HttpResponse } = require('./http/HttpResponse');
 

@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable import/no-import-module-exports */
-import '../../utils/typedef';
+require('../../utils/typedef');
 
 const { HttpResponse } = require('../../http/HttpResponse');
 const { World } = require('../../models/world');
