@@ -1,4 +1,4 @@
-require("dotenv").config();
+require('dotenv').config();
 
 /**
  * Middleware function to verify the authorization token in the request headers.
@@ -8,14 +8,14 @@ require("dotenv").config();
  * @returns {void}
  */
 const verifyAuthorization = (req, res, next) => {
-  const expectedAuthToken = process.env.AUTH_TOKEN;
+    const expectedAuthToken = process.env.AUTH_TOKEN;
 
-  const providedAuthToken = req.headers.authorization;
-  if (!providedAuthToken || providedAuthToken !== expectedAuthToken) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
+    const providedAuthToken = req.headers.authorization;
+    if (!providedAuthToken || providedAuthToken !== expectedAuthToken) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
 
-  next();
+    return next();
 };
 
 module.exports = verifyAuthorization;

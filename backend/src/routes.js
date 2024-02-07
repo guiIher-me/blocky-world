@@ -1,21 +1,19 @@
-const express = require("express");
-const router = express.Router();
-const { WorldController } = require("./controllers/world/WorldController");
-const { BaseController } = require("./controllers/BaseController");
+const express = require('express');
 
-const handler = new BaseController();
-const worldController = new WorldController();
+const router = express.Router();
+const { WorldController } = require('./controllers/world/WorldController');
+const { BaseController } = require('./controllers/BaseController');
 
 // Worlds
-router.post("/worlds", (req, res, next) => handler.handle(req, res, worldController.create));
-router.get("/worlds", async (req, res, next) => handler.handle(req, res, worldController.getAll));
-router.get("/worlds/:id", async (req, res, next) => handler.handle(req, res, worldController.getById));
-router.put("/worlds/:id", async (req, res, next) => handler.handle(req, res, worldController.update));
-router.delete("/worlds/:id", async (req, res, next) => handler.handle(req, res, worldController.delete));
+router.post('/worlds', (req, res) => BaseController.handle(req, res, WorldController.create));
+router.get('/worlds', async (req, res) => BaseController.handle(req, res, WorldController.getAll));
+router.get('/worlds/:id', async (req, res) => BaseController.handle(req, res, WorldController.getById));
+router.put('/worlds/:id', async (req, res) => BaseController.handle(req, res, WorldController.update));
+router.delete('/worlds/:id', async (req, res) => BaseController.handle(req, res, WorldController.delete));
 
 // Test
-router.get("/", async (req, res) => {
-  res.status(200).json({ message: "It's Working!" });
+router.get('/', async (req, res) => {
+    res.status(200).json({ message: "It's Working!" });
 });
 
 module.exports = router;
