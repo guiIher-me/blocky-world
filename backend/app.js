@@ -7,8 +7,8 @@ const { FRONTEND_URL, SERVER_PORT } = process.env;
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const authMiddleware = require('./src/middlewares/authMiddleware');
-const notFoundMiddleware = require('./src/middlewares/notFoundMiddleware');
+const { verifyAuthMiddleware } = require('./src/middlewares/verifyAuthMiddleware');
+const { notFoundMiddleware } = require('./src/middlewares/notFoundMiddleware');
 const router = require('./src/routes');
 
 const app = express();
@@ -23,7 +23,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
-app.use(authMiddleware);
+app.use(verifyAuthMiddleware);
 app.use(router);
 app.use(notFoundMiddleware);
 
