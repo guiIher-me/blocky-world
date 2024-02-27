@@ -1,5 +1,6 @@
-const Joi = require("joi");
+/* eslint-disable newline-per-chained-call */
+const Joi = require('joi');
 
 module.exports = Joi.object({
-    name: Joi.string().min(3).max(30).trim().required(),
+    name: Joi.string().trim().min(3).max(30).required(),
 });

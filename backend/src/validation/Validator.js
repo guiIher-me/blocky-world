@@ -1,21 +1,22 @@
-import './utils/typedef';
-const { HttpResponse } = require("./http/HttpResponse");
+require('../utils/typedef');
+
+const { HttpResponse } = require('../http/HttpResponse');
 
 class Validator {
     constructor() {
-        this._error = false;
+        this.err = false;
     }
 
     /**
      * Validate params by Schema Joi object
-     * @param {Object} schema 
-     * @param {Object} params 
+     * @param {Object} schema
+     * @param {Object} params
      * @returns {boolean}
      */
     validate(schema, params) {
         const result = schema.validate(params);
         if (result.error) {
-            this._error = result.error.details[0].message;
+            this.err = result.error.details[0].message;
         }
 
         return !result.error;
@@ -26,7 +27,7 @@ class Validator {
      * @returns {HttpResponseData}
      */
     error() {
-        return HttpResponse.unprocessable(this._error);
+        return HttpResponse.unprocessable(this.err);
     }
 }
 

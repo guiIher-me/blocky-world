@@ -1,24 +1,23 @@
-import '../utils/typedef';
+require('../utils/typedef');
 
 class HttpResponse {
-    
     /**
      * Return a HTTP Response
-     * @param {number} statusCode 
-     * @param {Object} body 
+     * @param {number} statusCode
+     * @param {Object} body
      * @returns {HttpResponseData}
      * @static
      */
     static response(statusCode, body) {
         return {
             statusCode,
-            body
+            body,
         };
     }
 
     /**
      * Return a HTTP Response error
-     * @param {number} statusCode 
+     * @param {number} statusCode
      * @param {string} error
      * @returns {HttpResponseData}
      * @static
@@ -29,13 +28,13 @@ class HttpResponse {
 
     /**
      * HTTP Response 200 - Sucess
-     * @param {number} statusCode 
+     * @param {number} statusCode
      * @param {string} error
      * @returns {HttpResponseData}
      * @static
      */
     static ok(body) {
-        return HttpResponse.response(200, body)
+        return HttpResponse.response(200, body);
     }
 
     /**
@@ -49,7 +48,7 @@ class HttpResponse {
 
     /**
      * HTTP Response 201 - Created
-     * @param {Object} body 
+     * @param {Object} body
      * @returns {HttpResponseData}
      * @static
      */
@@ -59,7 +58,7 @@ class HttpResponse {
 
     /**
      * HTTP Response 400 - Bad Request
-     * @param {Object} body 
+     * @param {Object} body
      * @returns {HttpResponseData}
      * @static
      */
@@ -69,17 +68,17 @@ class HttpResponse {
 
     /**
      * HTTP Response 400 - Bad Request
-     * @param {Object} body 
+     * @param {Object} body
      * @returns {HttpResponseData}
      * @static
      */
-    static unauthorized(error = "Unauthorized") {
+    static unauthorized(error = 'Unauthorized') {
         return HttpResponse.error(401, error);
     }
 
     /**
      * HTTP Response 404 - Not Found
-     * @param {string} error 
+     * @param {string} error
      * @returns {HttpResponseData}
      * @static
      */
@@ -89,7 +88,7 @@ class HttpResponse {
 
     /**
      * HTTP Response 422 - Unprocessable Content
-     * @param {string} error 
+     * @param {string} error
      * @returns {HttpResponseData}
      * @static
      */
@@ -99,14 +98,13 @@ class HttpResponse {
 
     /**
      * HTTP Response 500 - Internal Server Error
-     * @param {string} [error = "Internal Server Error!"] 
+     * @param {string} [error = "Internal Server Error!"]
      * @returns {HttpResponseData}
      * @static
      */
-    static serverError(error = "Internal Server Error!") {
+    static serverError(error = 'Internal Server Error!') {
         return HttpResponse.error(500, error);
     }
-
 }
 
 module.exports = { HttpResponse };

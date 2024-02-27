@@ -1,4 +1,5 @@
-const Joi = require("joi");
+/* eslint-disable newline-per-chained-call */
+const Joi = require('joi');
 
 module.exports = Joi.object({
     name: Joi.string().min(3).max(30).trim().required(),
@@ -33,8 +34,8 @@ module.exports = Joi.object({
             position: Joi.string()
                 .regex(/^(-?\d+) (-?\d+) (-?\d+)$/)
                 .message('Each "position" field must contain 3 integers separated by spaces').required(),
-            
+
             block: Joi.string().required(),
-        })
+        }),
     ).required(),
 });
