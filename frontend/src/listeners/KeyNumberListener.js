@@ -6,12 +6,8 @@ export default class KeyNumberListener extends KeyPressListener {
         super();
     }
 
-    notify(event) {
-        if (/^[0-9]$/.test(event.key))
-            Object.entries(this.subs).forEach(([key, fnCallback]) => {
-                console.log(`notifying ${key}...`);
-                fnCallback(event);
-            });
+    condition(event) {
+        return (/^[0-9]$/.test(event.key));
     }
 
 }

@@ -7,10 +7,8 @@ export default class KeyDownListener extends Listener {
         window.addEventListener("keydown", this.notify.bind(this));
     }
 
-    notify(event) {
-        Object.entries(this.subs).forEach(([ , fnCallback]) => {
-            fnCallback(event);
-        });
+    condition() {
+        return true;
     }
 
 }
