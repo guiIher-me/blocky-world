@@ -1,6 +1,6 @@
-require('./utils/typedef');
+require('../utils/typedef');
 
-const { HttpResponse } = require('./http/HttpResponse');
+const { HttpResponse } = require('../http/HttpResponse');
 
 class Validator {
     constructor() {

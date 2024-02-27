@@ -19,7 +19,6 @@ class BaseController {
             const { statusCode, body } = response;
             return res.status(statusCode).json(body);
         } catch (error) {
-            console.error(error);
             response = HttpResponse.serverError();
             const { statusCode, body } = response;
             return res.status(statusCode).json(body);

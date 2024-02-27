@@ -7,7 +7,7 @@ require('dotenv').config();
  * @param {Function} next - Express next middleware function.
  * @returns {void}
  */
-const verifyAuthorization = (req, res, next) => {
+const verifyAuthMiddleware = (req, res, next) => {
     const expectedAuthToken = process.env.AUTH_TOKEN;
 
     const providedAuthToken = req.headers.authorization;
@@ -18,4 +18,4 @@ const verifyAuthorization = (req, res, next) => {
     return next();
 };
 
-module.exports = verifyAuthorization;
+module.exports = { verifyAuthMiddleware };

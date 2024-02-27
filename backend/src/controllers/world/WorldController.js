@@ -3,7 +3,7 @@ require('../../utils/typedef');
 
 const { HttpResponse } = require('../../http/HttpResponse');
 const { World } = require('../../models/world');
-const { Validator } = require('../../Validator');
+const { Validator } = require('../../validation/Validator');
 const { idSchema, createSchema, updateSchema } = require('./schemas');
 
 class WorldController {
@@ -12,6 +12,7 @@ class WorldController {
      * @param {Object} params
      * @param {Object} body
      * @returns {HttpResponseData}
+     * @static
      */
     static async create(params, body) {
         const validator = new Validator();
@@ -26,6 +27,7 @@ class WorldController {
      * @param {Object} params
      * @param {Object} body
      * @returns {HttpResponseData}
+     * @static
      */
     static async getAll(params, body) {
         const worlds = await World.find({}, '_id name createdAt updatedAt');
@@ -37,6 +39,7 @@ class WorldController {
      * @param {Object} params
      * @param {Object} body
      * @returns {HttpResponseData}
+     * @static
      */
     static async getById(params, body) {
         const validator = new Validator();
@@ -53,6 +56,7 @@ class WorldController {
      * @param {Object} params
      * @param {Object} body
      * @returns {HttpResponseData}
+     * @static
      */
     static async update(params, body) {
         const validator = new Validator();
@@ -74,6 +78,7 @@ class WorldController {
      * @param {Object} params
      * @param {Object} body
      * @returns {HttpResponseData}
+     * @static
      */
     static async delete(params, body) {
         const validator = new Validator();
