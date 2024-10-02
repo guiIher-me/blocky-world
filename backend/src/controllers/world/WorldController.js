@@ -2,8 +2,8 @@
 require('../../utils/typedef');
 
 const { HttpResponse } = require('../../http/HttpResponse');
-const { World } = require('../../models/world');
-const { Validator } = require('../../validation/Validator');
+const { WorldService } = require('../../services/WorldService');
+const { validate } = require('../../validation/validate');
 const { idSchema, createSchema, updateSchema } = require('./schemas');
 
 class WorldController {
@@ -14,12 +14,10 @@ class WorldController {
      * @returns {HttpResponseData}
      * @static
      */
-    static async create(params, body) {
-        const validator = new Validator();
-        if (!validator.validate(createSchema, body)) return validator.error();
-
-        const newWorld = await World.create(body);
-        return HttpResponse.created(newWorld);
+    static async create(_, body) {
+        validate(createSchema, body);
+        const world = WorldService.create(body);
+        return HttpResponse.created(world);
     }
 
     /**
@@ -30,7 +28,7 @@ class WorldController {
      * @static
      */
     static async getAll(params, body) {
-        const worlds = await World.find({}, '_id name createdAt updatedAt');
+        const worlds = await WorldService.getAll();
         return HttpResponse.ok(worlds);
     }
 
@@ -42,13 +40,9 @@ class WorldController {
      * @static
      */
     static async getById(params, body) {
-        const validator = new Validator();
-        if (!validator.validate(idSchema, params)) return validator.error();
-
-        const world = await World.findById(params.id);
-
-        if (world) return HttpResponse.ok(world);
-        return HttpResponse.notFound('World not found!');
+        validate(idSchema, body);
+        const world = await WorldService.getById(params.id);
+        return HttpResponse.ok(world);
     }
 
     /**
@@ -59,18 +53,10 @@ class WorldController {
      * @static
      */
     static async update(params, body) {
-        const validator = new Validator();
-        if (!validator.validate(idSchema, params)) return validator.error();
-        if (!validator.validate(updateSchema, body)) return validator.error();
-
-        const updatedWorld = await World.findByIdAndUpdate(
-            params.id,
-            body,
-            { new: true },
-        );
-
-        if (updatedWorld) return HttpResponse.ok(updatedWorld);
-        return HttpResponse.notFound('World not found!');
+        validate(idSchema, params);
+        validate(updateSchema, body);
+        const world = await WorldService.updateById(params.id, body);
+        return HttpResponse.ok(world);
     }
 
     /**
@@ -80,14 +66,10 @@ class WorldController {
      * @returns {HttpResponseData}
      * @static
      */
-    static async delete(params, body) {
-        const validator = new Validator();
-        if (!validator.validate(idSchema, params)) return validator.error();
-
-        const deletedWorld = await World.findByIdAndDelete(params.id);
-
-        if (deletedWorld) return HttpResponse.okNoContent();
-        return HttpResponse.notFound('World not found!');
+    static async delete(params, _) {
+        validate(idSchema, params);
+        await WorldService.deleteById(params.id);
+        return HttpResponse.okNoContent();
     }
 }
 
