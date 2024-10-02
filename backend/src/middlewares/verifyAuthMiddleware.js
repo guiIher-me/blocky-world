@@ -1,3 +1,5 @@
+const { UnauthorizedError } = require('../errors/UnauthorizedError');
+
 require('dotenv').config();
 
 /**
@@ -12,7 +14,7 @@ const verifyAuthMiddleware = (req, res, next) => {
 
     const providedAuthToken = req.headers.authorization;
     if (!providedAuthToken || providedAuthToken !== expectedAuthToken) {
-        return res.status(401).json({ error: 'Unauthorized' });
+        throw new UnauthorizedError();
     }
 
     return next();
