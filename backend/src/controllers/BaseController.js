@@ -1,10 +1,7 @@
-require('../utils/typedef');
-
-const { NotFoundError } = require('../errors/NotFoundError');
-const { UnprocessableContentError } = require('../errors/UnprocessableContentError');
-const { UnauthorizedError } = require('../errors/UnauthorizedError');
-const { HttpResponse } = require('../http/HttpResponse');
+const { HttpError } = require('../errors/HttpError');
 const { Logger } = require('../logger/Logger');
+
+require('../utils/typedef');
 
 class BaseController {
     /**
@@ -16,34 +13,17 @@ class BaseController {
      * @static
      */
     static async handle(req, res, method) {
-        let response;
-
         try {
-            response = await method(req.params, req.body);
-            const { statusCode, body } = response;
+            const { statusCode, body } = await method(req.params, req.body, req.user);
             return res.status(statusCode).json(body);
         } catch (error) {
-            response = await BaseController.handleError(error);
-            const { statusCode, body } = response;
-            return res.status(statusCode).json(body);
-        }
-    }
+            if (error instanceof HttpError) {
+                return res.status(error.status).json({ error: error.message });
+            }
 
-    static async handleError(error) {
-        let response;
-
-        if (error instanceof UnauthorizedError) {
-            response = HttpResponse.unauthorized(error.message);
-        } else if (error instanceof NotFoundError) {
-            response = HttpResponse.notFound(error.message);
-        } else if (error instanceof UnprocessableContentError) {
-            response = HttpResponse.unprocessable(error.message);
-        } else {
             Logger.error(error);
-            response = HttpResponse.serverError();
+            return res.status(500).json({ error: 'Internal Server Error' });
         }
-
-        return response;
     }
 }
 
