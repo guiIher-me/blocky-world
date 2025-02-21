@@ -87,6 +87,7 @@ const WorldSchema = new mongoose.Schema({
                 block: 'grass-block',
             },
         ],
+        _id: false,
     },
 
 }, { timestamps: true });

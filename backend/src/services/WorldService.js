@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const { World } = require('../models/World');
 const { NotFound } = require('../errors/NotFound');
 const { Unauthorized } = require('../errors/Unauthorized');
@@ -11,11 +12,23 @@ class WorldService {
      *
      * @param {Object} world - The world object to be checked.
      * @throws {NotFound} If the world is not found.
-     * @returns {Object} The world object if found.
+     * @returns {Object} The world object if exists.
      */
     static assert(world) {
         if (!world) throw new NotFound('World not found!');
         return world;
+    }
+
+    /**
+     * Checks if the user exists.
+     *
+     * @param {Number} userId - The userId number to be checked.
+     * @throws {Unauthorized} If the userId is not found.
+     * @returns {Number} The userId if exists.
+     */
+    static assertUser(userId) {
+        if (!userId) throw new Unauthorized();
+        return userId;
     }
 
     /**
@@ -26,7 +39,7 @@ class WorldService {
      * @throws {Unauthorized} If the user is not the owner of the world.
      */
     static assertUserPermission(world, userId) {
-        if (world.user.id !== userId) {
+        if (!world.user.equals(userId)) {
             throw new Unauthorized('You do not have permission to access this world!');
         }
     }
@@ -39,6 +52,8 @@ class WorldService {
      * @returns {Object} The newly created world object.
      */
     static async create(data, userId) {
+        WorldService.assertUser(userId);
+
         const world = await World.create({
             name: data.name,
             description: data.description,
@@ -56,6 +71,8 @@ class WorldService {
      * @returns {Object} The world object.
      */
     static async getById(worldId, userId) {
+        WorldService.assertUser(userId);
+
         const world = await World.findById(worldId);
         WorldService.assert(world);
         WorldService.assertUserPermission(world, userId);
@@ -80,12 +97,14 @@ class WorldService {
      * @returns {Array<Object>} An array of world objects owned by the user.
      */
     static async getAllByUser(userId) {
+        WorldService.assertUser(userId);
+
         const worlds = await World.find({ user: userId }, '_id name createdAt updatedAt');
         return worlds;
     }
 
     /**
-     * Updates a world by its ID.
+     * Updates a world by ID.
      *
      * @param {string} worldId - The ID of the world to update.
      * @param {Object} data - The data to update the world with.
@@ -94,11 +113,33 @@ class WorldService {
      * @returns {Object} The updated world object.
      */
     static async updateById(worldId, data, userId) {
+        WorldService.assertUser(userId);
+
         const world = await World.findById(worldId);
         WorldService.assert(world);
         WorldService.assertUserPermission(world, userId);
 
-        const updatedWorld = await World.findByIdAndUpdate(worldId, data, { new: true }).populate('user', 'firstname email');
+        const updatedWorld = await World.findByIdAndUpdate(worldId, data, { new: true });
+        return updatedWorld;
+    }
+
+    /**
+     * Updates a world name by ID.
+     *
+     * @param {string} worldId - The ID of the world to update.
+     * @param {Object} data - The data to update the world with.
+     * @param {string} userId - The ID of the authenticated user.
+     * @throws {Unauthorized} If the user is not the owner of the world.
+     * @returns {Object} The updated world object.
+     */
+    static async updateNameById(worldId, data, userId) {
+        WorldService.assertUser(userId);
+
+        const world = await World.findById(worldId);
+        WorldService.assert(world);
+        WorldService.assertUserPermission(world, userId);
+
+        const updatedWorld = await World.findByIdAndUpdate(worldId, { name: data.name }, { new: true });
         return updatedWorld;
     }
 
@@ -110,6 +151,8 @@ class WorldService {
      * @throws {Unauthorized} If the user is not the owner of the world.
      */
     static async deleteById(worldId, userId) {
+        WorldService.assertUser(userId);
+
         const world = await World.findById(worldId);
         WorldService.assert(world);
         WorldService.assertUserPermission(world, userId);

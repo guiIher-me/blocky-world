@@ -60,12 +60,12 @@ class AuthService {
      */
     static async login(data) {
         const user = await User.findOne({ email: data.email }).select('+password');
-        this.assert(user);
+        AuthService.assert(user);
 
         const passwordMatch = await AuthUtil.compare(data.password, user.password);
         if (!passwordMatch) throw new Unauthorized('Invalid credentials');
 
-        return this.generateTokens(user);
+        return AuthService.generateTokens(user);
     }
 
     /**
@@ -75,11 +75,11 @@ class AuthService {
      * @static
      */
     static async refresh(data) {
-        const decoded = this.verifyRefreshToken(data.refreshToken);
-        const user = await User.findById(decoded.userId);
-        this.assert(user);
+        const decoded = AuthService.verifyRefreshToken(data.refreshToken);
+        const user = await User.findById(decoded.id);
+        AuthService.assert(user);
 
-        return this.generateAccessToken(user);
+        return AuthService.generateAccessToken(user);
     }
 
     /**
@@ -89,8 +89,8 @@ class AuthService {
      * @static
      */
     static generateTokens(user) {
-        const { accessToken, accessTokenExpiresAt } = this.generateAccessToken(user);
-        const { refreshToken, refreshTokenExpiresAt } = this.generateRefreshToken(user);
+        const { accessToken, accessTokenExpiresAt } = AuthService.generateAccessToken(user);
+        const { refreshToken, refreshTokenExpiresAt } = AuthService.generateRefreshToken(user);
 
         return {
             accessToken, accessTokenExpiresAt, refreshToken, refreshTokenExpiresAt,
@@ -106,7 +106,7 @@ class AuthService {
     static generateAccessToken(user) {
         const expiresIn = AuthService.accessTokenExpiresIn;
 
-        const payload = { userId: user._id, email: user.email };
+        const payload = { id: user._id, email: user.email };
         const accessToken = AuthUtil.sign(payload, expiresIn);
         const accessTokenExpiresAt = Math.floor(Date.now() / 1000) + expiresIn;
         return { accessToken, accessTokenExpiresAt };
@@ -121,7 +121,7 @@ class AuthService {
     static generateRefreshToken(user) {
         const expiresIn = AuthService.refreshTokenExpiresIn;
 
-        const payload = { userId: user._id };
+        const payload = { id: user._id };
         const refreshToken = AuthUtil.sign(payload, expiresIn);
         const refreshTokenExpiresAt = Math.floor(Date.now() / 1000) + expiresIn;
         return { refreshToken, refreshTokenExpiresAt };
