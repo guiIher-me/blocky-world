@@ -1,9 +1,9 @@
-const { UnprocessableContentError } = require('../errors/UnprocessableContentError');
+const { UnprocessableContent } = require('../errors/UnprocessableContent');
 
 const validate = (schema, params) => {
     const result = schema.validate(params);
     if (result.error) {
-        throw new UnprocessableContentError(result.error.details[0].message);
+        throw new UnprocessableContent(result.error.details[0].message);
     }
 };
 
