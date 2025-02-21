@@ -13,7 +13,8 @@ export default class WorldComponent extends Component {
         activeSlotBlock: PropTypes.object.isRequired,
         rotation: PropTypes.object.isRequired,
         position: PropTypes.object.isRequired,
-        classes: PropTypes.string
+        classes: PropTypes.string,
+        actions: PropTypes.object.isRequired
     }
 
     constructor(props) {
@@ -35,20 +36,29 @@ export default class WorldComponent extends Component {
         console.log(activeSlotBlock);
         const {x, y, z} = coordTarget;
         const key = `${x},${y},${z}`;
+        const position = `${x} ${y} ${z}`;
+
+        const blockpos = {
+            blockname: activeSlotBlock.name,
+            position,
+            states: [],
+        }
 
         await this.setState((prevState) => {
             return {
                 ...prevState,
                 [key]: {
                     randomkey: uuidv4(),
-                    position: `${x} ${y} ${z}`,
+                    active: true,
+
+                    position,
                     block: activeSlotBlock,
                     states: [],
-                    active: true,
                 },
             };
         });
 
+        this.props.actions.addBlock(blockpos);
         this.updateBlockNeighbors(coordTarget);
     }
 
@@ -91,6 +101,7 @@ export default class WorldComponent extends Component {
 
     render() {
         const { rotation, position, classes } = this.props;
+        
         const { WORLD_ID } = config;
         const world_style = {
             transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,

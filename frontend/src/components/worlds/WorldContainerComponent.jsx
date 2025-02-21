@@ -28,6 +28,7 @@ export default class WorldContainerComponent extends Component {
                     left: 70
                 }
             },
+            blockMap: {},
             activeSlotBlock: null,
             viewmode: false,
             inventoryOpened: false,
@@ -44,13 +45,28 @@ export default class WorldContainerComponent extends Component {
             }
         }
         
+        this.addBlock = this.addBlock.bind(this);
         this.changeActiveBlock = this.changeActiveBlock.bind(this);
         this.changeSelectSlotsBlock = this.changeSelectSlotsBlock.bind(this);
+        this.save = this.save.bind(this);
         this.updateWorldName = this.updateWorldName.bind(this);
         this.view360On = this.view360On.bind(this);
         this.view360Off = this.view360Off.bind(this);
         this.openInventory = this.openInventory.bind(this);
         this.closeInventory = this.closeInventory.bind(this);
+    }
+
+    setBlockMap() {
+        // TODO
+    }
+
+    addBlock(blockpos) {
+        console.log(blockpos)
+        console.log('logging add block worldCointainerComponent');
+
+        this.setState((prevState) => ({
+            blockMap: {...prevState.blockMap, [blockpos.position]: blockpos}
+        }));
     }
 
     changeActiveBlock(block) {
@@ -66,6 +82,7 @@ export default class WorldContainerComponent extends Component {
 
     save(event) {
         console.log("saving...");
+        console.log(this.state.blockMap)
         event.preventDefault();
     }
 
@@ -292,7 +309,7 @@ export default class WorldContainerComponent extends Component {
                     rotation={this.state.world.rotation}
                     position={this.state.world.position}
                     activeSlotBlock={this.state.activeSlotBlock}
-                    >
+                    actions={{addBlock: this.addBlock}}>
                 </WorldComponent>
 
                 <Footer slots={this.state.selectSlotsBlock}
