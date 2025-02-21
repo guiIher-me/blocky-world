@@ -21,6 +21,7 @@ router.post('/worlds', authMiddleware, (req, res) => BaseController.handle(req, 
 router.get('/worlds', authMiddleware, async (req, res) => BaseController.handle(req, res, WorldController.getAll));
 router.get('/worlds/:id', authMiddleware, async (req, res) => BaseController.handle(req, res, WorldController.getById));
 router.put('/worlds/:id', authMiddleware, async (req, res) => BaseController.handle(req, res, WorldController.update));
+router.patch('/worlds/:id/name', authMiddleware, async (req, res) => BaseController.handle(req, res, WorldController.updateName));
 router.delete('/worlds/:id', authMiddleware, async (req, res) => BaseController.handle(req, res, WorldController.delete));
 
 module.exports = router;

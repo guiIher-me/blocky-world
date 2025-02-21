@@ -4,7 +4,9 @@ require('../../utils/typedef');
 const { HttpResponse } = require('../../http/HttpResponse');
 const { WorldService } = require('../../services/WorldService');
 const { validate } = require('../../validation/validate');
-const { idSchema, createSchema, updateSchema } = require('./schemas');
+const {
+    idSchema, createSchema, updateSchema, nameSchema,
+} = require('./schemas');
 
 class WorldController {
     /**
@@ -16,7 +18,7 @@ class WorldController {
      */
     static async create(_, body, user) {
         validate(createSchema, body);
-        const world = WorldService.create(body, user.id);
+        const world = await WorldService.create(body, user.id);
         return HttpResponse.created(world);
     }
 
@@ -40,7 +42,7 @@ class WorldController {
      * @static
      */
     static async getById(params, body, user) {
-        validate(idSchema, body);
+        validate(idSchema, params);
         const world = await WorldService.getById(params.id, user.id);
         return HttpResponse.ok(world);
     }
@@ -56,6 +58,20 @@ class WorldController {
         validate(idSchema, params);
         validate(updateSchema, body);
         const world = await WorldService.updateById(params.id, body, user.id);
+        return HttpResponse.ok(world);
+    }
+
+    /**
+     * Update name world by id
+     * @param {Object} params
+     * @param {Object} body
+     * @returns {HttpResponseData}
+     * @static
+     */
+    static async updateName(params, body, user) {
+        validate(idSchema, params);
+        validate(nameSchema, body);
+        const world = await WorldService.updateNameById(params.id, body, user.id);
         return HttpResponse.ok(world);
     }
 
