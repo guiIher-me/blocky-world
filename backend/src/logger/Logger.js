@@ -8,19 +8,20 @@ class Logger {
     }
 
     static async log(message) {
-        return Logger.message(`${message}`, LOGTYPE.LOG);
+        Logger.message(`${message}`, LOGTYPE.LOG);
     }
 
     static async info(message) {
-        return Logger.message(`${message}`, LOGTYPE.INFO);
+        Logger.message(`${message}`, LOGTYPE.INFO);
     }
 
     static async warn(message) {
-        return Logger.message(`${message}`, LOGTYPE.WARNING);
+        Logger.message(`${message}`, LOGTYPE.WARNING);
     }
 
     static async error(message) {
-        return Logger.message(`${message}`, LOGTYPE.ERROR);
+        Logger.message(`${message}`, LOGTYPE.ERROR);
+        console.error(message);
     }
 }
 
