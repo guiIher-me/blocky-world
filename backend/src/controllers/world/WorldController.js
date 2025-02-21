@@ -14,9 +14,9 @@ class WorldController {
      * @returns {HttpResponseData}
      * @static
      */
-    static async create(_, body) {
+    static async create(_, body, user) {
         validate(createSchema, body);
-        const world = WorldService.create(body);
+        const world = WorldService.create(body, user.id);
         return HttpResponse.created(world);
     }
 
@@ -27,8 +27,8 @@ class WorldController {
      * @returns {HttpResponseData}
      * @static
      */
-    static async getAll(params, body) {
-        const worlds = await WorldService.getAll();
+    static async getAll(params, body, user) {
+        const worlds = await WorldService.getAllByUser(user.id);
         return HttpResponse.ok(worlds);
     }
 
@@ -39,9 +39,9 @@ class WorldController {
      * @returns {HttpResponseData}
      * @static
      */
-    static async getById(params, body) {
+    static async getById(params, body, user) {
         validate(idSchema, body);
-        const world = await WorldService.getById(params.id);
+        const world = await WorldService.getById(params.id, user.id);
         return HttpResponse.ok(world);
     }
 
@@ -52,10 +52,10 @@ class WorldController {
      * @returns {HttpResponseData}
      * @static
      */
-    static async update(params, body) {
+    static async update(params, body, user) {
         validate(idSchema, params);
         validate(updateSchema, body);
-        const world = await WorldService.updateById(params.id, body);
+        const world = await WorldService.updateById(params.id, body, user.id);
         return HttpResponse.ok(world);
     }
 
@@ -66,9 +66,9 @@ class WorldController {
      * @returns {HttpResponseData}
      * @static
      */
-    static async delete(params, _) {
+    static async delete(params, _, user) {
         validate(idSchema, params);
-        await WorldService.deleteById(params.id);
+        await WorldService.deleteById(params.id, user.id);
         return HttpResponse.okNoContent();
     }
 }

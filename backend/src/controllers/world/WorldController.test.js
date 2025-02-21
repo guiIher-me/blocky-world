@@ -1,6 +1,6 @@
 const { WorldController } = require('./WorldController');
 const { HttpResponse } = require('../../http/HttpResponse');
-const { World } = require('../../models/world');
+const { World } = require('../../models/World');
 
 jest.mock('../../models/world', () => ({
     World: {
