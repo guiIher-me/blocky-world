@@ -7,6 +7,8 @@ services:
     container_name: blockyworld-backend-mongodb
 
   blockyworld-backend-server:
+    env_file:
+      - .env
     build:
       context: .
     ports:
