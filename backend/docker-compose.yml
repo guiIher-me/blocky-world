@@ -16,3 +16,7 @@ services:
     depends_on:
       - blockyworld-backend-mongodb
     container_name: blockyworld-backend-server
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
