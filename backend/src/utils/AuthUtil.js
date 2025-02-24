@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 const { Unauthorized } = require('../errors/Unauthorized');
+const { UserRoleEnum } = require('../enums/UserRoleEnum');
 
 class AuthUtil {
     static async getHash(password) {
@@ -33,6 +34,15 @@ class AuthUtil {
         const token = authorization.replace('Bearer ', '');
         const decoded = AuthUtil.verify(token);
         return decoded;
+    }
+
+    static isTokenOwner(token, user) {
+        const decoded = AuthUtil.verify(token);
+        return decoded.id === user.id;
+    }
+
+    static isAdmin(user) {
+        return user?.role === UserRoleEnum.ADMIN;
     }
 }
 

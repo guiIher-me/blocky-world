@@ -1,7 +1,10 @@
 const { HttpResponse } = require('../../http/HttpResponse');
 const { AuthService } = require('../../services/AuthService');
 const { validate } = require('../../validation/validate');
-const { registerSchema, loginSchema, refreshSchema } = require('./schemas');
+
+const {
+    idSchema, registerSchema, loginSchema, refreshSchema, tokenSchema,
+} = require('./schemas');
 
 class AuthController {
     /**
@@ -41,6 +44,23 @@ class AuthController {
         validate(refreshSchema, body);
         const { accessToken, accessTokenExpiresAt } = await AuthService.refresh(body);
         return HttpResponse.ok({ accessToken, accessTokenExpiresAt });
+    }
+
+    static async logout(_, body, user) {
+        await AuthService.logout(user.id);
+        return HttpResponse.okNoContent();
+    }
+
+    static async revoke(_, body, user) {
+        validate(tokenSchema, body);
+        await AuthService.revoke(body.token, user);
+        return HttpResponse.okNoContent();
+    }
+
+    static async promote(_, body) {
+        validate(idSchema, body);
+        await AuthService.promote(body.id);
+        return HttpResponse.okNoContent();
     }
 }
 

@@ -8,7 +8,9 @@ const { User } = require('../models/User');
 const { Conflict } = require('../errors/Conflict');
 const { NotFound } = require('../errors/NotFound');
 const { Unauthorized } = require('../errors/Unauthorized');
+const { UserRoleEnum } = require('../enums/UserRoleEnum');
 const { AuthUtil } = require('../utils/AuthUtil');
+const { UnprocessableContent } = require('../errors/UnprocessableContent');
 
 /**
  * @class AuthService
@@ -21,6 +23,15 @@ class AuthService {
     static assert(user) {
         if (!user) throw new NotFound('User not found!');
         return user;
+    }
+
+    static assertOwnerOrAdmin(token, user) {
+        try {
+            if (!AuthUtil.isTokenOwner(token, user) && !AuthUtil.isAdmin(user)) throw new Unauthorized();
+            return user;
+        } catch (error) {
+            throw new UnprocessableContent('Invalid token!');
+        }
     }
 
     /**
@@ -43,6 +54,7 @@ class AuthService {
             lastname: data.lastname,
             email: data.email,
             password: hashedPassword,
+            role: UserRoleEnum.USER,
         });
 
         await user.save();
@@ -68,6 +80,13 @@ class AuthService {
         return AuthService.generateTokens(user);
     }
 
+    static async logout(userId) {
+        const userFound = await User.findById(userId);
+        AuthService.assert(userFound);
+
+        console.log('logouting user ', userId);
+    }
+
     /**
      * Refresh an existing user session with a new access token
      * @param {Object} data - Refresh token data (refreshToken).
@@ -80,6 +99,24 @@ class AuthService {
         AuthService.assert(user);
 
         return AuthService.generateAccessToken(user);
+    }
+
+    static async revoke(token, user) {
+        AuthService.assertOwnerOrAdmin(token, user);
+        console.log('revoking', token);
+    }
+
+    static async promote(userId, user) {
+        console.log('promoting', userId);
+    }
+
+    static async promoteToAdmin(userId, user) {
+        const userFound = await User.findById(userId);
+        AuthService.assert(userFound);
+
+        if (userFound.role === UserRoleEnum.ADMIN) throw new UnprocessableContent('User is already admin!');
+
+        await User.findOneAndUpdate(userId, { role: UserRoleEnum.ADMIN });
     }
 
     /**
@@ -106,7 +143,7 @@ class AuthService {
     static generateAccessToken(user) {
         const expiresIn = AuthService.accessTokenExpiresIn;
 
-        const payload = { id: user._id, email: user.email };
+        const payload = { id: user._id, email: user.email, role: user.role };
         const accessToken = AuthUtil.sign(payload, expiresIn);
         const accessTokenExpiresAt = Math.floor(Date.now() / 1000) + expiresIn;
         return { accessToken, accessTokenExpiresAt };

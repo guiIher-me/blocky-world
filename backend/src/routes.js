@@ -4,6 +4,7 @@ const router = express.Router();
 const { AuthController } = require('./controllers/auth/AuthController');
 const { WorldController } = require('./controllers/world/WorldController');
 const { BaseController } = require('./controllers/BaseController');
+const { adminMiddleware } = require('./middlewares/adminMiddleware');
 const { authMiddleware } = require('./middlewares/authMiddleware');
 
 // Health Check
@@ -15,6 +16,11 @@ router.get('/ping', async (_, res) => {
 router.post('/register', (req, res) => BaseController.handle(req, res, AuthController.register));
 router.post('/login', (req, res) => BaseController.handle(req, res, AuthController.login));
 router.post('/refresh', (req, res) => BaseController.handle(req, res, AuthController.refresh));
+router.post('/logout', authMiddleware, (req, res) => BaseController.handle(req, res, AuthController.logout));
+
+// Admin
+router.post('/admin/revoke', adminMiddleware, (req, res) => BaseController.handle(req, res, AuthController.revoke));
+router.post('/admin/promote', adminMiddleware, (req, res) => BaseController.handle(req, res, AuthController.promote));
 
 // Worlds
 router.post('/worlds', authMiddleware, (req, res) => BaseController.handle(req, res, WorldController.create));
