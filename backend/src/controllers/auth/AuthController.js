@@ -47,7 +47,7 @@ class AuthController {
     }
 
     static async logout(_, body, user) {
-        await AuthService.logout(user.id);
+        await AuthService.logout(user);
         return HttpResponse.okNoContent();
     }
 

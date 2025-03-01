@@ -11,6 +11,7 @@ const { Unauthorized } = require('../errors/Unauthorized');
 const { UserRoleEnum } = require('../enums/UserRoleEnum');
 const { AuthUtil } = require('../utils/AuthUtil');
 const { UnprocessableContent } = require('../errors/UnprocessableContent');
+const { TokenBlacklist } = require('../cache/TokenBlackList');
 
 /**
  * @class AuthService
@@ -80,11 +81,10 @@ class AuthService {
         return AuthService.generateTokens(user);
     }
 
-    static async logout(userId) {
-        const userFound = await User.findById(userId);
+    static async logout(user) {
+        const userFound = await User.findById(user.id);
         AuthService.assert(userFound);
-
-        console.log('logouting user ', userId);
+        await AuthService.revoke(user.token, user);
     }
 
     /**
@@ -102,8 +102,13 @@ class AuthService {
     }
 
     static async revoke(token, user) {
-        AuthService.assertOwnerOrAdmin(token, user);
-        console.log('revoking', token);
+        try {
+            AuthService.assertOwnerOrAdmin(token, user);
+            const expiresIn = AuthUtil.getTokenExpiration(token);
+            await TokenBlacklist.add(token, expiresIn);
+        } catch (error) {
+            throw new UnprocessableContent(error.message);
+        }
     }
 
     static async promote(userId, user) {

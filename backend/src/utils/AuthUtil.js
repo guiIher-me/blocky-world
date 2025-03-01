@@ -24,16 +24,32 @@ class AuthUtil {
         return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn });
     }
 
-    static getDecodedToken(req) {
+    static getToken(req) {
         const { authorization } = req.headers || null;
-
-        if (!authorization) {
-            throw new Unauthorized('Authentication token not provided');
-        }
+        if (!authorization) throw new Unauthorized('Authentication token not provided');
 
         const token = authorization.replace('Bearer ', '');
+        return token;
+    }
+
+    static getDecodedToken(req) {
+        const token = AuthUtil.getToken(req);
         const decoded = AuthUtil.verify(token);
         return decoded;
+    }
+
+    static getTokenExpiration(token) {
+        try {
+            const decoded = jwt.decode(token);
+            if (!decoded || !decoded.exp) {
+                throw new Error('Invalid token: missing expiration claim.');
+            }
+
+            const now = Math.floor(Date.now() / 1000);
+            return Math.max(decoded.exp - now, 0);
+        } catch (error) {
+            throw new Error('Invalid token');
+        }
     }
 
     static isTokenOwner(token, user) {

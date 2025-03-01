@@ -1,16 +1,22 @@
 /* eslint-disable import/order */
 /* eslint-disable import/no-extraneous-dependencies */
 
+const { TokenBlacklist } = require('../cache/TokenBlackList');
 const { Unauthorized } = require('../errors/Unauthorized');
 const { AuthUtil } = require('../utils/AuthUtil');
 
-const authMiddleware = (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
     try {
-        const decoded = AuthUtil.getDecodedToken(req);
-        req.user = decoded;
+        const token = AuthUtil.getToken(req);
+        const decoded = AuthUtil.verify(token);
+
+        const blacklist = await TokenBlacklist.exists(token);
+        if (blacklist) throw new Unauthorized();
+
+        req.user = { token, ...decoded };
         next();
     } catch (err) {
-        throw new Unauthorized('Invalid or Expired Token');
+        next(new Unauthorized('Invalid or Expired Token'));
     }
 };
 
