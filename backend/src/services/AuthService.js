@@ -12,20 +12,37 @@ const { UserRoleEnum } = require('../enums/UserRoleEnum');
 const { AuthUtil } = require('../utils/AuthUtil');
 const { UnprocessableContent } = require('../errors/UnprocessableContent');
 const { TokenBlacklist } = require('../cache/TokenBlackList');
+require('dotenv').config();
 
 /**
  * @class AuthService
  * @description Service responsible for user authentication and authorization actions.
  */
 class AuthService {
-    static accessTokenExpiresIn = 15 * 60; // 15m
-    static refreshTokenExpiresIn = 1 * 24 * 60 * 60; // 1d
-
+    /**
+     * Asserts that the provided user exists.
+     * Throws a `NotFound` error if the user is not found.
+     *
+     * @param {Object|null} user - The user object to be checked.
+     * @throws {NotFound} If the user is not found.
+     * @returns {Object} The validated user object.
+     */
     static assert(user) {
         if (!user) throw new NotFound('User not found!');
         return user;
     }
 
+    /**
+     * Checks if the provided token belongs to the user or if the user has admin privileges.
+     * Throws an `Unauthorized` error if the user is neither the token owner nor an admin.
+     * If an error occurs during validation, throws an `UnprocessableContent` error.
+     *
+     * @param {string} token - The authentication token to be validated.
+     * @param {Object} user - The user object to be validated.
+     * @throws {Unauthorized} If the user is not the token owner and not an admin.
+     * @throws {UnprocessableContent} If the token validation fails.
+     * @returns {Object} The validated user object.
+     */
     static assertOwnerOrAdmin(token, user) {
         try {
             if (!AuthUtil.isTokenOwner(token, user) && !AuthUtil.isAdmin(user)) throw new Unauthorized();
@@ -81,6 +98,15 @@ class AuthService {
         return AuthService.generateTokens(user);
     }
 
+    /**
+     * Logs out the user by revoking their authentication token.
+     *
+     * @param {Object} user - The user object containing authentication details.
+     * @param {string} user.id - The ID of the user to be logged out.
+     * @param {string} user.token - The authentication token of the user.
+     * @throws {NotFound} If the user is not found.
+     * @returns {Promise<void>} Resolves when the logout process is complete.
+     */
     static async logout(user) {
         const userFound = await User.findById(user.id);
         AuthService.assert(userFound);
@@ -101,6 +127,15 @@ class AuthService {
         return AuthService.generateAccessToken(user);
     }
 
+    /**
+     * Revokes a user's authentication token by adding it to a blacklist.
+     *
+     * @param {string} token - The authentication token to be revoked.
+     * @param {Object} user - The user object performing the revocation.
+     * @throws {Unauthorized} If the user is not the token owner and not an admin.
+     * @throws {UnprocessableContent} If an error occurs during the revocation process.
+     * @returns {Promise<void>} Resolves when the token has been successfully revoked.
+     */
     static async revoke(token, user) {
         try {
             AuthService.assertOwnerOrAdmin(token, user);
@@ -111,17 +146,21 @@ class AuthService {
         }
     }
 
-    static async promote(userId, user) {
-        console.log('promoting', userId);
-    }
-
-    static async promoteToAdmin(userId, user) {
+    /**
+     * Promotes a user to an admin role.
+     *
+     * @param {string} userId - The ID of the user to be promoted.
+     * @throws {NotFound} If the user is not found.
+     * @throws {UnprocessableContent} If the user is already an admin.
+     * @returns {Promise<void>} Resolves when the user's role has been successfully updated.
+     */
+    static async promote(userId) {
         const userFound = await User.findById(userId);
         AuthService.assert(userFound);
 
         if (userFound.role === UserRoleEnum.ADMIN) throw new UnprocessableContent('User is already admin!');
 
-        await User.findOneAndUpdate(userId, { role: UserRoleEnum.ADMIN });
+        await User.findOneAndUpdate({ _id: userId }, { role: UserRoleEnum.ADMIN }, { new: true });
     }
 
     /**
@@ -146,7 +185,7 @@ class AuthService {
      * @static
      */
     static generateAccessToken(user) {
-        const expiresIn = AuthService.accessTokenExpiresIn;
+        const expiresIn = process.env.ACCESS_TOKEN_EXPIRATION;
 
         const payload = { id: user._id, email: user.email, role: user.role };
         const accessToken = AuthUtil.sign(payload, expiresIn);
@@ -161,7 +200,7 @@ class AuthService {
      * @static
      */
     static generateRefreshToken(user) {
-        const expiresIn = AuthService.refreshTokenExpiresIn;
+        const expiresIn = process.env.REFRESH_TOKEN_EXPIRATION;
 
         const payload = { id: user._id };
         const refreshToken = AuthUtil.sign(payload, expiresIn);

@@ -46,17 +46,41 @@ class AuthController {
         return HttpResponse.ok({ accessToken, accessTokenExpiresAt });
     }
 
+    /**
+     * Logs out the current user by invalidating their authentication session.
+     *
+     * @param {Object} params
+     * @param {Object} body
+     * @param {Object} user
+     * @returns {Promise<Object>} An HTTP response with no content.
+     */
     static async logout(_, body, user) {
         await AuthService.logout(user);
         return HttpResponse.okNoContent();
     }
 
+    /**
+     * Revokes a user's authentication token.
+     *
+     * @param {Object} params
+     * @param {Object} body
+     * @param {Object} user
+     * @returns {Promise<Object>} An HTTP response with no content.
+     */
     static async revoke(_, body, user) {
         validate(tokenSchema, body);
         await AuthService.revoke(body.token, user);
         return HttpResponse.okNoContent();
     }
 
+    /**
+     * Promotes a user to a higher privilege level.
+     *
+     * @param {Object} params.
+     * @param {Object} body
+     * @param {string} body.id - The ID of the user to be promoted.
+     * @returns {Promise<Object>} An HTTP response with no content.
+     */
     static async promote(_, body) {
         validate(idSchema, body);
         await AuthService.promote(body.id);
