@@ -9,7 +9,7 @@ const { NotFound } = require('../errors/NotFound');
  * @returns {void}
  */
 const notFoundMiddleware = (req, res, next) => {
-    throw new NotFound('Route not found!');
+    next(new NotFound('Route not found!'));
 };
 
 module.exports = { notFoundMiddleware };
