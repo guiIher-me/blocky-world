@@ -10,6 +10,10 @@ const WorldSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
     },
+    zoom: {
+        type: Number,
+        default: 1.0,
+    },
     rotation: {
         x: {
             type: Number,

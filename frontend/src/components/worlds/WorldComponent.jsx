@@ -11,7 +11,8 @@ export default class WorldComponent extends Component {
 
     static propTypes = {
         activeSlotBlock: PropTypes.object.isRequired,
-        rotation: PropTypes.object.isRequired,
+        zoom: PropTypes.object.isRequired,
+        rotation: PropTypes.number.isRequired,
         position: PropTypes.object.isRequired,
         classes: PropTypes.string,
         actions: PropTypes.object.isRequired
@@ -100,11 +101,11 @@ export default class WorldComponent extends Component {
     }
 
     render() {
-        const { rotation, position, classes } = this.props;
+        const { zoom, rotation, position, classes } = this.props;
         
         const { WORLD_ID } = config;
         const world_style = {
-            transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+            transform: `scale(${zoom}) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
             top: position.top,
             left: position.left,
         };
