@@ -7,16 +7,16 @@ import WorldContainerComponent from './WorldContainerComponent';
 
 export default class App {
 
-    static async render(blockpositions) {
-        await WorldBlockMap.setBlockMap(blockpositions);
-        App.renderWorld();
-    }
+    // static async render(blockpositions) {
+    //     await WorldBlockMap.setBlockMap(blockpositions);
+    //     App.renderWorld();
+    // }
 
-    static renderWorld() {
-        const { APP_ID } = config;
+    // static renderWorld() {
+    //     const { APP_ID } = config;
 
-        const app_container = document.getElementById(APP_ID);
-        const world_container = <WorldContainerComponent />       
-        ReactDOM.createRoot(app_container).render(world_container);
-    }
+    //     const app_container = document.getElementById(APP_ID);
+    //     const world_container = <WorldContainerComponent />       
+    //     ReactDOM.createRoot(app_container).render(world_container);
+    // }
 }
