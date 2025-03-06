@@ -3,6 +3,7 @@ import blockModelBars from './blockModelBars';
 import blockModelDefault from './blockModelDefault';
 import blockModelSide from './blockModelSide';
 import blockModelSlab from './blockModelSlab';
+import blockModelStairs from './blockModelStairs';
 import blockModelWall from './blockModelWall'
 import blockModelX from './blockModelX';
 import blockModelsEnum from './blockModelsEnum';
@@ -19,6 +20,8 @@ export default (block) => {
         return blockModelSide(blockname);
     if (model == blockModelsEnum.Slab)
         return blockModelSlab(blockname);
+    if (model == blockModelsEnum.Stairs)
+        return blockModelStairs(blockname);
     if (model == blockModelsEnum.Wall)
         return blockModelWall(blockname);
     if (model == blockModelsEnum.X)

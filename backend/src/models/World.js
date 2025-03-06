@@ -1,9 +1,18 @@
 const mongoose = require('mongoose');
 
-const worldSchema = new mongoose.Schema({
+const WorldSchema = new mongoose.Schema({
     name: {
         type: String,
         trim: true,
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
+    zoom: {
+        type: Number,
+        default: 1.0,
     },
     rotation: {
         x: {
@@ -82,10 +91,11 @@ const worldSchema = new mongoose.Schema({
                 block: 'grass-block',
             },
         ],
+        _id: false,
     },
 
 }, { timestamps: true });
 
-const World = mongoose.model('World', worldSchema);
+const World = mongoose.model('World', WorldSchema);
 
 module.exports = { World };

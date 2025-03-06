@@ -1,19 +1,37 @@
 const express = require('express');
 
 const router = express.Router();
+const { AuthController } = require('./controllers/auth/AuthController');
 const { WorldController } = require('./controllers/world/WorldController');
-const { BaseController } = require('./controllers/BaseController');
+const { adminMiddleware } = require('./middlewares/adminMiddleware');
+const { authMiddleware } = require('./middlewares/authMiddleware');
+const { routeHandle } = require('./utils/routeHandle');
+
+// Health Check
+router.get('/ping', async (_, res) => {
+    res.status(200).json({ message: 'pong!' });
+});
+
+// Auth
+router.post('/register', routeHandle(AuthController.register));
+router.post('/login', routeHandle(AuthController.login));
+router.post('/refresh', routeHandle(AuthController.refresh));
+router.post('/logout', authMiddleware, routeHandle(AuthController.logout));
+
+// Admin
+router.post('/admin/revoke', adminMiddleware, routeHandle(AuthController.revoke));
+router.post('/admin/promote', adminMiddleware, routeHandle(AuthController.promote));
 
 // Worlds
-router.post('/worlds', (req, res) => BaseController.handle(req, res, WorldController.create));
-router.get('/worlds', async (req, res) => BaseController.handle(req, res, WorldController.getAll));
-router.get('/worlds/:id', async (req, res) => BaseController.handle(req, res, WorldController.getById));
-router.put('/worlds/:id', async (req, res) => BaseController.handle(req, res, WorldController.update));
-router.delete('/worlds/:id', async (req, res) => BaseController.handle(req, res, WorldController.delete));
+router.route('/worlds')
+    .post(authMiddleware, routeHandle(WorldController.create))
+    .get(authMiddleware, routeHandle(WorldController.getAll));
 
-// Test
-router.get('/', async (req, res) => {
-    res.status(200).json({ message: "It's Working!" });
-});
+router.route('/worlds/:id')
+    .get(authMiddleware, routeHandle(WorldController.getById))
+    .put(authMiddleware, routeHandle(WorldController.update))
+    .delete(authMiddleware, routeHandle(WorldController.delete));
+
+router.patch('/worlds/:id/name', authMiddleware, routeHandle(WorldController.updateName));
 
 module.exports = router;

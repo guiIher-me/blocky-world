@@ -334,6 +334,59 @@ nav.navigation {
     height: var(--half-block-px-size);
 }
 
+/* Slab Faces */
+.block .faces-stairs .face-top-up,
+.block .faces-stairs .face-top-down,
+.block .faces-stairs .face-south-up,
+.block .faces-stairs .face-south-down,
+.block .faces-stairs .face-west-up,
+.block .faces-stairs .face-west-down,
+.block .faces-stairs .face-east-up,
+.block .faces-stairs .face-east-down {
+    height: var(--half-block-px-size);
+    background-size: unset;
+}
+
+.block .faces-stairs .face-top-up {
+    transform: translateZ(calc(-1 * var(--half-half-block-px-size))) translateY(calc(-1 * var(--half-half-block-px-size))) rotateX(90deg);
+    background-position: top;
+}
+
+.block .faces-stairs .face-top-down {
+    transform: translateZ(var(--half-half-block-px-size)) translateY(var(--half-half-block-px-size)) rotateX(90deg);
+    background-position: bottom;
+}
+
+.block .faces-stairs .face-south-down {
+    transform: rotateY(0deg) translateZ(var(--half-block-px-size)) translateY(var(--half-block-px-size));
+    background-position: bottom;
+    background-blend-mode: darken;
+}
+
+.block .faces-stairs .face-west-up {
+    transform: translateZ(calc(-1 * var(--half-half-block-px-size))) translateX(calc(-1 * var(--half-half-block-px-size))) rotateY(90deg);
+    width: var(--half-block-px-size);
+    background-position: top;
+}
+
+.block .faces-stairs .face-west-down {
+    transform: rotateY(-90deg) translateZ(var(--half-block-px-size)) translateY(var(--half-block-px-size));
+    background-position: bottom;
+}
+
+.block .faces-stairs .face-east-up {
+    transform: translateZ(calc(-1 * var(--half-half-block-px-size))) translateX(calc(1.5 * var(--half-block-px-size))) rotateY(90deg);
+    width: var(--half-block-px-size);
+    background-position: top;
+    background-blend-mode: darken;
+}
+
+.block .faces-stairs .face-east-down {
+    transform: rotateY(90deg) translateZ(var(--half-block-px-size)) translateY(var(--half-block-px-size));
+    background-position: bottom;
+    background-blend-mode: darken;
+}
+
 
 /* X Faces */
 

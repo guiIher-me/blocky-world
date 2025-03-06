@@ -2,7 +2,6 @@
 const Joi = require('joi');
 
 module.exports = Joi.object({
-    name: Joi.string().min(3).max(30).trim().required(),
 
     rotation: Joi.object({
         x: Joi.number().min(0).max(365).required(),

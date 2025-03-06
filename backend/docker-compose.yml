@@ -6,11 +6,25 @@ services:
       - "27017:27017"
     container_name: blockyworld-backend-mongodb
 
+  blockyworld-backend-redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    container_name: blockyworld-backend-redis
+
   blockyworld-backend-server:
+    env_file:
+      - .env
     build:
       context: .
     ports:
       - "3001:3001"
     depends_on:
       - blockyworld-backend-mongodb
+      - blockyworld-backend-redis
     container_name: blockyworld-backend-server
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev

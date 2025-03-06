@@ -1,20 +1,19 @@
-# Use a imagem base do Node.js versão 16
-FROM node:16
+FROM node:18
 
-# Defina o diretório de trabalho dentro do contêiner
-WORKDIR /usr/src/app
+# Define o diretório de trabalho dentro do container
+WORKDIR /app
 
-# Copie o package.json e package-lock.json para o diretório de trabalho
+# Copia apenas os arquivos de dependências
 COPY package*.json ./
 
-# Instale as dependências
+# Instala as dependências
 RUN npm install
 
-# Copie o restante dos arquivos, incluindo src/, para o diretório de trabalho
+# Copia o restante do código para dentro do container
 COPY . .
 
-# Exponha a porta definida no arquivo .env
+# Expõe a porta da aplicação
 EXPOSE 3001
 
-# Comando para iniciar o aplicativo
+# Comando padrão (será sobrescrito pelo docker-compose)
 CMD ["npm", "start"]

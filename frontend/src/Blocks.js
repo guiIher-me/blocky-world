@@ -4,6 +4,7 @@ import BlockBuilding from './blocks/BlockBuilding';
 import blockModelsEnum from './blocks/models/blockModelsEnum';
 import BlockWall from './blocks/BlockWall';
 import BlockSlab from './blocks/BlockSlab';
+import BlockStairs from './blocks/BlockStairs';
 import BlockX from './blocks/BlockX';
 import BStates from './BlockStates';
 import ItemCat from './ItemCategories';
@@ -39,5 +40,6 @@ export default {
     StoneBricksSlab: ( new BlockSlab('stone-bricks') ),
     StoneBricksWall: ( new BlockWall('stone-bricks') ),
     DioriteWall: ( new BlockWall('diorite') ),
+    StoneBricksStairs: ( new BlockStairs('stone-bricks') ),
     IronBars: ( new Block('iron-bars').setModel(blockModelsEnum.Bars).setTransparency(true).setStates([BStates.FacingXZ]) ),
 }

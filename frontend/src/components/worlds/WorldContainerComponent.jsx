@@ -6,7 +6,7 @@ import Navigation from '../menu/Navigation';
 import Footer from '../menu/Footer';
 import Inventory from '../guis/inventory/Inventory';
 
-const { WORLD_CONTAINER_ID, WORLD_INITIAL_ROTATION_X, WORLD_INITIAL_ROTATION_Y } = config;
+const { WORLD_CONTAINER_ID, WORLD_INITIAL_ZOOM, WORLD_INITIAL_ROTATION_X, WORLD_INITIAL_ROTATION_Y } = config;
 
 export default class WorldContainerComponent extends Component {
 
@@ -19,6 +19,7 @@ export default class WorldContainerComponent extends Component {
                 name: "Ancient Castle",
                 active: true,
                 actionAxis: null,
+                zoom: WORLD_INITIAL_ZOOM,
                 rotation: {
                     x: WORLD_INITIAL_ROTATION_X,
                     y: WORLD_INITIAL_ROTATION_Y
@@ -28,6 +29,7 @@ export default class WorldContainerComponent extends Component {
                     left: 70
                 }
             },
+            blockMap: {},
             activeSlotBlock: null,
             viewmode: false,
             inventoryOpened: false,
@@ -44,13 +46,29 @@ export default class WorldContainerComponent extends Component {
             }
         }
         
+        this.addBlock = this.addBlock.bind(this);
         this.changeActiveBlock = this.changeActiveBlock.bind(this);
         this.changeSelectSlotsBlock = this.changeSelectSlotsBlock.bind(this);
+        this.setZoom = this.setZoom.bind(this);
+        this.save = this.save.bind(this);
         this.updateWorldName = this.updateWorldName.bind(this);
         this.view360On = this.view360On.bind(this);
         this.view360Off = this.view360Off.bind(this);
         this.openInventory = this.openInventory.bind(this);
         this.closeInventory = this.closeInventory.bind(this);
+    }
+
+    setBlockMap() {
+        // TODO
+    }
+
+    addBlock(blockpos) {
+        console.log(blockpos)
+        console.log('logging add block worldCointainerComponent');
+
+        this.setState((prevState) => ({
+            blockMap: {...prevState.blockMap, [blockpos.position]: blockpos}
+        }));
     }
 
     changeActiveBlock(block) {
@@ -66,6 +84,7 @@ export default class WorldContainerComponent extends Component {
 
     save(event) {
         console.log("saving...");
+        console.log(this.state.blockMap)
         event.preventDefault();
     }
 
@@ -178,7 +197,22 @@ export default class WorldContainerComponent extends Component {
         }));
     }
 
-    setRotation(event) {            
+    setZoom(event) {
+        let ammount = 0.05;
+
+        if (event.deltaY > 0) { //Zoom Out
+            ammount = -0.05;
+        }
+        
+        this.setState((prevState) => ({
+            world: {
+                ...prevState.world,
+                zoom: prevState.world.zoom + ammount
+            }
+        }));
+    }
+
+    setRotation(event) {
         if (this.state.world.actionAxis == 'X')
             return this.setRotationX(event.movementX);
         
@@ -229,6 +263,7 @@ export default class WorldContainerComponent extends Component {
     }
 
     componentDidMount() {
+        listeners.CtrlWheelListener.subscribe("worldcontainer-zoom", this.setZoom);
         listeners.EKeyListener.subscribe("worldcontainer-open-inventory", this.openInventory);
         listeners.EKeyListener.subscribe("worldcontainer-close-inventory", this.closeInventory);
         listeners.SaveListener.subscribe("worldcontainer-save", this.save);
@@ -239,6 +274,7 @@ export default class WorldContainerComponent extends Component {
     }
 
     componentWillUnmount() {
+        listeners.CtrlWheelListener.unsubscribe("worldcontainer-zoom");
         listeners.EKeyListener.unsubscribe("worldcontainer-open-inventory");
         listeners.EKeyListener.unsubscribe("worldcontainer-close-inventory");
         listeners.SaveListener.unsubscribe("worldcontainer-save");
@@ -289,10 +325,12 @@ export default class WorldContainerComponent extends Component {
                     classes={
                         `${this.state.viewmode ? 'infinite-rotating--animation' : ''}`
                     }
+
+                    zoom={this.state.world.zoom}
                     rotation={this.state.world.rotation}
                     position={this.state.world.position}
                     activeSlotBlock={this.state.activeSlotBlock}
-                    >
+                    actions={{addBlock: this.addBlock}}>
                 </WorldComponent>
 
                 <Footer slots={this.state.selectSlotsBlock}

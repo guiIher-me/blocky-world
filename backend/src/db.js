@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { Logger } = require('./logger/Logger');
 require('dotenv').config();
 
 /**
@@ -14,7 +15,7 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Erro na conexão com o MongoDB:'));
 
 db.once('open', () => {
-    console.log('Conectado ao MongoDB');
+    Logger.info(`Database MongoDB ON [PORT: ${process.env.DATABASE_PORT}]`);
 });
 
 process.on('SIGINT', () => {

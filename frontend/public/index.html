@@ -3,24 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel='stylesheet' type='text/css' media='screen' href='./css/main.css'>
-    <title>Castle Block - World</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/main.css">
+    <title>Blocky World</title>
   </head>
 
-  <body id="App">
+  <body>
+    <div id="root"></div>
 
-    <div id="axis-container">
+    <!-- <div id="axis-container">
         <div class="axis-coord axis-x"></div>
         <div class="axis-coord axis-y"></div>
         <div class="axis-coord axis-z"></div>
-    </div>
+    </div> -->
 
-    <script src="./js/main.js"></script>
-
-    <script>
-        new EventSource('/esbuild').addEventListener('change', () =>
-          location.reload(),
-        );
-    </script>
+    <script type="module" src="./js/main.js"></script>
   </body>
 </html>

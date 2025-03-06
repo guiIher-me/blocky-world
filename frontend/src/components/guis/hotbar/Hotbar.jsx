@@ -36,7 +36,6 @@ export default class Hotbar extends Component {
     }
 
     changeActiveSlotByWheel(event) {
-        event.preventDefault();
         const delta = event.deltaY > 0 ? 1 : -1;
         const number = this.state.activeSlot + delta;
 
