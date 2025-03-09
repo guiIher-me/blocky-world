@@ -4,7 +4,7 @@ export default class WorldSelectionPage extends Component {
     render() {
         return (
             <div>
-                <h1>Worlds</h1>
+                <h1>Worlds Selection</h1>
             </div>
         );
     }
