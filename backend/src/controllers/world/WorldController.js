@@ -11,12 +11,12 @@ const {
 class WorldController {
     /**
      * Create a new World
-     * @param {Object} params
      * @param {Object} body
+     * @param {Object} user
      * @returns {HttpResponseData}
      * @static
      */
-    static async create(_, body, user) {
+    static async create({ body, user }) {
         validate(createSchema, body);
         const world = await WorldService.create(body, user.id);
         return HttpResponse.created(world);
@@ -24,12 +24,11 @@ class WorldController {
 
     /**
      * Get all Worlds
-     * @param {Object} params
-     * @param {Object} body
+     * @param {Object} user
      * @returns {HttpResponseData}
      * @static
      */
-    static async getAll(params, body, user) {
+    static async getAll({ user }) {
         const worlds = await WorldService.getAllByUser(user.id);
         return HttpResponse.ok(worlds);
     }
@@ -37,11 +36,11 @@ class WorldController {
     /**
      * Get world by id
      * @param {Object} params
-     * @param {Object} body
+     * @param {Object} user
      * @returns {HttpResponseData}
      * @static
      */
-    static async getById(params, body, user) {
+    static async getById({ params, user }) {
         validate(idSchema, params);
         const world = await WorldService.getById(params.id, user.id);
         return HttpResponse.ok(world);
@@ -51,10 +50,11 @@ class WorldController {
      * Update world by id
      * @param {Object} params
      * @param {Object} body
+     * @param {Object} user
      * @returns {HttpResponseData}
      * @static
      */
-    static async update(params, body, user) {
+    static async update({ params, body, user }) {
         validate(idSchema, params);
         validate(updateSchema, body);
         const world = await WorldService.updateById(params.id, body, user.id);
@@ -65,10 +65,11 @@ class WorldController {
      * Update name world by id
      * @param {Object} params
      * @param {Object} body
+     * @param {Object} user
      * @returns {HttpResponseData}
      * @static
      */
-    static async updateName(params, body, user) {
+    static async updateName({ params, body, user }) {
         validate(idSchema, params);
         validate(nameSchema, body);
         const world = await WorldService.updateNameById(params.id, body, user.id);
@@ -78,11 +79,11 @@ class WorldController {
     /**
      * Delete world by id
      * @param {Object} params
-     * @param {Object} body
+     * @param {Object} user
      * @returns {HttpResponseData}
      * @static
      */
-    static async delete(params, _, user) {
+    static async delete({ params, user }) {
         validate(idSchema, params);
         await WorldService.deleteById(params.id, user.id);
         return HttpResponse.okNoContent();

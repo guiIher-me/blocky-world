@@ -1,5 +1,6 @@
 const { HttpResponse } = require('../../http/HttpResponse');
 const { AuthService } = require('../../services/AuthService');
+const { CookiesUtil } = require('../../utils/CookiesUtil');
 const { validate } = require('../../validation/validate');
 
 const {
@@ -9,12 +10,11 @@ const {
 class AuthController {
     /**
      * Register a new user
-     * @param {Object} params
      * @param {Object} body
      * @returns {HttpResponseData}
      * @static
      */
-    static async register(_, body) {
+    static async register({ body }) {
         validate(registerSchema, body);
         const user = await AuthService.register(body);
         return HttpResponse.created(user);
@@ -22,25 +22,32 @@ class AuthController {
 
     /**
      * Login a registered user
-     * @param {Object} params
      * @param {Object} body
+     * @param {Object} cookies
      * @returns {HttpResponseData}
      * @static
      */
-    static async login(_, body) {
+    static async login({ body }, res) {
         validate(loginSchema, body);
-        const tokens = await AuthService.login(body);
-        return HttpResponse.ok({ ...tokens });
+
+        const {
+            accessToken, accessTokenExpiresAt, refreshToken, refreshTokenExpiresAt,
+        } = await AuthService.login(body);
+
+        const SECURE = true;
+        CookiesUtil.setCookie(res, 'accessToken', accessToken, accessTokenExpiresAt);
+        CookiesUtil.setCookie(res, 'refreshToken', refreshToken, refreshTokenExpiresAt, SECURE);
+
+        return HttpResponse.ok({ accessTokenExpiresAt, refreshTokenExpiresAt });
     }
 
     /**
      * refresh a logged in user
-     * @param {Object} params
      * @param {Object} body
      * @returns {HttpResponseData}
      * @static
      */
-    static async refresh(_, body) {
+    static async refresh({ body }) {
         validate(refreshSchema, body);
         const { accessToken, accessTokenExpiresAt } = await AuthService.refresh(body);
         return HttpResponse.ok({ accessToken, accessTokenExpiresAt });
@@ -49,12 +56,11 @@ class AuthController {
     /**
      * Logs out the current user by invalidating their authentication session.
      *
-     * @param {Object} params
      * @param {Object} body
      * @param {Object} user
      * @returns {Promise<Object>} An HTTP response with no content.
      */
-    static async logout(_, body, user) {
+    static async logout({ user }) {
         await AuthService.logout(user);
         return HttpResponse.okNoContent();
     }
@@ -67,7 +73,7 @@ class AuthController {
      * @param {Object} user
      * @returns {Promise<Object>} An HTTP response with no content.
      */
-    static async revoke(_, body, user) {
+    static async revoke({ body, user }) {
         validate(tokenSchema, body);
         await AuthService.revoke(body.token, user);
         return HttpResponse.okNoContent();
@@ -76,12 +82,11 @@ class AuthController {
     /**
      * Promotes a user to a higher privilege level.
      *
-     * @param {Object} params.
      * @param {Object} body
      * @param {string} body.id - The ID of the user to be promoted.
      * @returns {Promise<Object>} An HTTP response with no content.
      */
-    static async promote(_, body) {
+    static async promote({ body }) {
         validate(idSchema, body);
         await AuthService.promote(body.id);
         return HttpResponse.okNoContent();
