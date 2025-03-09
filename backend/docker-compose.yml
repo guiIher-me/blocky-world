@@ -5,6 +5,8 @@ services:
     ports:
       - "27017:27017"
     container_name: blockyworld-backend-mongodb
+    networks:
+      - app-network
 
   blockyworld-backend-redis:
     image: redis:latest
@@ -12,6 +14,8 @@ services:
     ports:
       - "6379:6379"
     container_name: blockyworld-backend-redis
+    networks:
+      - app-network
 
   blockyworld-backend-server:
     env_file:
@@ -24,7 +28,15 @@ services:
       - blockyworld-backend-mongodb
       - blockyworld-backend-redis
     container_name: blockyworld-backend-server
-    volumes:
+    volumes: 
       - .:/app
       - /app/node_modules
+      - /etc/ssl/certs/localhost.pem:/etc/ssl/certs/localhost.pem:ro
+      - /etc/ssl/private/localhost-key.pem:/etc/ssl/private/localhost-key.pem:ro
     command: npm run dev
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

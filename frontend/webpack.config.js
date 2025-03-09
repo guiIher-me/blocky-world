@@ -1,6 +1,23 @@
 /* eslint-disable no-undef */
+const webpack = require('webpack');
 const path = require('path');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const dotenv = require('dotenv');
+const fs = require('fs');
+
+const env = dotenv.config().parsed;
+
+// Verifica se os arquivos de certificado existem
+if (!fs.existsSync(env.PROTECTED_HTTPS_KEY) || !fs.existsSync(env.PROTECTED_HTTPS_CERT)) {
+  throw new Error('Certificado ou chave privada não encontrados. Verifique os caminhos no arquivo .env.');
+}
+
+const publicEnvKeys = Object.keys(env)
+  .filter(key => key.startsWith('PUBLIC_'))
+  .reduce((acc, key) => {
+      acc[`process.env.${key}`] = JSON.stringify(env[key]);
+      return acc;
+}, {});
 
 module.exports = {
   entry: [
@@ -37,6 +54,13 @@ module.exports = {
       directory: path.join(__dirname, 'public'),
     },
     port: 8080,
+    server: {
+      type: 'https',
+      options: {
+        key: fs.readFileSync(env.PROTECTED_HTTPS_KEY),
+        cert: fs.readFileSync(env.PROTECTED_HTTPS_CERT),
+      },
+    },
     hot: true, // Habilita Hot Module Replacement (HMR)
     open: true, // Abre automaticamente o navegador
     historyApiFallback: {
@@ -48,6 +72,7 @@ module.exports = {
   },
   plugins: [
     new ReactRefreshWebpackPlugin(),
+    new webpack.DefinePlugin(publicEnvKeys),
   ],
   mode: 'development',
 };
