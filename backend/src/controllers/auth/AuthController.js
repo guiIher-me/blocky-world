@@ -34,9 +34,8 @@ class AuthController {
             accessToken, accessTokenExpiresAt, refreshToken, refreshTokenExpiresAt,
         } = await AuthService.login(body);
 
-        const SECURE = true;
-        CookiesUtil.setCookie(res, 'accessToken', accessToken, accessTokenExpiresAt, SECURE);
-        CookiesUtil.setCookie(res, 'refreshToken', refreshToken, refreshTokenExpiresAt, SECURE);
+        CookiesUtil.setSecureCookie(res, 'accessToken', accessToken, accessTokenExpiresAt);
+        CookiesUtil.setSecureCookie(res, 'refreshToken', refreshToken, refreshTokenExpiresAt);
 
         return HttpResponse.ok({ accessTokenExpiresAt, refreshTokenExpiresAt });
     }
@@ -50,7 +49,7 @@ class AuthController {
      */
     static async refresh(req, res) {
         const { accessToken, accessTokenExpiresAt } = await AuthService.refresh(req);
-        CookiesUtil.setCookie(res, 'accessToken', accessToken, accessTokenExpiresAt);
+        CookiesUtil.setSecureCookie(res, 'accessToken', accessToken, accessTokenExpiresAt);
 
         return HttpResponse.ok({ accessTokenExpiresAt });
     }

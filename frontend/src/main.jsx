@@ -23,7 +23,7 @@ const Main = () => {
     const publicRoutes = ["/login", "/signup", "/"];
 
     const checkAuthAndUpdate = async () => {
-        const isAuth = await AuthUtil.validAccessToken();
+        const isAuth = await AuthUtil.validRefreshToken();
 
         if (!isAuth && !publicRoutes.includes(location.pathname)) {
             navigate("/login");
@@ -41,7 +41,7 @@ const Main = () => {
         AuthUtil.setRefreshTokenExpiration(refreshTokenExpiresAt);
         
         checkAuthAndUpdate();
-        navigate("/world/select");
+        navigate("/worlds/select");
     };
 
     const handleSignupSuccess = () => {
@@ -52,19 +52,19 @@ const Main = () => {
         <div id="App">
             <Routes>
                 {/* Rota pública - Login */}
-                <Route path="/login" element={!isAuthenticated ? <LoginPage onLoginSuccess={handleLoginSuccess} /> : <Navigate to="/world/select" />} />
+                <Route path="/login" element={!isAuthenticated ? <LoginPage onLoginSuccess={handleLoginSuccess} /> : <Navigate to="/worlds/select" />} />
                 
                 {/* Rota pública - Signup */}
                 <Route path="/signup" element={<SignupPage onSignupSuccess={handleSignupSuccess} />} />
                 
                 {/* Rotas privadas, protegidas por autenticação */}
-                <Route path="/world/create" element={<ProtectedRoute element={<CreateWorldPage />} isAuthenticated={isAuthenticated} />} />
-                <Route path="/world/select" element={<ProtectedRoute element={<WorldSelectionPage />} isAuthenticated={isAuthenticated} />} />
+                <Route path="/worlds/create" element={<ProtectedRoute element={<CreateWorldPage />} isAuthenticated={isAuthenticated} />} />
+                <Route path="/worlds/select" element={<ProtectedRoute element={<WorldSelectionPage />} isAuthenticated={isAuthenticated} />} />
                 <Route path="/profile" element={<ProtectedRoute element={<ProfilePage />} isAuthenticated={isAuthenticated} />} />
                 
                 {/* Página inicial redireciona dependendo da autenticação */}
-                <Route path="/home" element={isAuthenticated ? <Navigate to="/world/select" /> : <Navigate to="/login" />} />
-                <Route path="/" element={isAuthenticated ? <Navigate to="/world/select" /> : <Navigate to="/login" />} />
+                <Route path="/home" element={isAuthenticated ? <Navigate to="/worlds/select" /> : <Navigate to="/login" />} />
+                <Route path="/" element={isAuthenticated ? <Navigate to="/worlds/select" /> : <Navigate to="/login" />} />
             </Routes>
         </div>
     );

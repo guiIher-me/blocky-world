@@ -29,8 +29,8 @@ export default class LoginForm extends Component {
 
         try {
             const Http = new BlockyHttp();
-            const data = await Http.post('/login', { email, password });
-            onLoginSuccess(data);
+            const response = await Http.post('/login', { email, password });
+            onLoginSuccess(response.data);
         } catch (err) {
             console.log(err);
 

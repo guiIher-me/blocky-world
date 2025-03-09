@@ -1,9 +1,9 @@
 class CookiesUtil {
-    static setCookie(res, name, value, expirationAt, secure = false) {
+    static setSecureCookie(res, name, value, expirationAt) {
         const options = {
             path: '/',
             expires: expirationAt ? new Date(Number(expirationAt * 1000)) : undefined,
-            secure,
+            secure: true,
             httpOnly: true,
             sameSite: 'none',
         };
