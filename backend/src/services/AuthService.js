@@ -181,16 +181,29 @@ class AuthService {
     /**
      * Generate an access token
      * @param {Object} user - User object to be included in the token payload.
+     * @param {String} expiration - string expiration.
+     * @returns {Object} - JWT token and expiration.
+     * @static
+     */
+    static _generateToken(user, expiration) {
+        const expiresIn = Number(expiration);
+
+        const payload = { id: user._id, email: user.email, role: user.role };
+        const token = AuthUtil.sign(payload, expiresIn);
+        const expiresAt = Math.floor(Date.now() / 1000) + expiresIn;
+        return { token, expiresAt };
+    }
+
+    /**
+     * Generate an access token
+     * @param {Object} user - User object to be included in the token payload.
      * @returns {Object} - JWT access token and expiration.
      * @static
      */
     static generateAccessToken(user) {
-        const expiresIn = process.env.ACCESS_TOKEN_EXPIRATION;
-
-        const payload = { id: user._id, email: user.email, role: user.role };
-        const accessToken = AuthUtil.sign(payload, expiresIn);
-        const accessTokenExpiresAt = Math.floor(Date.now() / 1000) + expiresIn;
-        return { accessToken, accessTokenExpiresAt };
+        const expiration = process.env.ACCESS_TOKEN_EXPIRATION;
+        const { token, expiresAt } = AuthService._generateToken(user, expiration);
+        return { accessToken: token, accessTokenExpiresAt: expiresAt };
     }
 
     /**
@@ -200,12 +213,9 @@ class AuthService {
      * @static
      */
     static generateRefreshToken(user) {
-        const expiresIn = process.env.REFRESH_TOKEN_EXPIRATION;
-
-        const payload = { id: user._id };
-        const refreshToken = AuthUtil.sign(payload, expiresIn);
-        const refreshTokenExpiresAt = Math.floor(Date.now() / 1000) + expiresIn;
-        return { refreshToken, refreshTokenExpiresAt };
+        const expiration = process.env.REFRESH_TOKEN_EXPIRATION;
+        const { token, expiresAt } = AuthService._generateToken(user, expiration);
+        return { refreshToken: token, refreshTokenExpiresAt: expiresAt };
     }
 
     /**
