@@ -35,7 +35,7 @@ class AuthController {
         } = await AuthService.login(body);
 
         const SECURE = true;
-        CookiesUtil.setCookie(res, 'accessToken', accessToken, accessTokenExpiresAt);
+        CookiesUtil.setCookie(res, 'accessToken', accessToken, accessTokenExpiresAt, SECURE);
         CookiesUtil.setCookie(res, 'refreshToken', refreshToken, refreshTokenExpiresAt, SECURE);
 
         return HttpResponse.ok({ accessTokenExpiresAt, refreshTokenExpiresAt });
