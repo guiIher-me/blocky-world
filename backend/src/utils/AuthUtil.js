@@ -25,10 +25,12 @@ class AuthUtil {
     }
 
     static getToken(req) {
-        const { authorization } = req.headers || null;
-        if (!authorization) throw new Unauthorized('Authentication token not provided');
+        const token = req.cookies?.accessToken;
 
-        const token = authorization.replace('Bearer ', '');
+        if (!token) {
+            throw new Unauthorized('Authentication token not provided');
+        }
+
         return token;
     }
 

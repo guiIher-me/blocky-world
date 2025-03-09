@@ -5,6 +5,7 @@ require('./src/db');
 require('dotenv').config();
 const moment = require('moment-timezone');
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const https = require('https');
@@ -35,6 +36,7 @@ const corsOptions = {
 // Middlewares Setup
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(requestLoggerMiddleware);
 app.use(responseLoggerMiddleware);
 
