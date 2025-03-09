@@ -40,7 +40,7 @@ class WorldService {
      */
     static assertUserPermission(world, userId) {
         if (!world.user.equals(userId)) {
-            throw new Unauthorized('You do not have permission to access this world!');
+            throw new NotFound('World not found!');
         }
     }
 
