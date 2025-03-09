@@ -15,10 +15,8 @@ export default class AuthUtil {
 
             return true;
         } catch(error) {
-            console.log(error);
             return false;
         }
-
     }
 
     static validAccessToken() {
