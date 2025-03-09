@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export default class SignupPage extends Component {
     static propTypes = {
-        onSignupSuccess: PropTypes.object.isRequired,
+        onSignupSuccess: PropTypes.func.isRequired,
     }
 
     render() {

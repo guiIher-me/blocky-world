@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export default class LoginPage extends Component {
     static propTypes = {
-        onLoginSuccess: PropTypes.object.isRequired,
+        onLoginSuccess: PropTypes.func.isRequired,
     }
 
     render() {

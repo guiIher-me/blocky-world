@@ -1,66 +1,83 @@
-import React, { Component } from "react";
+/* eslint-disable react/prop-types */
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate, useLocation } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import CreateWorldPage from "./pages/CreateWorldPage";
 import WorldSelectionPage from "./pages/WorldSelectionPage";
 import ProfilePage from "./pages/ProfilePage";
+import AuthUtil from "./utils/AuthUtil";
 
-class Main extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isAuthenticated: false,
-        };
-    }
+// Componente de Rota Protegida
+const ProtectedRoute = ({ element, isAuthenticated }) => {
+    return isAuthenticated ? element : <Navigate to="/login" />;
+};
 
-    handleLoginSuccess = (token) => {
-        this.setState({ isAuthenticated: true });
+const Main = () => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation(); 
+
+    // Lista de rotas públicas
+    const publicRoutes = ["/login", "/signup", "/"];
+
+    const checkAuthAndUpdate = async () => {
+        const isAuth = await AuthUtil.validAccessToken();
+
+        if (!isAuth && !publicRoutes.includes(location.pathname)) {
+            navigate("/login");
+        } else {
+            setIsAuthenticated(isAuth);
+        }
     };
 
-    handleSignupSuccess = () => {
-        this.setState({ isAuthenticated: true });
+    useEffect(() => {
+        checkAuthAndUpdate();
+    }, [location]); 
+
+    const handleLoginSuccess = ({ accessTokenExpiresAt, refreshTokenExpiresAt }) => {
+        AuthUtil.setAccessTokenExpiration(accessTokenExpiresAt);
+        AuthUtil.setRefreshTokenExpiration(refreshTokenExpiresAt);
+        
+        checkAuthAndUpdate();
+        navigate("/world/select");
     };
 
-    render() {
-        const { isAuthenticated } = this.state;
+    const handleSignupSuccess = () => {
+        navigate("/login");
+    };
 
-        return (
-            <Router>
-                <div id="App">
-                    <Routes>
-                        {!isAuthenticated ? (
-                            <Route path="/login" element={<LoginPage onLoginSuccess={this.handleLoginSuccess} />} />
-                        ) : (
-                            <Route path="/world/select" element={<WorldSelectionPage />} />
-                        )}
-
-                        <Route path="/signup" element={<SignupPage onSignupSuccess={this.handleSignupSuccess} />} />
-                        <Route path="/create-world" element={<CreateWorldPage />} />
-                        <Route path="/select-world" element={<WorldSelectionPage />} />
-                        <Route path="/profile" element={<ProfilePage />} />
-                        
-                        <Route path="/" element={isAuthenticated ? <WorldSelectionPage /> : <Navigate to="/login" />} />
-                    </Routes>
-                </div>
-            </Router>
-        );
-    }
-}
-
-console.log("teste")
+    return (
+        <div id="App">
+            <Routes>
+                {/* Rota pública - Login */}
+                <Route path="/login" element={!isAuthenticated ? <LoginPage onLoginSuccess={handleLoginSuccess} /> : <Navigate to="/world/select" />} />
+                
+                {/* Rota pública - Signup */}
+                <Route path="/signup" element={<SignupPage onSignupSuccess={handleSignupSuccess} />} />
+                
+                {/* Rotas privadas, protegidas por autenticação */}
+                <Route path="/world/create" element={<ProtectedRoute element={<CreateWorldPage />} isAuthenticated={isAuthenticated} />} />
+                <Route path="/world/select" element={<ProtectedRoute element={<WorldSelectionPage />} isAuthenticated={isAuthenticated} />} />
+                <Route path="/profile" element={<ProtectedRoute element={<ProfilePage />} isAuthenticated={isAuthenticated} />} />
+                
+                {/* Página inicial redireciona dependendo da autenticação */}
+                <Route path="/home" element={isAuthenticated ? <Navigate to="/world/select" /> : <Navigate to="/login" />} />
+                <Route path="/" element={isAuthenticated ? <Navigate to="/world/select" /> : <Navigate to="/login" />} />
+            </Routes>
+        </div>
+    );
+};
 
 document.addEventListener("DOMContentLoaded", () => {
     const rootElement = document.getElementById("root");
-    console.log(rootElement)
-
-    if (!rootElement) {
-        console.error("Erro: Elemento #root não encontrado no DOM!");
-    } else {
-        const root = ReactDOM.createRoot(rootElement);
-        root.render(<Main />);
-    }
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(
+        <Router>
+            <Main />
+        </Router>
+    );
 });
 
 

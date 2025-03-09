@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { register } from "../../../api/auth"; // Importando a função signup
+import AlertError from "../../../errors/AlertError";
+import { Link } from "react-router-dom";
 
 export default class SignupForm extends Component {
     static propTypes = {
@@ -12,7 +15,11 @@ export default class SignupForm extends Component {
             email: "",
             password: "",
             confirmPassword: "",
+            firstname: "",
+            lastname: "",
             errorMessage: "",
+            successMessage: "",
+            isSubmitting: false,
         };
     }
 
@@ -21,38 +28,70 @@ export default class SignupForm extends Component {
         this.setState({ [name]: value });
     };
 
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault();
-        
-        const { email, password, confirmPassword } = this.state;
-        
+
+        const { email, password, confirmPassword, firstname, lastname } = this.state;
+
+        // Verificando se as senhas são iguais
         if (password !== confirmPassword) {
             this.setState({ errorMessage: "Passwords do not match!" });
             return;
         }
 
-        // Chamada ao backend para cadastrar o usuário
-        // Exemplo: 
-        // api.signup({ email, password })
-        //   .then(response => {
-        //     this.props.onSignupSuccess(response.token);
-        //   })
-        //   .catch(error => {
-        //     this.setState({ errorMessage: error.message });
-        //   });
+        this.setState({ isSubmitting: true, errorMessage: "", successMessage: "" });
 
-        // Simulando sucesso da inscrição:
-        this.props.onSignupSuccess("fake-token");
+        try {
+            const response = await register(firstname, lastname, email, password);
 
-        // Limpar os campos após a submissão
-        this.setState({ email: "", password: "", confirmPassword: "", errorMessage: "" });
+            // Sucesso no registro
+            this.props.onSignupSuccess(response);
+            this.setState({
+                successMessage: "Account created successfully!",
+                email: "",
+                password: "",
+                confirmPassword: "",
+                firstname: "",
+                lastname: "",
+            });
+        } catch (error) {
+            // Tratando erros da requisição
+            if (error instanceof AlertError) {
+                this.setState({ errorMessage: error.message });
+            } else {
+                this.setState({ errorMessage: "An unknown error occurred." });
+            }
+        } finally {
+            // Finalizando a submissão
+            this.setState({ isSubmitting: false });
+        }
     };
 
     render() {
-        const { email, password, confirmPassword, errorMessage } = this.state;
+        const { email, password, confirmPassword, firstname, lastname, errorMessage, successMessage, isSubmitting } = this.state;
 
         return (
             <form onSubmit={this.handleSubmit}>
+                <div>
+                    <label>First Name:</label>
+                    <input
+                        type="text"
+                        name="firstname"
+                        value={firstname}
+                        onChange={this.handleChange}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Last Name:</label>
+                    <input
+                        type="text"
+                        name="lastname"
+                        value={lastname}
+                        onChange={this.handleChange}
+                        required
+                    />
+                </div>
                 <div>
                     <label>Email:</label>
                     <input
@@ -83,8 +122,14 @@ export default class SignupForm extends Component {
                         required
                     />
                 </div>
+
                 {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-                <button type="submit">Sign Up</button>
+                {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
+
+                <button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? "Signing up..." : "Sign Up"}
+                </button>
+                <p>Already have an account? <Link to="/login">Log In</Link></p>
             </form>
         );
     }

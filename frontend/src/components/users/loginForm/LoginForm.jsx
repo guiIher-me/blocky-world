@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { login } from "../../../api/auth";
+import AlertError from "../../../errors/AlertError";
+import { Link } from "react-router-dom";
 
 export default class LoginForm extends Component {
 
@@ -14,6 +16,7 @@ export default class LoginForm extends Component {
             email: "",
             password: "",
             error: null,
+            isSubmitting: false,
         };
     }
 
@@ -26,9 +29,14 @@ export default class LoginForm extends Component {
 
         try {
             const data = await login(email, password);
-            onLoginSuccess(data.token);
+            onLoginSuccess(data);
         } catch (err) {
-            this.setState({ error: "Credenciais inválidas" });
+            console.log(err);
+
+            if(err instanceof AlertError)
+                this.setState({ error: err.message });
+            else
+                this.setState({ error: 'Internal Server Error!' });
         }
     };
 
@@ -38,29 +46,38 @@ export default class LoginForm extends Component {
     };
 
     render() {
-        const { email, password, error } = this.state;
+        const { email, password, error, isSubmitting } = this.state;
 
         return (
             <form onSubmit={this.handleSubmit} className="login-form">
-                <h2>Login</h2>
                 {error && <p className="error">{error}</p>}
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={this.handleInputChange}
-                    required
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={this.handleInputChange}
-                    required
-                />
-                <button type="submit">Login</button>
+                <div>
+                    <label>Email:</label>
+                    <input
+                        type="email"
+                        name="email"
+                        value={email}
+                        onChange={this.handleInputChange}
+                        required
+                    />
+                </div>
+
+                <div>
+                    <label>Password:</label>
+                    <input
+                        type="password"
+                        name="password"
+                        value={password}
+                        onChange={this.handleInputChange}
+                        required
+                    />
+                </div>
+
+                <button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? "Signing up..." : "Login"}
+                </button>
+
+                <p>Don&apos;t have an account? <Link to="/signup">Create one</Link></p>
             </form>
         );
     }
