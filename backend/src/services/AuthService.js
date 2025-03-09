@@ -115,12 +115,15 @@ class AuthService {
 
     /**
      * Refresh an existing user session with a new access token
-     * @param {Object} data - Refresh token data (refreshToken).
+     * @param {Object} res - Refresh token data (refreshToken).
      * @returns {Object} - New JWT access token and expiration.
      * @static
      */
-    static async refresh(data) {
-        const decoded = AuthService.verifyRefreshToken(data.refreshToken);
+    static async refresh(req) {
+        const refreshToken = req.cookies?.refreshToken || null;
+        if (!refreshToken) throw new Unauthorized();
+
+        const decoded = AuthService.verifyRefreshToken(refreshToken);
         const user = await User.findById(decoded.id);
         AuthService.assert(user);
 

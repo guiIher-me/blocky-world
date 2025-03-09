@@ -4,7 +4,7 @@ const { CookiesUtil } = require('../../utils/CookiesUtil');
 const { validate } = require('../../validation/validate');
 
 const {
-    idSchema, registerSchema, loginSchema, refreshSchema, tokenSchema,
+    idSchema, registerSchema, loginSchema, tokenSchema,
 } = require('./schemas');
 
 class AuthController {
@@ -23,7 +23,7 @@ class AuthController {
     /**
      * Login a registered user
      * @param {Object} body
-     * @param {Object} cookies
+     * @param {Object} res
      * @returns {HttpResponseData}
      * @static
      */
@@ -43,14 +43,16 @@ class AuthController {
 
     /**
      * refresh a logged in user
-     * @param {Object} body
+     * @param {Object} req
+     * @param {Object} res
      * @returns {HttpResponseData}
      * @static
      */
-    static async refresh({ body }) {
-        validate(refreshSchema, body);
-        const { accessToken, accessTokenExpiresAt } = await AuthService.refresh(body);
-        return HttpResponse.ok({ accessToken, accessTokenExpiresAt });
+    static async refresh(req, res) {
+        const { accessToken, accessTokenExpiresAt } = await AuthService.refresh(req);
+        CookiesUtil.setCookie(res, 'accessToken', accessToken, accessTokenExpiresAt);
+
+        return HttpResponse.ok({ accessTokenExpiresAt });
     }
 
     /**
