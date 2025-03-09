@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { login } from "../../../api/auth";
+import BlockyHttp from "../../../http/BlockyHttp";
 import AlertError from "../../../errors/AlertError";
 import { Link } from "react-router-dom";
 
@@ -28,7 +28,8 @@ export default class LoginForm extends Component {
         const { onLoginSuccess } = this.props;
 
         try {
-            const data = await login(email, password);
+            const Http = new BlockyHttp();
+            const data = await Http.post('/login', { email, password });
             onLoginSuccess(data);
         } catch (err) {
             console.log(err);

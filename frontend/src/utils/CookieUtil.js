@@ -25,7 +25,6 @@ class CookieUtil {
             cookieString += `;Secure`;
         }
 
-        console.log('cookie string', cookieString);
         document.cookie = cookieString;
     }
 

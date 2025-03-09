@@ -1,7 +1,7 @@
 import AuthUtil from "../utils/AuthUtil";
-import { BlockyHttp } from "./BlockyHttp";
+import BlockyHttp from "./BlockyHttp";
 
-export default class BlockyHttpAuth extends  BlockyHttp {
+export default class BlockyHttpAuth extends BlockyHttp {
     async request(method, url, body, params = {}, headers = {}) {
         if(!AuthUtil.validAccessToken())
             await BlockyHttpAuth.refresh();

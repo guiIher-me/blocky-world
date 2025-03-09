@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { register } from "../../../api/auth"; // Importando a função signup
 import AlertError from "../../../errors/AlertError";
 import { Link } from "react-router-dom";
+import BlockyHttp from "../../../http/BlockyHttp";
 
 export default class SignupForm extends Component {
     static propTypes = {
@@ -42,9 +42,9 @@ export default class SignupForm extends Component {
         this.setState({ isSubmitting: true, errorMessage: "", successMessage: "" });
 
         try {
-            const response = await register(firstname, lastname, email, password);
+            const Http = new BlockyHttp();
+            const response = await Http.post('/register', { firstname, lastname, email, password });
 
-            // Sucesso no registro
             this.props.onSignupSuccess(response);
             this.setState({
                 successMessage: "Account created successfully!",
@@ -55,14 +55,12 @@ export default class SignupForm extends Component {
                 lastname: "",
             });
         } catch (error) {
-            // Tratando erros da requisição
             if (error instanceof AlertError) {
                 this.setState({ errorMessage: error.message });
             } else {
                 this.setState({ errorMessage: "An unknown error occurred." });
             }
         } finally {
-            // Finalizando a submissão
             this.setState({ isSubmitting: false });
         }
     };
