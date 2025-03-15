@@ -5,7 +5,6 @@
 /* eslint-disable no-unused-vars */
 
 const { User } = require('../models/User');
-const { Conflict } = require('../errors/Conflict');
 const { NotFound } = require('../errors/NotFound');
 const { Unauthorized } = require('../errors/Unauthorized');
 const { UserRoleEnum } = require('../enums/UserRoleEnum');
@@ -50,36 +49,6 @@ class AuthService {
         } catch (error) {
             throw new UnprocessableContent('Invalid token!');
         }
-    }
-
-    /**
-     * Register a new user
-     * @param {Object} data - User registration data.
-     * @returns {Object} - Created user data.
-     * @throws {Conflict} - If the email is already in use.
-     * @static
-     */
-    static async register(data) {
-        const existingUser = await User.findOne({ email: data.email });
-        if (existingUser) {
-            throw new Conflict('Email already in use');
-        }
-
-        const hashedPassword = await AuthUtil.getHash(data.password);
-
-        const user = new User({
-            firstname: data.firstname,
-            lastname: data.lastname,
-            email: data.email,
-            password: hashedPassword,
-            role: UserRoleEnum.USER,
-        });
-
-        await user.save();
-
-        // get user data (except password)
-        const { password, ...userData } = user.toObject();
-        return userData;
     }
 
     /**

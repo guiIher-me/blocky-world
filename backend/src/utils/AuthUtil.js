@@ -7,11 +7,6 @@ const { Unauthorized } = require('../errors/Unauthorized');
 const { UserRoleEnum } = require('../enums/UserRoleEnum');
 
 class AuthUtil {
-    static async getHash(password) {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        return hashedPassword;
-    }
-
     static async compare(password, hash) {
         return bcrypt.compare(password, hash);
     }

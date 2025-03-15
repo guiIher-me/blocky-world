@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { AuthController } = require('./controllers/auth/AuthController');
 const { WorldController } = require('./controllers/world/WorldController');
+const { UserController } = require('./controllers/user/UserController');
 const { adminMiddleware } = require('./middlewares/adminMiddleware');
 const { authMiddleware } = require('./middlewares/authMiddleware');
 const { routeHandle } = require('./utils/routeHandle');
@@ -12,8 +13,11 @@ router.get('/ping', async (_, res) => {
     res.status(200).json({ message: 'pong!' });
 });
 
-// Auth
+// User
 router.post('/register', routeHandle(AuthController.register));
+router.get('/user', authMiddleware, routeHandle(UserController.get));
+
+// Auth
 router.post('/login', routeHandle(AuthController.login));
 router.post('/refresh', routeHandle(AuthController.refresh));
 router.post('/logout', authMiddleware, routeHandle(AuthController.logout));
