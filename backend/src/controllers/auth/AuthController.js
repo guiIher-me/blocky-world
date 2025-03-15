@@ -31,13 +31,19 @@ class AuthController {
         validate(loginSchema, body);
 
         const {
-            accessToken, accessTokenExpiresAt, refreshToken, refreshTokenExpiresAt,
+            tokens, user,
         } = await AuthService.login(body);
+
+        const {
+            accessToken, accessTokenExpiresAt, refreshToken, refreshTokenExpiresAt,
+        } = tokens;
+
+        const { firstname } = user;
 
         CookiesUtil.setSecureCookie(res, 'accessToken', accessToken, accessTokenExpiresAt);
         CookiesUtil.setSecureCookie(res, 'refreshToken', refreshToken, refreshTokenExpiresAt);
 
-        return HttpResponse.ok({ accessTokenExpiresAt, refreshTokenExpiresAt });
+        return HttpResponse.ok({ firstname, accessTokenExpiresAt, refreshTokenExpiresAt });
     }
 
     /**

@@ -95,7 +95,9 @@ class AuthService {
         const passwordMatch = await AuthUtil.compare(data.password, user.password);
         if (!passwordMatch) throw new Unauthorized('Invalid credentials');
 
-        return AuthService.generateTokens(user);
+        const tokens = AuthService.generateTokens(user);
+
+        return { tokens, user };
     }
 
     /**
