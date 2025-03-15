@@ -88,7 +88,7 @@ const WorldSchema = new mongoose.Schema({
         default: [
             {
                 position: '0 0 0',
-                block: 'grass-block',
+                blockname: 'grass-block',
             },
         ],
         _id: false,
