@@ -5,11 +5,18 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const dotenv = require('dotenv');
 const fs = require('fs');
 
-const env = dotenv.config().parsed;
+const dotenvResult = dotenv.config();
 
-// Verifica se os arquivos de certificado existem
+if (dotenvResult.error || !dotenvResult.parsed) {
+  throw new Error('Missing frontend .env file. Run "npm run setup" from the repository root.');
+}
+
+const env = dotenvResult.parsed;
+
 if (!fs.existsSync(env.PROTECTED_HTTPS_KEY) || !fs.existsSync(env.PROTECTED_HTTPS_CERT)) {
-  throw new Error('Certificado ou chave privada não encontrados. Verifique os caminhos no arquivo .env.');
+  throw new Error(
+    'Local HTTPS certificates were not found. Run "npm run setup" from the repository root to generate them.'
+  );
 }
 
 const publicEnvKeys = Object.keys(env)

@@ -1,30 +1,30 @@
 # Backend
 
-This backend runs with Node.js, MongoDB, and Redis. The simplest way to start everything is with Docker Compose.
+This backend runs with Node.js, MongoDB, and Redis. Local HTTPS certificates are shared with the frontend through the repository root `.local-certs/` directory.
 
 ## Requirements
 
 - Docker and Docker Compose
 - Node.js 18+ and npm
+- `mkcert`
 
 ## How to run
 
-1. Go to the backend folder:
+Run the project setup once from the repository root:
 
 ```bash
-cd backend
+npm run setup
 ```
 
-2. Create your environment file:
+Then start the backend from the repository root:
 
 ```bash
-cp .env.example .env
+npm run start-backend
 ```
 
-3. Start the backend, MongoDB, and Redis with Docker:
+Or run it from inside the backend folder:
 
 ```bash
-npm install
 npm run start-docker
 ```
 
@@ -44,10 +44,14 @@ Run tests:
 npm test
 ```
 
-Run the server locally in development mode:
+Run the server locally without Docker:
 
 ```bash
 npm run dev
 ```
 
-Note: local development also requires MongoDB, Redis, the `.env` file, and the HTTPS certificate files referenced by `HTTPS_KEY` and `HTTPS_CERT`.
+## Notes
+
+- `npm run setup` creates `backend/.env` from `.env.example` if it does not exist.
+- HTTPS certificates are stored in the repository root `.local-certs/` directory.
+- If the cert files are missing, rerun `npm run setup` from the repository root.

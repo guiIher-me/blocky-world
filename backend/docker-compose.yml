@@ -31,8 +31,7 @@ services:
     volumes: 
       - .:/app
       - /app/node_modules
-      - /etc/ssl/certs/localhost.pem:/etc/ssl/certs/localhost.pem:ro
-      - /etc/ssl/private/localhost-key.pem:/etc/ssl/private/localhost-key.pem:ro
+      - ../.local-certs:/.local-certs:ro
     command: npm run dev
     networks:
       - app-network

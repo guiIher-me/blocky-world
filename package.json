@@ -4,6 +4,7 @@
   "description": "An interactive three-dimensional blocky world inspired by Minecraft",
   "main": "index.js",
   "scripts": {
+    "setup": "bash ./scripts/setup-local-dev.sh",
     "start": "npm run start-backend & npm run start-frontend",
     "start-backend": "cd backend && npm run start-docker",
     "start-frontend": "cd frontend && npm start",

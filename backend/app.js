@@ -23,6 +23,16 @@ const {
     FRONTEND_URL, SERVER_PORT, HTTPS_KEY, HTTPS_CERT,
 } = process.env;
 
+function validateHttpsConfiguration() {
+    if (!FRONTEND_URL || !SERVER_PORT || !HTTPS_KEY || !HTTPS_CERT) {
+        throw new Error('Missing backend HTTPS environment variables. Run "npm run setup" from the repository root.');
+    }
+
+    if (!fs.existsSync(HTTPS_KEY) || !fs.existsSync(HTTPS_CERT)) {
+        throw new Error('Local HTTPS certificates were not found. Run "npm run setup" from the repository root to generate them.');
+    }
+}
+
 // Datetime Configurations
 moment.tz.setDefault('America/Sao_Paulo');
 
@@ -43,6 +53,8 @@ app.use(responseLoggerMiddleware);
 app.use(router);
 app.use(notFoundMiddleware);
 app.use(globalErrorMiddleware);
+
+validateHttpsConfiguration();
 
 // Configurar o servidor HTTPS com certificados
 const httpsOptions = {
