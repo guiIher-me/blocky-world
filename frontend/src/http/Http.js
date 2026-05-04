@@ -2,6 +2,7 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 import Unauthorized from '../errors/Unauthorized';
+import AlertError from '../errors/AlertError';
 
 export default class Http {
     static async request(method, url, { body, params = {}, headers = {} }) {
@@ -22,6 +23,10 @@ export default class Http {
         } catch(error) {
             if (error.response && error.response.status === 401) {
                 throw new Unauthorized();
+            }
+
+            if (error.response && error.response.data?.error) {
+                throw new AlertError(error.response.data.error);
             }
 
             throw error;

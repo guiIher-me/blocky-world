@@ -22,7 +22,7 @@ export default class LoginForm extends Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        this.setState({ error: null });
+        this.setState({ error: null, isSubmitting: true });
 
         const { email, password } = this.state;
         const { onLoginSuccess } = this.props;
@@ -32,12 +32,12 @@ export default class LoginForm extends Component {
             const response = await Http.post('/login', { email, password });
             onLoginSuccess(response.data);
         } catch (err) {
-            console.log(err);
-
-            if(err instanceof AlertError)
+            if (err instanceof AlertError)
                 this.setState({ error: err.message });
             else
                 this.setState({ error: 'Internal Server Error!' });
+        } finally {
+            this.setState({ isSubmitting: false });
         }
     };
 
@@ -75,7 +75,7 @@ export default class LoginForm extends Component {
                 </div>
 
                 <button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? "Signing up..." : "Login"}
+                    {isSubmitting ? "Logging in..." : "Login"}
                 </button>
 
                 <p>Don&apos;t have an account? <Link to="/signup">Create one</Link></p>

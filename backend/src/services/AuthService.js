@@ -11,6 +11,7 @@ const { UserRoleEnum } = require('../enums/UserRoleEnum');
 const { AuthUtil } = require('../utils/AuthUtil');
 const { UnprocessableContent } = require('../errors/UnprocessableContent');
 const { TokenBlacklist } = require('../cache/TokenBlackList');
+const { UserService } = require('./UserService');
 require('dotenv').config();
 
 /**
@@ -18,6 +19,19 @@ require('dotenv').config();
  * @description Service responsible for user authentication and authorization actions.
  */
 class AuthService {
+    /**
+     * Register a new user.
+     *
+     * Delegates persistence concerns to UserService so hashing and uniqueness
+     * checks remain implemented in one place.
+     *
+     * @param {Object} data - Registration data.
+     * @returns {Promise<Object>} The created user without password fields.
+     */
+    static async register(data) {
+        return UserService.register(data);
+    }
+
     /**
      * Asserts that the provided user exists.
      * Throws a `NotFound` error if the user is not found.
