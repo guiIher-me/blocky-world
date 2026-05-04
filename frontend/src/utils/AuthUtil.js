@@ -38,4 +38,9 @@ export default class AuthUtil {
         const cookie = AuthUtil.REFRESH_TOKEN_KEY;
         CookieUtil.setCookie(cookie, expiration, expiration);
     }
+
+    static clearSession() {
+        CookieUtil.deleteCookie(AuthUtil.ACCESS_TOKEN_KEY);
+        CookieUtil.deleteCookie(AuthUtil.REFRESH_TOKEN_KEY);
+    }
 }

@@ -8,17 +8,26 @@ export default class MCInput extends PureComponent {
         value: PropTypes.string,
         classes: PropTypes.string,
         placeholder: PropTypes.string,
-        onFocusOut: PropTypes.func
+        onFocusOut: PropTypes.func,
+        onValueChange: PropTypes.func,
     }
 
     constructor(props) {
         super(props);
         this.state = {
-            text: this.props.value
+            text: this.props.value || ""
         }
 
         this.onChange = this.onChange.bind(this);
         this.notifyChanges = this.notifyChanges.bind(this);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.value !== this.props.value) {
+            this.setState({
+                text: this.props.value || "",
+            });
+        }
     }
 
     onChange(event) {
@@ -26,19 +35,27 @@ export default class MCInput extends PureComponent {
         this.setState({
             text: value
        });
+
+        const { onValueChange } = this.props;
+        if (onValueChange) {
+            onValueChange(event, value);
+        }
     }
 
     notifyChanges(event) {
         const { onFocusOut } = this.props;
-        onFocusOut(event, this.state.text);
+        if (onFocusOut) {
+            onFocusOut(event, this.state.text);
+        }
     }
 
     render() {
-        const { name = "", value = "", classes = "", placeholder = "" } = this.props;
+        const { name = "", classes = "", placeholder = "" } = this.props;
+        const { text } = this.state;
         return <input type="text" name={name} className={`mc-input ${classes}`}
                       autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"
                       onBlur={this.notifyChanges}
-                      defaultValue={value}
+                      value={text}
                       placeholder={placeholder}
                       onChange={this.onChange}></input>
     }
